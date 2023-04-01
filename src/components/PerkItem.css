@@ -1,0 +1,43 @@
+.perk-item {
+    flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.perk-item .icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    aspect-ratio: 1/1;
+    font-size: 2.5em;
+    background: var(--hu-ball-gradient);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    box-shadow: var(--hu-accent-shadow);
+}
+
+.perk-item .text {
+    text-align: center;
+}
+
+.perk-item .text h2 {
+    margin-bottom: 1rem;
+}
+
+.perk-item .text p {
+    opacity: 80%;
+}
+
+@media screen and (max-width: 800px) {
+    .perk-item {
+        flex: 1 1 100%;
+        gap: 1.5rem;
+    }
+}

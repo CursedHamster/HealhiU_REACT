@@ -1,0 +1,10 @@
+.footer {
+    background: var(--hu-lighter);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.footer p {
+    color: var(--hu-green-black);
+    margin: 0;
+}

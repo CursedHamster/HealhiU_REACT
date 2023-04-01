@@ -1,0 +1,25 @@
+.test-result {
+    position: relative;
+    isolation: isolate;
+    background: var(--hu-light-gradient);
+}
+
+.test-result .green {
+    height: 100vh;
+    position: absolute;
+    bottom: 2%;
+    right: 5%;
+    transform: scaleY(-1) rotate(-5deg);
+    -webkit-transform: scaleY(-1) rotate(-5deg);
+    -moz-transform: scaleY(-1) rotate(-5deg);
+    -ms-transform: scaleY(-1) rotate(-5deg);
+    -o-transform: scaleY(-1) rotate(-5deg);
+    opacity: 0.7;
+    z-index: -1;
+}
+
+@media screen and (max-width: 600px) {
+    .test-result h1 {
+        text-align: center;
+    }
+}

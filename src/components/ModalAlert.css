@@ -1,0 +1,19 @@
+.modal-alert .modal-content {
+    --bs-modal-color: var(--hu-green-black);
+
+    border: none;
+    box-shadow: var(--hu-gray-shadow);
+}
+
+.modal-alert .modal-header {
+    gap: 2rem;
+    border: none;
+}
+
+.modal-alert .btn-close {
+    margin: 0;
+}
+
+.modal-alert .modal-footer {
+    border: none;
+}

@@ -1,0 +1,98 @@
+.hero-section {
+  min-height: 90vh;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  isolation: isolate;
+  color: var(--hu-black);
+  background: var(--hu-light-gradient);
+  gap: 2rem;
+}
+
+.hero-section .pointer {
+  position: absolute;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -ms-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -o-transform: matrix(-1, 0, 0, 1, 0, 0);
+  height: 110vh;
+  bottom: -15%;
+  left: -5%;
+}
+
+.hero-section p {
+  color: var(--hu-light-black);
+}
+
+.hero-section .left {
+  width: 40%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero-section .right {
+  width: 60%;
+  height: inherit;
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-section .img1 {
+  width: 100%;
+  transform: translateY(2rem);
+  -webkit-transform: translateY(2rem);
+  -moz-transform: translateY(2rem);
+  -ms-transform: translateY(2rem);
+  -o-transform: translateY(2rem);
+}
+
+.hero-section .img2 {
+  width: 100%;
+  position: absolute;
+  right: -2rem;
+  top: -2rem;
+  opacity: 90%;
+}
+
+.hero-section .img3 {
+  width: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: -1;
+}
+
+@media screen and (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+    gap: 3rem;
+  }
+
+  .hero-section .left {
+    width: 100%;
+  }
+
+  .hero-section .right {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .hero-section .left {
+    align-items: center;
+  }
+}

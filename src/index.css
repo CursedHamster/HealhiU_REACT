@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+:root {
+  --hu-primary: #5B895A;
+  --hu-primary-sheer: #5b895a94;
+  --hu-darker: #416d40;
+  --hu-lighter: #D3E9BE;
+  --hu-lighter-sheer: #d3e9bedc;
+  --hu-back-logo: #e7efde;
+  --hu-lightest: #f4f8ef;
+  --hu-lightest-gray: #c1cfb5;
+  --hu-accent-green: #6DA33A;
+  --hu-green: #2EAD61;
+  --hu-accent-red: #ef533f;
+  --hu-dark-red: #ce3f2c;
+  --hu-attention: #c44e1f;
+  --hu-white: #FBFFFC;
+  --hu-black: #1A2424;
+  --hu-green-black: #072217;
+  --hu-light-gray: #EEF5F3;
+  --hu-gray: #d4d8d7ce;
+  --hu-light-black: #4a564d;
+  --hu-teal-dark: #244f48;
+  --hu-teal-sheer: #244f484e;
+  --hu-vibrant-green: #91F8A1;
+  --hu-vibrant-red: #ff9687;
+  --hu-vibrant-red-transparent: rgba(255, 151, 135, 0.352);
+  --hu-yellow-sheer: #fae0988e;
+  --hu-yellow-dark: #8f6e1b;
+  --hu-light-gradient: linear-gradient(270.52deg, rgba(18, 198, 133, 0.12) 18.87%, rgba(18, 198, 133, 0.0852) 99.55%);
+  --hu-light-shadow: 0px 0px 20px rgba(204, 255, 237, 0.44);
+  --hu-green-shadow: 0px 0px 20px rgba(46, 173, 97, .3);
+  --hu-accent-shadow: 0 8px 20px 1px #3aa36e27;
+  --hu-accent-message-shadow: 0 10px 20px 0 #709b4821;
+  --hu-accent-message-shadow-horisontal: 5px 0 20px 0 #709b4812;
+  --hu-gray-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.05);
+  --hu-light-gradient: radial-gradient(circle at 100% 100%, #E5FFEF 0%, #FFFFFF 50%);
+  --hu-ball-gradient: radial-gradient(circle at 50% 20%, #6A965A 0%, #244F48 60%);
+  --hu-ball-green-gradient: radial-gradient(circle at 20%, #a7e2b7e7 0%, #163e2c);
+  --hu-ball-transparent-gradient: radial-gradient(circle, #cee4cc 0%, #bfdbbc53 100%);
+  --hu-card-gradient:
+    radial-gradient(circle at 20%, #578348dc, transparent),
+    radial-gradient(circle at top right, #244f48e0, transparent),
+    radial-gradient(circle at bottom, #25a2b8df, transparent);
+  --section-padding-horisontal: 10vw;
+  --section-padding-vertical: 15vh;
+  --bs-border-color: var(--hu-light-black);
+
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: var(--hu-green-black);
+  background-color: var(--hu-white);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  font-family: "Mulish";
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  width: 100%;
+  overflow-x: hidden;
+  padding: 0 !important;
+}
+
+:root *::-webkit-scrollbar {
+  width: .7rem;
+}
+
+:root *::-webkit-scrollbar-track {
+  background: white;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+:root *::-webkit-scrollbar-thumb {
+  background: var(--hu-gray);
+  outline: none;
+  border-radius: 2rem;
+  -webkit-border-radius: 2rem;
+  -moz-border-radius: 2rem;
+  -ms-border-radius: 2rem;
+  -o-border-radius: 2rem;
+}
+
+@media screen and (max-width: 600px) {
+  :root {
+    --section-padding-horisontal: 5vw;
+    --section-padding-vertical: 7rem;
+
+    font-size: .8rem;
+  }
+}

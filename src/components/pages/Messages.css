@@ -1,0 +1,216 @@
+.messages-page {
+  --messages-height: 80vh;
+  --messages-padding-horisontal: 2rem;
+  --messages-padding-vertical: 1rem;
+  --text-blob-size: 1.5em;
+
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+}
+
+.messages {
+  box-shadow: 0 2px 10px 1px rgb(0 0 0 / 5%), 0 0 2px 0px rgb(0 0 0 / 10%);
+}
+
+.messages-nav-container {
+  background: white;
+  height: var(--messages-height);
+  box-shadow: var(--hu-accent-message-shadow-horisontal);
+  z-index: 3;
+}
+
+.open-nav .messages-nav-container {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.messages-nav-header {
+  padding: var(--messages-padding-vertical) var(--messages-padding-horisontal);
+}
+
+.open-nav .messages-nav-header {
+  align-self: flex-end;
+}
+
+.messages-nav-header i {
+  color: var(--hu-primary);
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.messages-nav-container .button {
+  display: none;
+  width: 90%;
+}
+
+.open-nav .messages-nav-container .button {
+  display: inline-block;
+}
+
+.messages-nav-chats {
+  display: none;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.open-nav .messages-nav-chats {
+  display: block;
+}
+
+.messages-nav-chats .chat {
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  color: var(--hu-green-black);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.messages-nav-chats .chat.active {
+  background: var(--hu-lightest);
+}
+
+.messages-nav-chats .chat p {
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+.messages-nav-chats .chat .unread-tag {
+  color: var(--hu-darker);
+  font-weight: bold;
+  background: var(--hu-back-logo);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  line-height: 1.5rem;
+  flex-shrink: 0;
+  font-size: 0.7em;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.messages-container {
+  flex: 1;
+  display: flex;
+  background: var(--hu-lightest);
+  height: var(--messages-height);
+  justify-content: flex-end;
+}
+
+.messages .text-box-container {
+  flex: 1;
+  height: 100%;
+}
+
+.messages-container .companion {
+  padding: var(--messages-padding-vertical) var(--messages-padding-horisontal);
+  background: white;
+  color: var(--hu-green-black);
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.messages .companion b {
+  color: var(--hu-darker);
+}
+
+.messages .text-boxes {
+  flex: 1;
+  padding: var(--messages-padding-vertical) var(--messages-padding-horisontal);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 1rem;
+  background: url("logo_translucent.svg");
+  background-repeat: space;
+  scroll-behavior: smooth;
+}
+
+.messages .text-input-container {
+  position: relative;
+}
+
+.messages .text-input {
+  display: block;
+  background: white;
+  border: none;
+  max-width: 100%;
+  width: 100%;
+  resize: none;
+  padding: var(--messages-padding-vertical) var(--messages-padding-horisontal);
+  padding-right: calc(
+    var(--messages-padding-horisontal) + var(--text-blob-size) + 0.7rem
+  );
+  color: var(--hu-green-black);
+}
+
+.messages .text-input:focus {
+  outline: none;
+}
+
+.messages .text-input::placeholder {
+  color: var(--hu-primary-sheer);
+}
+
+.messages .text-blob {
+  position: absolute;
+  right: var(--messages-padding-horisontal);
+  width: var(--text-blob-size);
+  height: fit-content;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--hu-primary);
+  font-size: 2em;
+  background-size: 200%;
+  background-position: 50% 100%;
+  transition: all 0.1s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+}
+
+.messages .text-blob:active {
+  color: var(--hu-accent-green);
+}
+
+@media screen and (max-width: 1050px) {
+  .open-nav .messages-nav-container {
+    width: 30vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .messages {
+    --messages-padding-horisontal: 1rem;
+    --messages-padding-vertical: 0.7rem;
+  }
+
+  .open-nav .messages-nav-container {
+    flex: 1;
+    width: 100%;
+    border-right: none;
+  }
+
+  .open-nav .messages-container {
+    display: none;
+  }
+}

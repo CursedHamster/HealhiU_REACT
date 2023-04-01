@@ -1,0 +1,188 @@
+.card-section {
+    position: relative;
+    isolation: isolate;
+    gap: 5rem;
+    height: fit-content;
+}
+
+.card-container {
+    position: relative;
+    isolation: isolate;
+}
+
+.ball-1 {
+    width: 10vw;
+    bottom: -4vw;
+    left: -7vw;
+    z-index: 2;
+}
+
+.ball-2 {
+    width: 7vw;
+    bottom: -4.5vw;
+    left: 4vw;
+    z-index: 2;
+}
+
+.ball-3 {
+    width: 25%;
+    top: calc(var(--section-padding-vertical) / 1.5 * -1);
+    right: 10%;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.ball-4 {
+    width: 20%;
+    top: 10%;
+    right: -8%;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.card-shadow {
+    position: absolute;
+    width: 80%;
+    height: var(--section-padding-vertical);
+    border-radius: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: calc(var(--section-padding-vertical) / 4 * -1);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    background: var(--hu-green);
+    filter: blur(10px);
+    -webkit-filter: blur(50px);
+    opacity: 0.5;
+}
+
+.card-section .green {
+    height: 70%;
+    position: absolute;
+    z-index: -1;
+}
+
+.green-1 {
+    top: 2%;
+    left: -5%;
+    transform: scaleX(-1) rotate(-20deg);
+    -webkit-transform: scaleX(-1) rotate(-20deg);
+    -moz-transform: scaleX(-1) rotate(-20deg);
+    -ms-transform: scaleX(-1) rotate(-20deg);
+    -o-transform: scaleX(-1) rotate(-20deg);
+}
+
+.green-2 {
+    bottom: 2%;
+    right: -5%;
+    transform: scaleX(-1) rotate(150deg);
+    -webkit-transform: scaleX(-1) rotate(150deg);
+    -moz-transform: scaleX(-1) rotate(150deg);
+    -ms-transform: scaleX(-1) rotate(150deg);
+    -o-transform: scaleX(-1) rotate(150deg);
+}
+
+.card-buttons {
+    width: calc(100% + 5rem);
+    left: -2.5rem;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.confession-container {
+    flex: 0 0 35%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.confession-container .photo {
+    width: 8rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.confession-container h2 {
+    color: var(--hu-green-black);
+}
+
+.confession-container .quote {
+    position: relative;
+    isolation: isolate;
+}
+
+.confession-container .bi-quote {
+    font-size: 3rem;
+    color: var(--hu-lighter);
+    position: absolute;
+    z-index: -1;
+}
+
+.confession-container .quote-1 {
+    top: -2rem;
+    left: 2%;
+}
+
+.confession-container .quote-2 {
+    top: -2rem;
+    right: 2%;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+}
+
+.confession-container p {
+    font-style: italic;
+    font-size: 1.5em;
+}
+
+@media screen and (max-width: 1200px) {
+    .card-section .green {
+        opacity: 0.1;
+    }
+
+    .card-section {
+        flex-direction: column-reverse;
+        gap: 2rem;
+    }
+
+    .card-section .ball {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .card-section {
+        flex-direction: column-reverse;
+        gap: 4rem;
+    }
+
+    .card-buttons {
+        width: 100%;
+        top: unset;
+        left: unset;
+        top: -3rem;
+        bottom: unset;
+        margin: unset;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 30%;
+    }
+}

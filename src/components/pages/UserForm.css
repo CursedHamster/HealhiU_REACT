@@ -1,0 +1,122 @@
+.sign-container a {
+    color: var(--hu-teal-dark);
+}
+
+.sign-container a:hover {
+    color: var(--hu-primary);
+}
+
+.sign-container .sides {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.sign-container .sign-form {
+    flex: 1 0 60%;
+    margin-top: 2rem;
+}
+
+.sign-container .col-form-label {
+    flex: 0 0 20%;
+}
+
+.sign-container div.col {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sign-container div.col i {
+    cursor: pointer;
+    color: var(--bs-border-color);
+}
+
+.sign-container .input-group-text {
+    background: var(--hu-light-gray);
+}
+
+.sign-container .btn-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sign-container .btn-container p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.sign-container .info {
+    padding: 1rem 2rem;
+    padding-right: 0;
+    border-left: 2px solid var(--hu-lighter);
+    color: var(--hu-light-black);
+}
+
+.sign-form .row {
+    position: relative;
+}
+
+.sign-form .invalid-tooltip {
+    top: 80%;
+    right: -2vw;
+    z-index: 10;
+    display: inline-block;
+}
+
+.error-text {
+    display: none;
+    background: var(--hu-vibrant-red-transparent);
+    color: var(--hu-dark-red);
+    margin-top: 2rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem;
+}
+
+.error-text.s-200, .valid .error-text {
+    background: var(--hu-lighter-sheer);
+    color: var(--hu-darker);
+}
+
+.error-text.s-400 {
+    background: var(--hu-yellow-sheer);
+    color: var(--hu-yellow-dark);
+}
+
+.invalid .error-text, .valid .error-text {
+    display: block;
+}
+
+@media screen and (max-width: 1200px) {
+    .sign-container.section-padding.vertical {
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+    }
+
+    .sign-container .info {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .sign-container h1 {
+        text-align: center;
+    }
+
+    .sign-container div.row {
+        flex-direction: column;
+    }
+
+    .sign-container .btn-container {
+        justify-content: center;
+        flex-direction: column;
+    }
+}

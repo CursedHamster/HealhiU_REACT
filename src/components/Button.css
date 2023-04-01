@@ -1,0 +1,212 @@
+.button {
+    padding: 0.5em 2em;
+    color: black;
+    background: none;
+    border-radius: 3em;
+    -webkit-border-radius: 3em;
+    -moz-border-radius: 3em;
+    -ms-border-radius: 3em;
+    -o-border-radius: 3em;
+    border: 3px solid transparent;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.button.full {
+    width: 100%;
+}
+
+.button.solid {
+    background: var(--hu-primary);
+    border-color: var(--hu-primary);
+    color: var(--hu-white);
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+}
+
+.button.outline {
+    border-color: var(--hu-primary);
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+}
+
+.button.cta {
+    background: var(--hu-accent-green);
+    color: var(--hu-white);
+    font-weight: 500;
+}
+
+.button.icon {
+    background: var(--hu-ball-transparent-gradient);
+    width: 4rem;
+    padding: 0;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    color: var(--hu-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(1px);
+}
+
+.button.solid:hover {
+    background: var(--hu-darker);
+    border-color: var(--hu-darker);
+}
+
+.button.outline:hover {
+    border-color: var(--hu-darker);
+}
+
+/* .button.cta:hover {
+    box-shadow: var(--hu-accent-shadow);
+} */
+
+.button:hover .bi-arrow-right {
+    animation: iconAnimMove 1s infinite ease-in-out;
+    -webkit-animation: iconAnimMove 1s infinite ease-in-out;
+}
+
+.button:hover .bi-gear-fill {
+    animation: iconAnimSpin 2s infinite ease-in-out;
+    -webkit-animation: iconAnimSpin 2s infinite ease-in-out;
+}
+
+.button:hover .bi-envelope-plus-fill {
+    animation: iconAnimJump 1s infinite ease-in-out;
+    -webkit-animation: iconAnimJump 1s infinite ease-in-out;
+}
+
+.button.cta:active {
+    background: var(--hu-darker);
+    border-color: var(--hu-darker);
+}
+
+.button.icon:active {
+    box-shadow: var(--hu-light-shadow);
+}
+
+.button.medium {
+    font-size: 1.25em;
+}
+
+.button.large {
+    font-size: 1.75em;
+}
+
+@-webkit-keyframes iconAnimMove {
+    0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(20%);
+        -webkit-transform: translateX(20%);
+        -moz-transform: translateX(20%);
+        -ms-transform: translateX(20%);
+        -o-transform: translateX(20%);
+    }
+
+    50% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+}
+
+@keyframes iconAnimMove {
+    0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(10%);
+        -webkit-transform: translateX(10%);
+        -moz-transform: translateX(10%);
+        -ms-transform: translateX(10%);
+        -o-transform: translateX(10%);
+    }
+
+    50% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+}
+
+@keyframes iconAnimSpin {
+    0% {
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+    }
+}
+
+@keyframes iconAnimJump {
+    0% {
+        transform: translateY(0);
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-10%);
+        -webkit-transform: translateY(-10%);
+        -moz-transform: translateY(-10%);
+        -ms-transform: translateY(-10%);
+        -o-transform: translateY(-10%);
+    }
+
+    50% {
+        transform: translateY(0);
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .button {
+        padding: 0.5em 1em;
+        width: 100%;
+    }
+}

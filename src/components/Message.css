@@ -1,0 +1,76 @@
+.message {
+    max-width: 55%;
+    min-width: 30%;
+    width: fit-content;
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem;
+    animation: messageAppear .5s ease-out;
+    -webkit-animation: messageAppear .5s ease-out;
+}
+
+.message.receiver {
+    background: white;
+}
+
+.message.sender {
+    background: var(--hu-lighter-sheer);
+    align-self: flex-end;
+}
+
+.message .text {
+    color: var(--hu-green-black);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.message .additional {
+    margin-top: .5rem;
+    color: var(--hu-primary-sheer);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .5rem;
+}
+
+.message .time {
+    font-size: .9em;
+}
+
+.message .additional i {
+    font-size: 1.3em;
+}
+
+@keyframes messageAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(-10%);
+        -webkit-transform: translateY(-10%);
+        -moz-transform: translateY(-10%);
+        -ms-transform: translateY(-10%);
+        -o-transform: translateY(-10%);
+}
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+        -webkit-transform: translateY(0%);
+        -moz-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+        -o-transform: translateY(0%);
+}
+}
+
+@media screen and (max-width: 900px) {
+    .message {
+        max-width: 80%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .message {
+        max-width: 100%;
+    }
+}
