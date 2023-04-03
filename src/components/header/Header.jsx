@@ -4,6 +4,7 @@ import { Context } from "../../Context";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAlert from "../ModalAlert";
+import logo from "/logo.svg";
 
 function Header() {
   const context = useContext(Context);
@@ -97,7 +98,7 @@ function Header() {
         <Container>
           <div className="logo-and-language">
             <Link className="navbar-brand" to="/">
-              <img src="logo.svg" className="logo" /> HealthiU
+              <img src={logo} className="logo" /> HealthiU
             </Link>
             <div className="language">
               <p

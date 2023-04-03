@@ -81,6 +81,11 @@
     -webkit-animation: iconAnimMove 1s infinite ease-in-out;
 }
 
+.button:hover .bi-arrow-left {
+    animation: iconAnimMoveLeft 1s infinite ease-in-out;
+    -webkit-animation: iconAnimMoveLeft 1s infinite ease-in-out;
+}
+
 .button:hover .bi-gear-fill {
     animation: iconAnimSpin 2s infinite ease-in-out;
     -webkit-animation: iconAnimSpin 2s infinite ease-in-out;
@@ -89,6 +94,11 @@
 .button:hover .bi-envelope-plus-fill {
     animation: iconAnimJump 1s infinite ease-in-out;
     -webkit-animation: iconAnimJump 1s infinite ease-in-out;
+}
+
+.button:hover .bi-sd-card {
+    animation: iconAnimSave 1s infinite ease-in-out;
+    -webkit-animation: iconAnimSave 1s infinite ease-in-out;
 }
 
 .button.cta:active {
@@ -160,6 +170,32 @@
     }
 }
 
+@keyframes iconAnimMoveLeft {
+    0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10%);
+        -webkit-transform: translateX(-10%);
+        -moz-transform: translateX(-10%);
+        -ms-transform: translateX(-10%);
+        -o-transform: translateX(-10%);
+    }
+
+    50% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+}
+
 @keyframes iconAnimSpin {
     0% {
         transform: rotate(0);
@@ -201,6 +237,32 @@
         -moz-transform: translateY(0);
         -ms-transform: translateY(0);
         -o-transform: translateY(0);
+    }
+}
+
+@keyframes iconAnimSave {
+    0% {
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+    }
+
+    40% {
+        transform: rotate(20deg);
+        -webkit-transform: rotate(20deg);
+        -moz-transform: rotate(20deg);
+        -ms-transform: rotate(20deg);
+        -o-transform: rotate(20deg);
+    }
+
+    80% {
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
     }
 }
 

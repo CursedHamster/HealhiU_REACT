@@ -10,6 +10,22 @@
     isolation: isolate;
 }
 
+.card-container .button-right {
+    position: absolute;
+    right: -2.5rem;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.card-container .button-left {
+    position: absolute;
+    left: -2.5rem;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
 .ball-1 {
     width: 10vw;
     bottom: -4vw;

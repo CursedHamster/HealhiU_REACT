@@ -57,7 +57,7 @@ function HeroSection() {
         </Link>
       </div>
       <div className="right images">
-        <img className="img3" src="food3.jpg" ref={foodRef} />
+        <img className="img3" src="food/food3.jpg" ref={foodRef} />
         <img className="img1" src="wreath.png" ref={wreathRef} />
         <img className="img2" src="leaves.png" ref={leavesRef} />
       </div>

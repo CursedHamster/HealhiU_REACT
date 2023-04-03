@@ -82,14 +82,14 @@ export default {
       cards: [
         {
           person: {
-            photoUrl: "person-1.jpg",
+            photoUrl: "confessions/person-1.jpg",
             name: "Оксана Петровська",
             quote:
               "Мені дуже сподобався тест. Завдяки ньому я здобула впевненість в своєму тілі",
           },
           card: {
             bmi: 23.4,
-            result: "normal",
+            testResult: "normal",
             goodProducts: "dietOLose",
             badProducts: "dietOStopGain",
             calories: {
@@ -99,14 +99,14 @@ export default {
         },
         {
           person: {
-            photoUrl: "person-2.jpg",
+            photoUrl: "confessions/person-2.jpg",
             name: "Олег Нагірняк",
             quote:
               "Дякую! Я хотів трохи підкачатись і консультація мені дійсно допомогла",
           },
           card: {
             bmi: 20.6,
-            result: "normal",
+            testResult: "normal",
             goodProducts: "dietALose",
             badProducts: "dietAStopGain",
             calories: {
@@ -116,14 +116,14 @@ export default {
         },
         {
           person: {
-            photoUrl: "person-3.jpg",
+            photoUrl: "confessions/person-3.jpg",
             name: "Анна Кітик",
             quote:
               "Останні кілька місяців я почувалась не дуже добре, тепер знаю чому. Дякую!",
           },
           card: {
             bmi: 15.6,
-            result: "underweight",
+            testResult: "underweight",
             goodProducts: "dietOGain",
             badProducts: "dietOStopLose",
             calories: {
@@ -193,6 +193,7 @@ export default {
     },
     profile: {
       title: "Мій профіль",
+      noUser: "Користувача не існує",
       inputs: {
         inputLabels: {
           loginLabel: "Логін",
@@ -201,6 +202,7 @@ export default {
           passwordLabel: "Пароль",
           confirmPasswordLabel: "Повторіть пароль",
           dateOfBirthLabel: "Дата народження",
+          roleLabel: "Роль",
         },
         inputPlaceholders: {
           loginPlaceholder: "login0123",
@@ -209,7 +211,9 @@ export default {
         },
       },
       cta: "Зберегти зміни",
+      goBack: "Повернутись назад",
       showTestResult: "Показати результат тесту",
+      noResultText: "Збереженого результату тесту немає",
       closeTestResult: "Закрити",
       info: (
         <>
@@ -317,6 +321,17 @@ export default {
     testResult: {
       title: "Висновок за результатами тесту",
       goToHome: "На головну сторінку",
+      saveButton: "Зберегти результат тесту",
+      modalText: {
+        title: "Ви впевнені, що хочете зберегти результат?",
+        text: "Якщо Ви вже маєте збережений результат, його буде видалено",
+        noButton: "Закрити",
+        yesButton: "Так, зберегти",
+      },
+      messageText: {
+        200: "Результат було збережено в профілі",
+        400: "Результат не було збережено",
+      },
     },
     resultCard: {
       bmiLabel: "ІМТ",
@@ -330,7 +345,7 @@ export default {
         extremelyObese:
           "У Вас ожиріння 2-го ступеню. Будь ласка, проконсультуйтеся зі своїм лікарем і якомога швидше " +
           "почніть лікування.",
-        morbidly_obese:
+        morbidlyObese:
           "У Вас ожиріння 3-го ступеню. Це смертельно небезпечно. Зараз для Вас важливо якнайшвидше зв'язатися " +
           "з лікарем, щоб запобігти серйозним наслідкам.",
       },
@@ -428,6 +443,20 @@ export default {
           "Для набирання 1 кг за тиждень Вам потрібно стільки калорій в день: ",
       },
     },
+    testCard: {
+      genderLabel: "Стать",
+      ageLabel: "Вік",
+      heightLabel: "Ріст",
+      weightLabel: "Вага",
+      chestSizeLabel: "Обхват грудей",
+      waistSizeLabel: "Обхват талії",
+      hipSizeLabel: "Обхват стегон",
+      bloodTypeLabel: "Група крові",
+      genderText: {
+        MALE: "Чоловік",
+        FEMALE: "Жінка",
+      },
+    },
     test: {
       back: "Назад",
       next: "Далі",
@@ -436,8 +465,7 @@ export default {
         {
           name: "gender",
           id: 1,
-          imgUrl:
-            "https://www.idi.no/images/Joomla_Featured_Images_for_blog_posts_3.jpg",
+          imgUrl: "test/test_1.jpg",
           title: "Вкажіть свою стать",
           description:
             "Потрібно ввести свою біологічну стать (яка була записана у Вашому свідоцтві про народження), з усією повагою до небінарних користувачів.",
@@ -456,8 +484,7 @@ export default {
         {
           name: "age",
           id: 2,
-          imgUrl:
-            "https://www.sciencenews.org/wp-content/uploads/2015/12/122615_4_feat.jpg",
+          imgUrl: "test/test_2.jpg",
           title: "Вкажіть свій вік",
           description:
             "Для проходження тесту необхідно бути старшим за 14 років. Це вимога, яка існує через формули для розрахунків, що не підходять для дітей.",
@@ -470,8 +497,7 @@ export default {
         {
           name: "height",
           id: 3,
-          imgUrl:
-            "https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321132_2200-1200x628.jpg",
+          imgUrl: "test/test_3.jpg",
           title: "Вкажіть свій ріст (в сантиметрах, см)",
           description:
             "Деякі загальні правила вимірювання зросту: вимірювання повинно проводитися без взуття, взуття може вплинути на точність вимірювання; вимірювати зріст потрібно на рівній поверхні, наприклад, на підлозі чи спеціальній мітці; людина повинна стояти прямо, з головою, спиною та стопами прилягаючими до стіни. Частини тіла, такі як п'яти, сильно згинати не потрібно; міркувати потрібно від верхівки голови до п'ят.",
@@ -484,8 +510,7 @@ export default {
         {
           name: "weight",
           id: 4,
-          imgUrl:
-            "https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/12/03/13/weighing-scales.jpg?quality=75&width=1200&auto=webp",
+          imgUrl: "test/test_4.jpg",
           title: "Вкажіть свою вагу (в кілограмах, кг)",
           description:
             "Щоб правильно виміряти свою вагу, треба виконати кілька простих дій: будьте обережні й рівномірно розподіляйте свою вагу на ноги обох ніг, щоб отримати точний результат; рекомендується зважуватися зранку, до прийому їжі.",
@@ -498,8 +523,7 @@ export default {
         {
           name: "chestSize",
           id: 5,
-          imgUrl:
-            "https://issbpsychologist.com/wp-content/uploads/2021/03/chest-measure.jpg",
+          imgUrl: "test/test_5.jpg",
           title: "Вкажіть обхват грудей (в сантиметрах, см)",
           description:
             "Щоб виміряти обхват грудей, потрібно виконати наступні кроки: візьміть стрічку для вимірювання і встаньте перед дзеркалом з прямою поставою; обгорніть стрічку навколо грудей в найширшій частині; впевніться, що стрічка не занадто тісна або занадто вільна.",
@@ -512,8 +536,7 @@ export default {
         {
           name: "waistSize",
           id: 6,
-          imgUrl:
-            "https://www.yorkshireeveningpost.co.uk/images-i.jpimedia.uk/imagefetch/https://jpgreatcontent.co.uk/wp-content/uploads/2022/04/AdobeStock_442423267.jpeg?width=2048&enable=upscale",
+          imgUrl: "test/test_6.jpg",
           title: "Вкажіть обхват талії (в сантиметрах, см)",
           description:
             "Вимірювання обхвату талії - це процес вимірювання довжини навколо найвужчої частини живота.",
@@ -526,8 +549,7 @@ export default {
         {
           name: "hipSize",
           id: 7,
-          imgUrl:
-            "https://www.verywellfit.com/thmb/zFwaBybHXLH9WgDS1501kliNOHE=/2000x1125/smart/filters:no_upscale()/GettyImages-90199918-589535543df78caebc3dff41.jpg",
+          imgUrl: "test/test_7.jpg",
           title: "Вкажіть обхват стегон (в сантиметрах, см)",
           description:
             "Правильне місце під час вимірювання - це зазвичай найширша частина стегна, що знаходиться на відстані приблизно 20 см від талії.",
@@ -540,8 +562,7 @@ export default {
         {
           name: "bloodType",
           id: 8,
-          imgUrl:
-            "https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2020-07/z6OiJBamGI.jpg",
+          imgUrl: "test/test_8.jpg",
           title: "Вкажіть групу крові (О = 1, А = 2, В = 3, АВ = 4)",
           description:
             "Для визначення своєї групи крові потрібно провести клінічний аналіз крові: медичні лабораторії роблять спеціальні аналізи крові, щоб визначити групу крові. Цей метод є найточнішим і надійнішим.",
@@ -568,8 +589,13 @@ export default {
       ],
     },
     errorPage: {
-      title: "Помилка 404",
-      text: "Сторінку не знайдено або Ви не маєте права її переглядати.",
+      title: "Помилка",
+      error: {
+        400: "Неправильний запит. Ви намагаєтесь перейти на недоступну сторінку.",
+        401: "Ця сторінка не доступна неавторизованим користувачам.",
+        403: "У Вас немає прав переглядати цю сторінку.",
+        404: "Сторінку не знайдено.",
+      },
       cta: "На головну сторінку",
     },
     footer: (
@@ -667,14 +693,14 @@ export default {
       cards: [
         {
           person: {
-            photoUrl: "person-1.jpg",
+            photoUrl: "confessions/person-1.jpg",
             name: "Anne White",
             quote:
               "I liked this test very much. It helped me to appreciate my body",
           },
           card: {
             bmi: 23.4,
-            result: "normal",
+            testResult: "normal",
             goodProducts: "dietOLose",
             badProducts: "dietOStopGain",
             calories: {
@@ -684,14 +710,14 @@ export default {
         },
         {
           person: {
-            photoUrl: "person-2.jpg",
+            photoUrl: "confessions/person-2.jpg",
             name: "Oliver Smith",
             quote:
               "Thank you! I wanted to buff up a bit and consultation really helped me!",
           },
           card: {
             bmi: 20.6,
-            result: "normal",
+            testResult: "normal",
             goodProducts: "dietALose",
             badProducts: "dietAStopGain",
             calories: {
@@ -701,14 +727,14 @@ export default {
         },
         {
           person: {
-            photoUrl: "person-3.jpg",
+            photoUrl: "confessions/person-3.jpg",
             name: "Diana Evans",
             quote:
               "I was feeling unwell for the last couple of months and now I know why. Thank you very much!",
           },
           card: {
             bmi: 15.6,
-            result: "underweight",
+            testResult: "underweight",
             goodProducts: "dietOGain",
             badProducts: "dietOStopLose",
             calories: {
@@ -778,6 +804,7 @@ export default {
     },
     profile: {
       title: "My Profile",
+      noUser: "User doesn't exist",
       inputs: {
         inputLabels: {
           loginLabel: "Login",
@@ -786,6 +813,7 @@ export default {
           passwordLabel: "Password",
           confirmPasswordLabel: "Confirm password",
           dateOfBirthLabel: "Date of birth",
+          roleLabel: "Role",
         },
         inputPlaceholders: {
           loginPlaceholder: "login0123",
@@ -794,7 +822,9 @@ export default {
         },
       },
       cta: "Save changes",
+      goBack: "Go back",
       showTestResult: "Show test result",
+      noResultText: "There is no saved test result",
       closeTestResult: "Close",
       info: (
         <>
@@ -902,6 +932,17 @@ export default {
     testResult: {
       title: "Result of the completed test",
       goToHome: "To the home page",
+      saveButton: "Save test result",
+      modalText: {
+        title: "Are you sure that you want to save result?",
+        text: "If you already have a result saved to your profile, it will be gone",
+        noButton: "Close",
+        yesButton: "Yes, save result",
+      },
+      messageText: {
+        200: "The result has been saved to your profile",
+        400: "The result hasn't been saved",
+      },
     },
     resultCard: {
       bmiLabel: "BMI",
@@ -1000,6 +1041,20 @@ export default {
           "To gain 1 kg by week you need to consume this much calories per day:",
       },
     },
+    testCard: {
+      genderLabel: "Gender",
+      ageLabel: "Age",
+      heightLabel: "Height",
+      weightLabel: "Weight",
+      chestSizeLabel: "Chest size",
+      waistSizeLabel: "Waist size",
+      hipSizeLabel: "Hip size",
+      bloodTypeLabel: "bloodType",
+      genderText: {
+        MALE: "Male",
+        FEMALE: "Female",
+      },
+    },
     test: {
       back: "Back",
       next: "Next",
@@ -1008,8 +1063,7 @@ export default {
         {
           name: "gender",
           id: 1,
-          imgUrl:
-            "https://www.idi.no/images/Joomla_Featured_Images_for_blog_posts_3.jpg",
+          imgUrl: "test/test_1.jpg",
           title: "Choose your gender",
           description:
             "It is necessary to choose your biological gender (what was recorded in your birth certificate), with all due respect to non-binary users.",
@@ -1028,8 +1082,7 @@ export default {
         {
           name: "age",
           id: 2,
-          imgUrl:
-            "https://www.sciencenews.org/wp-content/uploads/2015/12/122615_4_feat.jpg",
+          imgUrl: "test/test_2.jpg",
           title: "Enter your age",
           description:
             "To use this test it is necessary to be 14 y.o. or older. Calculator can not be used by children.",
@@ -1042,8 +1095,7 @@ export default {
         {
           name: "height",
           id: 3,
-          imgUrl:
-            "https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321132_2200-1200x628.jpg",
+          imgUrl: "test/test_3.jpg",
           title: "Enter your height (in centimeters, cm)",
           description:
             "Some general rules for height measurement: measurement must be held without shoes, shoes can influence precision of measurement; to measure height it is necessary to stand on flat surface, for example on the floor; a person must stand straight, with head, back and feet adjacent to walls; measure from top of the head to bottom of the heel.",
@@ -1056,8 +1108,7 @@ export default {
         {
           name: "weight",
           id: 4,
-          imgUrl:
-            "https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/12/03/13/weighing-scales.jpg?quality=75&width=1200&auto=webp",
+          imgUrl: "test/test_4.jpg",
           title: "Enter your weight (in kilograms, kg)",
           description:
             "To properly measure your weight, you need to perform a few simple actions: be careful and evenly distribute your weight on both legs to get an accurate result; it is recommended to weigh yourself in the morning, before eating.",
@@ -1070,8 +1121,7 @@ export default {
         {
           name: "chestSize",
           id: 5,
-          imgUrl:
-            "https://issbpsychologist.com/wp-content/uploads/2021/03/chest-measure.jpg",
+          imgUrl: "test/test_5.jpg",
           title: "Enter your chest size (in centimeters, cm)",
           description:
             "To measure your chest circumference, you need to follow these steps: take a measuring tape and stand in front of a mirror with good posture; wrap the tape around the widest part of your chest; make sure that the tape is not too tight or too loose.",
@@ -1084,8 +1134,7 @@ export default {
         {
           name: "waistSize",
           id: 6,
-          imgUrl:
-            "https://www.yorkshireeveningpost.co.uk/images-i.jpimedia.uk/imagefetch/https://jpgreatcontent.co.uk/wp-content/uploads/2022/04/AdobeStock_442423267.jpeg?width=2048&enable=upscale",
+          imgUrl: "test/test_6.jpg",
           title: "Enter your waist size (in centimeters, cm)",
           description:
             "Measuring waist circumference is the process of measuring the length around the narrowest part of the abdomen.",
@@ -1098,8 +1147,7 @@ export default {
         {
           name: "hipSize",
           id: 7,
-          imgUrl:
-            "https://www.verywellfit.com/thmb/zFwaBybHXLH9WgDS1501kliNOHE=/2000x1125/smart/filters:no_upscale()/GettyImages-90199918-589535543df78caebc3dff41.jpg",
+          imgUrl: "test/test_7.jpg",
           title: "Enter your hips size (in centimeters, cm)",
           description:
             "Correct placement during measurement is usually the widest part of the thigh, located approximately 20 cm from the waist.",
@@ -1112,8 +1160,7 @@ export default {
         {
           name: "bloodType",
           id: 8,
-          imgUrl:
-            "https://loopnewslive.blob.core.windows.net/liveimage/sites/default/files/2020-07/z6OiJBamGI.jpg",
+          imgUrl: "test/test_8.jpg",
           title: "Choose your blood type (O = 1, A = 2, B = 3, AB = 4)",
           description:
             "To determine your blood type, a clinical blood analysis is required. Medical laboratories perform specialized blood tests to determine the blood type. This method is the most accurate and reliable.",
@@ -1140,8 +1187,13 @@ export default {
       ],
     },
     errorPage: {
-      title: "Error 404",
-      text: "The page you were looking for can't be found or you don't have the rights to view this page.",
+      title: "Error",
+      error: {
+        400: "Bad request. You are trying too access unavailable page.",
+        401: "This page is accessible only to authorized users.",
+        403: "You don't have the rights to view this page.",
+        404: "The page you were looking for can't be found.",
+      },
       cta: "To the home page",
     },
     footer: (

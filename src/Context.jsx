@@ -1,16 +1,14 @@
 import { useState, useEffect, createContext } from "react";
 import textData from "./assets/text";
-import testD from "./assets/testData";
 import getRandomColor from "./components/utils/getRandomColor";
 import api from "./components/config/axiosConfig";
-import { HttpStatusCode } from "axios";
 
 const Context = createContext();
 
 function ContextProvider(props) {
+  const [loaded, setLoaded] = useState(false);
   const [language, setLanguage] = useState("ukr");
   const [text, setText] = useState(textData.ukr);
-  const [testData, setTestData] = useState(testD);
   const [messages, setMessages] = useState([]);
   const languages = ["ukr", "eng"];
   const languageItemName = "language";
@@ -36,6 +34,8 @@ function ContextProvider(props) {
         username: authData.username,
         refreshToken: authData.refreshToken,
       });
+    } else {
+      setLoaded(true);
     }
   }, []);
 
@@ -54,7 +54,8 @@ function ContextProvider(props) {
     } else {
       if (user) {
         getRequested(user.login);
-        getChatrooms(user.login);
+        setLoaded(false);
+        getChatrooms(user.login).finally(() => setLoaded(true));
       }
     }
   }, [user]);
@@ -67,6 +68,7 @@ function ContextProvider(props) {
   }
 
   async function login(loginData) {
+    setLoaded(false);
     let errorText = null;
     await api
       .post("/api/auth/login", loginData)
@@ -78,12 +80,14 @@ function ContextProvider(props) {
         localStorage.setItem("auth", JSON.stringify(data));
         setUserData(data.username, data.token);
       })
-      .catch((error) => (errorText = true));
+      .catch((error) => (errorText = true))
+      .finally(() => setLoaded(true));
 
     return errorText;
   }
 
   async function renew(renewData) {
+    setLoaded(false);
     await api
       .post("/api/auth/renew", renewData)
       .then((res) => {
@@ -102,6 +106,7 @@ function ContextProvider(props) {
   async function register(registerData) {
     let errorText = null;
     if (!registerData.role) {
+      setLoaded(false);
       await api
         .post("/api/auth/register", registerData)
         .then((res) => {
@@ -112,7 +117,8 @@ function ContextProvider(props) {
           localStorage.setItem("auth", JSON.stringify(data));
           setUserData(data.username, data.token);
         })
-        .catch((error) => (errorText = true));
+        .catch((error) => (errorText = true))
+        .finally(() => setLoaded(true));
     } else {
       await api
         .post(
@@ -154,6 +160,16 @@ function ContextProvider(props) {
       .then((data) => setUser(data));
   }
 
+  function getUserProfile(login, setUser) {
+    setLoaded(false);
+    api
+      .get("/api/user/" + login)
+      .then((res) => res.data)
+      .then((data) => setUser(data))
+      .catch((error) => setUser(null))
+      .finally(() => setLoaded(true));
+  }
+
   function getRequested(login) {
     api
       .get("/api/chatroom/requested?login=" + login)
@@ -184,20 +200,24 @@ function ContextProvider(props) {
   }
 
   function getChatroomRequests() {
-    api.get("/api/admin-messages/requests").then((res) =>
-      setChatroomRequests(
-        res.data
-          ? res.data
-          : {
-              user: [],
-              doctor: [],
-            }
+    setLoaded(false);
+    api
+      .get("/api/admin-messages/requests")
+      .then((res) =>
+        setChatroomRequests(
+          res.data
+            ? res.data
+            : {
+                user: [],
+                doctor: [],
+              }
+        )
       )
-    );
+      .finally(() => setLoaded(true));
   }
 
-  function getChatrooms(login) {
-    api
+  async function getChatrooms(login) {
+    await api
       .get("/api/chatroom/chatrooms?login=" + login)
       .then((res) => res.data)
       .then((res) => setChatrooms(res));
@@ -276,14 +296,46 @@ function ContextProvider(props) {
     return updated;
   }
 
+  function getTestResult(testData, setResult) {
+    api
+      .post("/api/test/result", testData)
+      .then((res) => {
+        let data = res.data;
+        if (!data?.bmi) {
+          throw new Error("Invalid request");
+        }
+        setResult(data);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function saveTestResult(testData, login, setInfoMessage) {
+    api
+      .post("/api/test/result/save?login=" + login, testData)
+      .then((res) => {
+        if (!res?.data?.bmi) {
+          throw new Error("Invalid request");
+        }
+        setInfoMessage(res.status);
+      })
+      .catch((error) => setInfoMessage(error.response.status));
+  }
+
+  function showTestResultOfUser(login, setTestResult) {
+    api
+      .get("/api/test/result/show?login=" + login)
+      .then((res) => res.data)
+      .then((result) => setTestResult(result?.bmi ? result : null));
+  }
+
   return (
     <Context.Provider
       value={{
+        loaded,
         text,
         user,
         userType,
         userLogin: user?.login,
-        testData,
         getChatrooms,
         getMessages,
         messages,
@@ -297,11 +349,15 @@ function ContextProvider(props) {
         login,
         logout,
         changeUser,
+        getUserProfile,
         requested,
         requestChatroom,
         unrequestChatroom,
         chatroomRequests,
         chatrooms,
+        getTestResult,
+        saveTestResult,
+        showTestResultOfUser,
       }}
     >
       {props.children}

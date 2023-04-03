@@ -6,6 +6,7 @@ import { Form, Row, Col } from "react-bootstrap";
 import { Context } from "../../Context";
 import Button from "../Button";
 import ResultCard from "../ResultCard";
+import TestCard from "../TestCard";
 import PasswordInput from "../PasswordInput";
 import ModalAlert from "../ModalAlert";
 import { useFormik } from "formik";
@@ -13,20 +14,22 @@ import * as Yup from "yup";
 
 function Profile() {
   const context = useContext(Context);
-  const { userLogin = "", changeUser } = context;
+  const { userLogin = "", changeUser, showTestResultOfUser } = context;
   const contextUser = context.user;
   const { min, max, confirm, email } = context.text.validation;
-  const { resultInfo } = context.testData;
   const [infoMessage, setInfoMessage] = useState(null);
   const [user, setUser] = useState({
     email: "",
     name: "",
     dateOfBirth: "",
   });
+  const [result, setResult] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (contextUser) {
       setUser(contextUser);
+      showTestResultOfUser(contextUser.login, setResult);
     }
   }, [contextUser]);
 
@@ -40,6 +43,7 @@ function Profile() {
     info,
     cta,
     showTestResult,
+    noResultText,
     closeTestResult,
     modalText,
     messageText,
@@ -88,24 +92,40 @@ function Profile() {
     if (allow) {
       let error = changeUser({ ...formValues, login: userLogin });
       error.then((res) => {
-        setInfoMessage(res)
+        setInfoMessage(res);
       });
-      formik.setTouched({})
-      formik.setErrors({})
+      formik.setTouched({});
+      formik.setErrors({});
     }
   }
 
-  const handleClose = (e) => {
-    e.preventDefault();
+  const handleClose = () => {
     setShowResultCard(false);
   };
   const handleShow = (e) => {
     e.preventDefault();
     setShowResultCard(true);
+    setCurrentIndex(0);
   };
   const handleLoginInput = (e) => {
     e.preventDefault();
   };
+
+  function nextCard(index) {
+    if (index + 1 > 1) {
+      setCurrentIndex(0);
+    } else {
+      setCurrentIndex(1);
+    }
+  }
+
+  function prevCard(index) {
+    if (index - 1 < 0) {
+      setCurrentIndex(cardsData.length - 1);
+    } else {
+      setCurrentIndex((prevIndex) => prevIndex - 1);
+    }
+  }
 
   return (
     <>
@@ -235,7 +255,11 @@ function Profile() {
                 {showTestResult}
               </Button>
             </div>
-            <div className={"error-text " + (infoMessage ? "s-" + infoMessage : "")}>
+            <div
+              className={
+                "error-text " + (infoMessage ? "s-" + infoMessage : "")
+              }
+            >
               {messageText[infoMessage] ? messageText[infoMessage] : ""}
             </div>
           </Form>
@@ -251,7 +275,37 @@ function Profile() {
           {closeTestResult}
           <i className="bi bi-x"></i>
         </div>
-        <ResultCard cardType="type-d" resultInfo={resultInfo} />
+        {result ? (
+          <div className="card-container">
+            {currentIndex === 0 ? (
+              <>
+                <ResultCard cardType="type-d" resultInfo={result} />
+                <Button
+                  className="button-right"
+                  buttonStyle="icon"
+                  buttonSize="medium"
+                  onClick={() => nextCard(currentIndex)}
+                >
+                  <i className="bi bi-chevron-right"></i>
+                </Button>
+              </>
+            ) : (
+              <>
+                <TestCard testInfo={result} />
+                <Button
+                  className="button-left"
+                  buttonStyle="icon"
+                  buttonSize="medium"
+                  onClick={() => prevCard(currentIndex)}
+                >
+                  <i className="bi bi-chevron-left"></i>
+                </Button>
+              </>
+            )}
+          </div>
+        ) : (
+          <div className="no-result">{noResultText}</div>
+        )}
       </Modal>
       <ModalAlert
         show={show}

@@ -1,5 +1,10 @@
 .modal-backdrop {
-    background-color: var(--hu-light-gray);
+    background-color: var(--hu-light-gray-sheer);
+    backdrop-filter: blur(2px);
+}
+
+.modal-backdrop.show {
+    opacity: 100%;
 }
 
 .modal.profile-modal {
@@ -9,15 +14,18 @@
 }
 
 .profile-modal .modal-dialog {
-    max-width: unset;
-    margin: 0 calc(var(--section-padding-horisontal) / 2);
+    max-width: 100%;
     width: 100%;
+    margin: 0 calc(var(--section-padding-horisontal) / 2);
+    display: flex;
+    justify-content: center;
 }
 
 .profile-modal .modal-content {
     background: none;
     box-shadow: none;
     border: none;
+    width: 90%;
 }
 
 .profile-modal .modal-close {
@@ -31,6 +39,21 @@
 
 .profile-modal .modal-close i {
     font-size: 2em;
+}
+
+.profile-modal .no-result {
+    width: 100%;
+    text-align: center;
+    color: var(--hu-green-black); 
+    border: 1px solid var(--hu-darker);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem 2rem;
+    border-radius: .5rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem; 
 }
 
 @media screen and (max-width: 750px) {

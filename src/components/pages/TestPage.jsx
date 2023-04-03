@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../../Context";
 import "./TestPage.css";
 import Test from "../Test";
@@ -6,7 +7,11 @@ import Button from "../Button";
 
 function TestPage() {
   const context = useContext(Context);
+  const { getTestResult } = context;
   const { back, next, complete, questions } = context.text?.test;
+
+  const navigate = useNavigate();
+
   const questionsLength = questions?.length;
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [answers, setAnswers] = useState({
@@ -29,11 +34,12 @@ function TestPage() {
     hipSize: false,
     bloodType: false,
   });
+  const [result, setResult] = useState(null);
   const changeAnswered = (name, val) =>
     setAnswered((prev) => ({ ...prev, [name]: val }));
 
   const testPages = questions.map((question, i) => (
-    <>
+    <Fragment key={"test-pages-" + i}>
       {i !== 0 && <div className="page-breaker"></div>}
       <div
         className={
@@ -45,8 +51,14 @@ function TestPage() {
       >
         {question.id}
       </div>
-    </>
+    </Fragment>
   ));
+
+  useEffect(() => {
+    if (result) {
+      navigate("/test-result", { state: result });
+    }
+  }, [result]);
 
   function changeAnswers(name, newValue) {
     setAnswers((prev) => ({ ...prev, [name]: newValue }));
@@ -78,8 +90,7 @@ function TestPage() {
     }
 
     if (valid) {
-      window.location.href = "/test-result";
-      console.log(JSON.stringify(answers));
+      getTestResult(answers, setResult);
     }
   }
 

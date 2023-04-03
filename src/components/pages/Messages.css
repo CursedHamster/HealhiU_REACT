@@ -121,8 +121,18 @@
   font-size: 1.2em;
 }
 
-.messages .companion b {
+.messages .companion .companion-profile {
   color: var(--hu-darker);
+  font-weight: bold;
+  transition: color .2s ease-in-out;
+  -webkit-transition: color .2s ease-in-out;
+  -moz-transition: color .2s ease-in-out;
+  -ms-transition: color .2s ease-in-out;
+  -o-transition: color .2s ease-in-out;
+}
+
+.messages .companion .companion-profile:hover {
+  color: var(--hu-teal-dark);
 }
 
 .messages .text-boxes {

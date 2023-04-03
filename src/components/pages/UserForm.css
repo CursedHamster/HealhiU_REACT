@@ -68,33 +68,6 @@
     display: inline-block;
 }
 
-.error-text {
-    display: none;
-    background: var(--hu-vibrant-red-transparent);
-    color: var(--hu-dark-red);
-    margin-top: 2rem;
-    padding: .5rem 1rem;
-    border-radius: .5rem;
-    -webkit-border-radius: .5rem;
-    -moz-border-radius: .5rem;
-    -ms-border-radius: .5rem;
-    -o-border-radius: .5rem;
-}
-
-.error-text.s-200, .valid .error-text {
-    background: var(--hu-lighter-sheer);
-    color: var(--hu-darker);
-}
-
-.error-text.s-400 {
-    background: var(--hu-yellow-sheer);
-    color: var(--hu-yellow-dark);
-}
-
-.invalid .error-text, .valid .error-text {
-    display: block;
-}
-
 @media screen and (max-width: 1200px) {
     .sign-container.section-padding.vertical {
         padding-top: 7rem;

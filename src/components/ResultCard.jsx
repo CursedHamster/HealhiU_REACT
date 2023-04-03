@@ -16,9 +16,7 @@ function ResultCard(props) {
   const { maintain, lose05, lose1, gain05, gain1 } = caloriesVariants;
 
   const { cardType } = props;
-  const { bmi, result, goodProducts, badProducts, calories } = props.resultInfo
-    ? props.resultInfo
-    : props;
+  const { bmi, testResult, goodProducts, badProducts, calories } = props.resultInfo;
 
   const goodProductsItems = dietVariants[goodProducts].map((gProduct, i) => (
     <div key={"good-product-" + i} className="product w-100 d-flex">
@@ -41,7 +39,7 @@ function ResultCard(props) {
         <div className="left d-flex flex-column">
           <div className="bmi-cell w-100 d-flex">
             <h3>{bmiLabel}</h3>
-            <p className="cell">{bmi}</p>
+            <p className="cell">{bmi?.toFixed(2)}</p>
           </div>
           <div className="diet-cell w-100">
             <h3 className="vertical-heading">{dietLabel}</h3>
@@ -57,31 +55,31 @@ function ResultCard(props) {
             {calories.maintain && (
               <div className="calorie">
                 <p>{maintain}</p>
-                <p className="cell">{calories.maintain}</p>
+                <p className="cell">{calories?.maintain.toFixed(2)}</p>
               </div>
             )}
             {calories.lose05 && (
               <div className="calorie">
                 <p>{lose05}</p>
-                <p className="cell">{calories.lose05}</p>
+                <p className="cell">{calories?.lose05.toFixed(2)}</p>
               </div>
             )}
             {calories.lose1 && (
               <div className="calorie">
                 <p>{lose1}</p>
-                <p className="cell">{calories.lose1}</p>
+                <p className="cell">{calories?.lose1.toFixed(2)}</p>
               </div>
             )}
             {calories.gain05 && (
               <div className="calorie">
                 <p>{gain05}</p>
-                <p className="cell">{calories.gain05}</p>
+                <p className="cell">{calories?.gain05.toFixed(2)}</p>
               </div>
             )}
             {calories.gain1 && (
               <div className="calorie">
                 <p>{gain1}</p>
-                <p className="cell">{calories.gain1}</p>
+                <p className="cell">{calories?.gain1.toFixed(2)}</p>
               </div>
             )}
           </div>
@@ -90,7 +88,7 @@ function ResultCard(props) {
       {cardType && cardType === cardTypes[1] && (
         <div className="description-result w-100 d-flex flex-column">
           <h3>{resultLabel}</h3>
-          <p className="cell">{resultVariants[result]}</p>
+          <p className="cell">{resultVariants[testResult]}</p>
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./Messages.css";
 import { Context } from "../../Context";
 import Message from "../Message";
@@ -208,7 +209,7 @@ function Messages() {
   }
 
   function sendMessage() {
-    if (messageInput.trim().length > 0) {
+    if (chatroom && messageInput.trim().length > 0) {
       addNewMessage(
         {
           senderLogin: userLogin,
@@ -261,7 +262,13 @@ function Messages() {
           <h4 className="companion">
             {chatroom ? (
               <>
-                {titleWithLogin} <b>{getCompanionLogin(chatroom)}</b>
+                {titleWithLogin}{" "}
+                <Link
+                  className="companion-profile"
+                  to={"/profile/" + getCompanionLogin(chatroom)}
+                >
+                  {getCompanionLogin(chatroom)}
+                </Link>
               </>
             ) : (
               <>{titleWithoutLogin}</>

@@ -4,13 +4,14 @@ import "./ErrorPage.css";
 import { Context } from "../../Context";
 import Button from "../Button";
 
-function ErrorPage() {
+function ErrorPage(props) {
   const context = useContext(Context);
-  const { title, text, cta } = context.text.errorPage;
+  const { title, error, cta } = context.text.errorPage;
+  const { errorCode = 404 } = props;
   return (
     <div className="error-container section-padding vertical page-min-height d-flex flex-column">
-      <h1>{title}</h1>
-      <p>{text}</p>
+      <h1>{title + " " + errorCode}</h1>
+      <p>{error[errorCode]}</p>
       <Link to="/">
         <Button buttonStyle="cta" buttonSize="medium">
           {cta}
