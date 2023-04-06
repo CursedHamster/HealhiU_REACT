@@ -14,7 +14,12 @@ import * as Yup from "yup";
 
 function Profile() {
   const context = useContext(Context);
-  const { userLogin = "", changeUser, showTestResultOfUser } = context;
+  const {
+    userLogin = "",
+    changeUser,
+    showTestResultOfUser,
+    changeProfilePicture,
+  } = context;
   const contextUser = context.user;
   const { min, max, confirm, email } = context.text.validation;
   const [infoMessage, setInfoMessage] = useState(null);
@@ -22,13 +27,15 @@ function Profile() {
     email: "",
     name: "",
     dateOfBirth: "",
+    imgUrl: "/profile_image.png",
   });
+  const [profileImage, setProfileImage] = useState(null);
   const [result, setResult] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (contextUser) {
-      setUser(contextUser);
+      setUser((prev) => ({ ...prev, ...contextUser }));
       showTestResultOfUser(contextUser.login, setResult);
     }
   }, [contextUser]);
@@ -40,7 +47,6 @@ function Profile() {
   const {
     title,
     inputs,
-    info,
     cta,
     showTestResult,
     noResultText,
@@ -88,6 +94,19 @@ function Profile() {
     enableReinitialize: true,
   });
 
+  useEffect(() => {
+    if (profileImage) {
+      const formData = new FormData();
+      formData.append("file", profileImage);
+      console.log(formData)
+      changeProfilePicture(formData);
+    }
+  }, [profileImage]);
+
+  function handleUploadImage(e) {
+    setProfileImage(e.target.files[0]);
+  }
+
   function handleChangeUser(allow) {
     if (allow) {
       let error = changeUser({ ...formValues, login: userLogin });
@@ -129,7 +148,7 @@ function Profile() {
 
   return (
     <>
-      <div className="sign-container section-padding vertical">
+      <div className="profile sign-container section-padding vertical">
         <h1>{title}</h1>
         <div className="sides">
           <Form
@@ -263,7 +282,30 @@ function Profile() {
               {messageText[infoMessage] ? messageText[infoMessage] : ""}
             </div>
           </Form>
-          <p className="info">{info}</p>
+          <div className="profile-picture">
+            <img
+              src={
+                profileImage ? URL.createObjectURL(profileImage) : user.imgUrl
+              }
+            />
+            <Form.Group className="mb-3" controlId="imgFile">
+              <Form.Label className="button outline file-label" column>
+                Завантажити зображення...
+              </Form.Label>
+              <Form.Control
+                type="file"
+                name="imgFile"
+                className="file-input"
+                accept="image/png, image/jpeg"
+                onChange={handleUploadImage}
+              />
+              {formik.errors.name && (
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {formik.errors.name}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          </div>
         </div>
       </div>
       <Modal

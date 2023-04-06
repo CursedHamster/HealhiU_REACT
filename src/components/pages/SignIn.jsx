@@ -13,7 +13,8 @@ function SignIn() {
   const handleLogin = context.login;
   const { required, min, max, login } = context.text.validation;
 
-  const { title, inputs, info, cta, linkText, link, errorText } = context.text.signIn;
+  const { title, inputs, info, cta, linkText, link, errorText } =
+    context.text.signIn;
   const { loginLabel, passwordLabel } = inputs.inputLabels;
   const { loginPlaceholder } = inputs.inputPlaceholders;
 
@@ -40,12 +41,13 @@ function SignIn() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      let error = handleLogin({
-        username: values.login,
-        password: values.password,
-      });
-      error.then((res) =>
-        res ? setErrorMessage(res) : navigate("/profile")
+      handleLogin(
+        {
+          username: values.login,
+          password: values.password,
+        },
+        navigate,
+        setErrorMessage
       );
     },
   });

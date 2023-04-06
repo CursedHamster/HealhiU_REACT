@@ -1,0 +1,23 @@
+.verification-container {
+  align-items: center;
+  justify-content: center;
+  gap: 20%;
+}
+
+.verification-info {
+  gap: 2rem;
+  justify-content: center;
+}
+
+.verification-image {
+  max-width: 100%;
+  max-height: 30vh;
+}
+
+@media screen and (max-width: 600px) {
+  .verification-container {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+}

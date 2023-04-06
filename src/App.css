@@ -125,15 +125,16 @@ h4 {
   background: var(--hu-vibrant-red-transparent);
   color: var(--hu-dark-red);
   margin-top: 2rem;
-  padding: .5rem 1rem;
-  border-radius: .5rem;
-  -webkit-border-radius: .5rem;
-  -moz-border-radius: .5rem;
-  -ms-border-radius: .5rem;
-  -o-border-radius: .5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
 }
 
-.error-text.s-200, .valid .error-text {
+.error-text.s-200,
+.valid .error-text {
   background: var(--hu-lighter-sheer);
   color: var(--hu-darker);
 }
@@ -143,27 +144,34 @@ h4 {
   color: var(--hu-yellow-dark);
 }
 
-.invalid .error-text, .valid .error-text {
+.invalid .error-text,
+.valid .error-text {
   display: block;
 }
 
 .loading-container {
-  width: 100%;
+  position: fixed;
+  width: 100vw;
   height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: white;
+  z-index: 1003;
 }
 
 .loading-spinner {
   color: var(--hu-accent-green);
   width: 5rem;
   height: 5rem;
-  border-width: .4rem;
+  border-width: 0.4rem;
 }
 
 @media screen and (max-width: 600px) {
-
   #root input,
   #root select {
     padding: 1rem 2rem;

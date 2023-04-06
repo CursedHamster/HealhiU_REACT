@@ -75,8 +75,7 @@ function AdminRegistration() {
 
   function addNewUser(allow) {
     if (allow) {
-      let error = register(formValues);
-      error.then((res) => setInfoMessage({ error: res, success: !res }));
+      register(formValues, setInfoMessage);
     }
   }
 

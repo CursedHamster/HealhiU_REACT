@@ -164,7 +164,10 @@ export default {
           використання введених користувачем авторизаційних даних.
         </>
       ),
-      errorText: "Користувач з цим логіном чи поштою вже існує",
+      messageText: {
+        200: "Реєстрація успішна. Перевірте вказану електронну пошту для підтвердження. Поки пошту не буде підтверджено, Ви не зможете ввійти у свій профіль.",
+        403: "Користувач з цим логіном чи поштою вже існує",
+      },
     },
     signIn: {
       title: "Вхід",
@@ -598,6 +601,21 @@ export default {
       },
       cta: "На головну сторінку",
     },
+    verificationPage: {
+      title: "Верифікація профілю",
+      infoText: {
+        ok: "Ваш профіль активовано. Тепер ви можете ввійти в свій профіль",
+        bad: "Токен для верифікації неправильний або термін його придатності закінчився",
+      },
+      cta: {
+        ok: "Ввійти",
+        bad: "Зареєструватись",
+      },
+      image: {
+        ok: "/verification/email_happy.png",
+        bad: "/verification/email_sad.png",
+      },
+    },
     footer: (
       <>
         <b>©HealthiU 2023</b>. Всі права на матеріали що розміщені на сайті
@@ -775,7 +793,10 @@ export default {
           data to take place.
         </>
       ),
-      errorText: "User with this login or email already exists",
+      messageText: {
+        200: "Registration was successful. Check your email for confirmation. Unless the email is confirmed, you won't be able to sign in.",
+        403: "User with this login or email already exists",
+      },
     },
     signIn: {
       title: "Sign In",
@@ -1195,6 +1216,21 @@ export default {
         404: "The page you were looking for can't be found.",
       },
       cta: "To the home page",
+    },
+    verificationPage: {
+      title: "Profile Verification",
+      infoText: {
+        ok: "The profile has been activated. Now you can sign in",
+        bad: "Verification token is invalid or has expired",
+      },
+      cta: {
+        ok: "Sign In",
+        bad: "Sign Up",
+      },
+      image: {
+        ok: "/verification/email_happy.png",
+        bad: "/verification/email_sad.png",
+      },
     },
     footer: (
       <>

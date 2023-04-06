@@ -25,32 +25,38 @@ function AdminMessages() {
   });
   const [show, setShow] = useState(false);
 
-  const userListItems = chatroomRequests?.user.map((request, i) => (
-    <li
-      key={"userListItem" + i}
-      className="chat-list-item"
-      onClick={() => handleAddLogin(request.userLogin, "user")}
-    >
-      <div className="user">
-        <div className={"circle " + request.color}></div>
-        <p>{request.userLogin}</p>
-      </div>
-      <i className="bi bi-person-plus-fill"></i>
-    </li>
-  ));
-  const doctorListItems = chatroomRequests?.doctor.map((request, i) => (
-    <li
-      key={"userListItem" + i}
-      className="chat-list-item"
-      onClick={() => handleAddLogin(request.doctorLogin, "doctor")}
-    >
-      <div className="user">
-        <div className={"circle " + request.color}></div>
-        <p>{request.doctorLogin}</p>
-      </div>
-      <i className="bi bi-person-plus-fill"></i>
-    </li>
-  ));
+  const userListItems = chatroomRequests?.user.map((request, i) => {
+    const { user } = request;
+    return (
+      <li
+        key={"userListItem" + i}
+        className="chat-list-item"
+        onClick={() => handleAddLogin(user.login, "user")}
+      >
+        <div className="user">
+          <div className={"circle"}></div>
+          <p>{user.login}</p>
+        </div>
+        <i className="bi bi-person-plus-fill"></i>
+      </li>
+    );
+  });
+  const doctorListItems = chatroomRequests?.doctor.map((request, i) => {
+    const { doctor } = request;
+    return (
+      <li
+        key={"userListItem" + i}
+        className="chat-list-item"
+        onClick={() => handleAddLogin(doctor.login, "doctor")}
+      >
+        <div className="user">
+          <div className={"circle"}></div>
+          <p>{doctor.login}</p>
+        </div>
+        <i className="bi bi-person-plus-fill"></i>
+      </li>
+    );
+  });
 
   function handleAddLogin(login, type) {
     setInputData((prev) => ({ ...prev, [type]: login }));
@@ -68,15 +74,13 @@ function AdminMessages() {
 
   function handleNewChatroom(allow) {
     if (allow) {
-      let error = addNewChatroom({
-        user: chatroomRequests?.user.find(
-          (val) => val.userLogin === inputData.user
-        ),
-        doctor: chatroomRequests?.doctor.find(
-          (val) => val.doctorLogin === inputData.doctor
-        ),
-      });
-      error.then((res) => setInfoMessage({ error: res, success: !res }));
+      addNewChatroom(
+        {
+          user: inputData.user,
+          doctor: inputData.doctor,
+        },
+        setInfoMessage
+      );
       setInputData({ user: "", doctor: "" });
     }
   }

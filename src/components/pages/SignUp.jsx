@@ -13,10 +13,10 @@ function SignUp() {
   const { register } = context;
   const { required, min, max, confirm, email, login } = context.text.validation;
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [infoMessage, setInfoMessage] = useState(null);
   const navigate = useNavigate();
 
-  const { title, inputs, info, cta, linkText, link, errorText } = context.text.signUp;
+  const { title, inputs, info, cta, linkText, link, messageText } = context.text.signUp;
   const {
     loginLabel,
     emailLabel,
@@ -60,8 +60,7 @@ function SignUp() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      let error = register(values);
-      error.then((res) => res ? setErrorMessage(res) : navigate("/profile"))
+      register(values, setInfoMessage);
     },
   });
 
@@ -71,7 +70,7 @@ function SignUp() {
       <div className="sides">
         <Form
           action="post"
-          className={"sign-form" + (errorMessage ? " invalid" : "")}
+          className={"sign-form" + (infoMessage ? " invalid" : "")}
           noValidate
           onSubmit={formik.handleSubmit}
         >
@@ -199,7 +198,13 @@ function SignUp() {
               </Link>
             </p>
           </div>
-          <div className="error-text">{errorText}</div>
+          <div
+              className={
+                "error-text " + (infoMessage ? "s-" + infoMessage : "")
+              }
+            >
+              {messageText[infoMessage] ? messageText[infoMessage] : ""}
+            </div>
         </Form>
         <p className="info">{info}</p>
       </div>

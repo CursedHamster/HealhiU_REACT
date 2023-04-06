@@ -48,9 +48,7 @@ function Messages() {
 
   //functions to get chatroom information
   const getCompanionLogin = (chat) =>
-    userType === "USER" ? chat.doctorLogin : chat.userLogin;
-  const getCompanionColor = (chat) =>
-    userType === "USER" ? chat.doctorColor : chat.userColor;
+    userType === "USER" ? chat.doctor.login : chat.user.login;
 
   //get jsx chatroom list
   const chatItems = chatrooms.map((chat) => {
@@ -61,7 +59,7 @@ function Messages() {
         className={"chat" + (chat.id === chatroom?.id ? " active" : "")}
         onClick={() => setChatroom(chat)}
       >
-        <div className={"circle " + getCompanionColor(chat)}></div>
+        <div className={"circle"}></div>
         <p>{getCompanionLogin(chat)}</p>
         {unreadCount > 0 && (
           <div className="unread-tag">
@@ -74,14 +72,14 @@ function Messages() {
 
   //get jsx messages list
   const messageItems = messages.map((message) => {
-    if (message.status === "UNREAD" && message.recipientLogin === userLogin) {
+    if (message.status === "UNREAD" && message.recipient.login === userLogin) {
       updateStatus(message);
     }
     return (
       <Message
         key={"message-" + message.id}
         messageType={
-          message.recipientLogin === userLogin ? "receiver" : "sender"
+          message.recipient.login === userLogin ? "receiver" : "sender"
         }
         text={message.content}
         time={convertDateToTime(new Date(message.timestamp))}
@@ -107,6 +105,7 @@ function Messages() {
   }, []);
 
   useEffect(() => {
+    console.log(chatrooms);
     if (chatrooms.length > 0) {
       if (!chatrooms.some((chat) => chat.id === chatroom?.id)) {
         setChatroom(chatrooms[0]);
@@ -189,16 +188,19 @@ function Messages() {
 
   function onSubscribe(data) {
     const message = JSON.parse(data.body);
+    console.log(message)
     const companionLogin = chatroom ? getCompanionLogin(chatroom) : null;
-    if (message?.id === null && message?.content === null) {
-      getMessages(userLogin, companionLogin);
-    } else if (message?.senderLogin === companionLogin) {
-      updateStatus(message);
-    } else if (message?.recipientLogin === companionLogin) {
-      getNewMessage(message);
-    }
+    if (companionLogin) {
+      if (message?.id === null && message?.content === null) {
+        getMessages(userLogin, companionLogin);
+      } else if (message?.sender.login === companionLogin) {
+        updateStatus(message);
+      } else if (message?.recipient.login === companionLogin) {
+        getNewMessage(message);
+      }
 
-    getChatrooms(userLogin);
+      getChatrooms(userLogin);
+    }
   }
 
   function disconnect() {
@@ -226,7 +228,7 @@ function Messages() {
     const updated = updateMessageStatus(message);
     updated.then((res) => {
       if (res) {
-        askToUpdateMessages(userLogin, message.senderLogin, stompClient);
+        askToUpdateMessages(userLogin, message.sender.login, stompClient);
       }
     });
   }

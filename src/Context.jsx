@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import textData from "./assets/text";
 import getRandomColor from "./components/utils/getRandomColor";
 import api from "./components/config/axiosConfig";
+import { HttpStatusCode } from "axios";
 
 const Context = createContext();
 
@@ -51,12 +52,11 @@ function ContextProvider(props) {
     setUserType(user ? user.role : null);
     if (user?.role == "ADMIN") {
       getChatroomRequests();
-    } else {
-      if (user) {
-        getRequested(user.login);
-        setLoaded(false);
-        getChatrooms(user.login).finally(() => setLoaded(true));
-      }
+      setLoaded(true);
+    } else if (user) {
+      getRequested(user.login);
+      setLoaded(false);
+      getChatrooms(user.login).finally(() => setLoaded(true));
     }
   }, [user]);
 
@@ -67,10 +67,8 @@ function ContextProvider(props) {
     }
   }
 
-  async function login(loginData) {
-    setLoaded(false);
-    let errorText = null;
-    await api
+  function login(loginData, navigate, setErrorMessage) {
+    api
       .post("/api/auth/login", loginData)
       .then((res) => {
         let data = res.data;
@@ -79,15 +77,12 @@ function ContextProvider(props) {
         }
         localStorage.setItem("auth", JSON.stringify(data));
         setUserData(data.username, data.token);
+        navigate("/profile");
       })
-      .catch((error) => (errorText = true))
-      .finally(() => setLoaded(true));
-
-    return errorText;
+      .catch((error) => setErrorMessage(true));
   }
 
   async function renew(renewData) {
-    setLoaded(false);
     await api
       .post("/api/auth/renew", renewData)
       .then((res) => {
@@ -100,34 +95,40 @@ function ContextProvider(props) {
           setUserData(renewData.username, data.token);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
   }
 
-  async function register(registerData) {
-    let errorText = null;
+  function register(registerData, setInfoMessage) {
+    setLoaded(false);
     if (!registerData.role) {
-      setLoaded(false);
-      await api
+      api
         .post("/api/auth/register", registerData)
         .then((res) => {
-          let data = res.data;
-          if (!data.token) {
-            throw new Error("Login or email in use");
-          }
-          localStorage.setItem("auth", JSON.stringify(data));
-          setUserData(data.username, data.token);
+          setInfoMessage(res.status);
         })
-        .catch((error) => (errorText = true))
+        .catch((error) => setInfoMessage(error.response.status))
         .finally(() => setLoaded(true));
     } else {
-      await api
+      api
         .post(
           "/api/auth/admin-register?role=" + registerData.role,
           registerData
         )
-        .catch((error) => (errorText = true));
+        .then((res) => setInfoMessage({ error: false, success: true }))
+        .catch((error) => setInfoMessage({ error: true, success: false }))
+        .finally(() => setLoaded(true));
     }
-    return errorText;
+  }
+
+  function verifyUser(token, setEnabled) {
+    setLoaded(false);
+    api
+      .get("/api/auth/verify?token=" + token)
+      .then((res) => setEnabled(true))
+      .catch((error) => setEnabled(false))
+      .finally(() => {
+        setLoaded(true);
+      });
   }
 
   async function changeUser(userData) {
@@ -146,6 +147,21 @@ function ContextProvider(props) {
         errorCode = error.response ? error.response.status : null;
       });
     return errorCode;
+  }
+
+  function changeProfilePicture(file) {
+    api
+      .post("/api/user/change-picture", file, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error.response.status);
+      });
   }
 
   function logout() {
@@ -223,23 +239,19 @@ function ContextProvider(props) {
       .then((res) => setChatrooms(res));
   }
 
-  function addNewChatroom(requests) {
-    let errorText = null;
+  function addNewChatroom(requests, setInfoMessage) {
     api
       .post("/api/admin-messages/add-chatroom", requests)
-      .then((res) =>
+      .then((res) => {
         setChatroomRequests((prev) => ({
           ...prev,
-          user: prev.user.filter(
-            (val) => val.userLogin !== requests.user.userLogin
-          ),
-        }))
-      )
+          user: prev.user.filter((val) => val.user.login !== requests.user),
+        }));
+        setInfoMessage({ error: false, success: true });
+      })
       .catch((error) => {
-        errorText = true;
+        setInfoMessage({ error: true, success: false });
       });
-
-    return errorText;
   }
 
   function getMessages(userLogin, companionLogin) {
@@ -348,7 +360,9 @@ function ContextProvider(props) {
         register,
         login,
         logout,
+        verifyUser,
         changeUser,
+        changeProfilePicture,
         getUserProfile,
         requested,
         requestChatroom,
