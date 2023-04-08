@@ -74,7 +74,8 @@ function ContextProvider(props) {
           throw new Error("Invalid login or password");
         }
         localStorage.setItem("auth", JSON.stringify(data));
-        setUserData(data.username, data.token).then(() => navigate("/profile"));
+        const meow = setUserData(data.username, data.token).finally(() => navigate("/profile"));
+        console.log(meow)
       })
       .catch((error) => setErrorMessage(true))
       .finally(() => setLoaded(true));
@@ -183,8 +184,8 @@ function ContextProvider(props) {
     setUser(null);
   }
 
-  async function setUserData(login, token) {
-    await api
+  function setUserData(login, token) {
+    api
       .get("/api/user?login=" + login + "&token=" + token)
       .then((res) => res.data)
       .then((data) => setUser(data));
