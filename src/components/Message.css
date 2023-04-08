@@ -8,8 +8,8 @@
     -moz-border-radius: 1rem;
     -ms-border-radius: 1rem;
     -o-border-radius: 1rem;
-    animation: messageAppear .5s ease-out;
-    -webkit-animation: messageAppear .5s ease-out;
+    animation: messageAppear .2s ease-out;
+    -webkit-animation: messageAppear .2s ease-out;
 }
 
 .message.receiver {

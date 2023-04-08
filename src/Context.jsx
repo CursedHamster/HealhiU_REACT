@@ -66,6 +66,7 @@ function ContextProvider(props) {
   }
 
   function login(loginData, navigate, setErrorMessage) {
+    setLoaded(false)
     api
       .post("/api/auth/login", loginData)
       .then((res) => {
@@ -77,7 +78,8 @@ function ContextProvider(props) {
         setUserData(data.username, data.token);
         navigate("/profile");
       })
-      .catch((error) => setErrorMessage(true));
+      .catch((error) => setErrorMessage(true))
+      .finally(() => setLoaded(true));
   }
 
   async function renew(renewData) {
