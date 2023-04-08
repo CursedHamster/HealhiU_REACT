@@ -215,7 +215,8 @@ export default {
       },
       cta: "Зберегти зміни",
       goBack: "Повернутись назад",
-      showTestResult: "Показати результат тесту",
+      uploadImage: "Завантажити зображення",
+      showTestResult: "Результат тесту",
       noResultText: "Збереженого результату тесту немає",
       closeTestResult: "Закрити",
       info: (
@@ -235,6 +236,7 @@ export default {
       },
       messageText: {
         200: "Ваш профіль успішно змінено",
+        202: "Зміни було внесено. На вказану електронну пошту має прийти лист із підтвердженням",
         400: "Ніяких змін не було внесено",
         401: "Новий пароль не співпадає з підтвердженням",
         403: "Пошта вже використовується",
@@ -604,12 +606,24 @@ export default {
     verificationPage: {
       title: "Верифікація профілю",
       infoText: {
-        ok: "Ваш профіль активовано. Тепер ви можете ввійти в свій профіль",
-        bad: "Токен для верифікації неправильний або термін його придатності закінчився",
+        profile: {
+          ok: "Ваш профіль активовано. Тепер ви можете ввійти в свій профіль",
+          bad: "Токен для верифікації неправильний або термін його придатності закінчився",
+        },
+        email: {
+          ok: "Вашу пошту було змінено",
+          bad: "Токен для верифікації неправильний або термін його придатності закінчився",
+        },
       },
       cta: {
-        ok: "Ввійти",
-        bad: "Зареєструватись",
+        profile: {
+          ok: "Ввійти",
+          bad: "Зареєструватись",
+        },
+        email: {
+          ok: "Перейти у профіль",
+          bad: "Перейти у проофіль",
+        },
       },
       image: {
         ok: "/verification/email_happy.png",
@@ -844,6 +858,7 @@ export default {
       },
       cta: "Save changes",
       goBack: "Go back",
+      uploadImage: "Upload new image",
       showTestResult: "Show test result",
       noResultText: "There is no saved test result",
       closeTestResult: "Close",
@@ -864,6 +879,7 @@ export default {
       },
       messageText: {
         200: "The profile has been changed",
+        202: "Changes have been applied. An email confirmation should be sent to the provided email address",
         400: "No changes have been made",
         401: "New password was not confirmed correctly",
         403: "This email is already in use by someone else",
@@ -1220,12 +1236,24 @@ export default {
     verificationPage: {
       title: "Profile Verification",
       infoText: {
-        ok: "The profile has been activated. Now you can sign in",
-        bad: "Verification token is invalid or has expired",
+        profile: {
+          ok: "The profile has been activated. Now you can sign in",
+          bad: "Verification token is invalid or has expired",
+        },
+        email: {
+          ok: "The email has been changed.",
+          bad: "Verification token is invalid or has expired",
+        },
       },
       cta: {
-        ok: "Sign In",
-        bad: "Sign Up",
+        profile: {
+          ok: "Sign In",
+          bad: "Sign Up",
+        },
+        email: {
+          ok: "Go to my profile",
+          bad: "Go to my profile",
+        },
       },
       image: {
         ok: "/verification/email_happy.png",

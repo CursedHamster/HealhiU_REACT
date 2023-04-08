@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from "react";
 import textData from "./assets/text";
 import getRandomColor from "./components/utils/getRandomColor";
-import api from "./components/config/axiosConfig";
+import api, { url } from "./components/config/axiosConfig";
 import { HttpStatusCode } from "axios";
 
 const Context = createContext();
@@ -52,11 +52,9 @@ function ContextProvider(props) {
     setUserType(user ? user.role : null);
     if (user?.role == "ADMIN") {
       getChatroomRequests();
-      setLoaded(true);
     } else if (user) {
       getRequested(user.login);
-      setLoaded(false);
-      getChatrooms(user.login).finally(() => setLoaded(true));
+      getChatrooms(user.login);
     }
   }, [user]);
 
@@ -95,7 +93,7 @@ function ContextProvider(props) {
           setUserData(renewData.username, data.token);
         }
       })
-      .catch((error) => console.error(error))
+      .catch((error) => console.error(error));
   }
 
   function register(registerData, setInfoMessage) {
@@ -131,6 +129,17 @@ function ContextProvider(props) {
       });
   }
 
+  function verifyEmail(token, setEnabled) {
+    setLoaded(false);
+    api
+      .get("/api/user/verify?token=" + token)
+      .then((res) => setEnabled(true))
+      .catch((error) => setEnabled(false))
+      .finally(() => {
+        setLoaded(true);
+      });
+  }
+
   async function changeUser(userData) {
     let errorCode = null;
     await api
@@ -149,19 +158,24 @@ function ContextProvider(props) {
     return errorCode;
   }
 
-  function changeProfilePicture(file) {
-    api
-      .post("/api/user/change-picture", file, {
+  async function changeUserAndProfilePicture(userData, pictureData) {
+    let newImgUrl = null;
+    await api
+      .post("/api/user/change-picture", pictureData, {
         headers: {
           "content-type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log(res);
+        newImgUrl = res.data;
       })
       .catch((error) => {
-        console.log(error.response.status);
+        newImgUrl = null;
       });
+    if (newImgUrl) {
+      return changeUser({ ...userData, imgUrl: newImgUrl });
+    }
+    return 400;
   }
 
   function logout() {
@@ -232,11 +246,12 @@ function ContextProvider(props) {
       .finally(() => setLoaded(true));
   }
 
-  async function getChatrooms(login) {
-    await api
+  function getChatrooms(login) {
+    api
       .get("/api/chatroom/chatrooms?login=" + login)
       .then((res) => res.data)
-      .then((res) => setChatrooms(res));
+      .then((res) => setChatrooms(res))
+      .finally(() => setLoaded(true));
   }
 
   function addNewChatroom(requests, setInfoMessage) {
@@ -344,6 +359,7 @@ function ContextProvider(props) {
     <Context.Provider
       value={{
         loaded,
+        setLoaded,
         text,
         user,
         userType,
@@ -361,8 +377,9 @@ function ContextProvider(props) {
         login,
         logout,
         verifyUser,
+        verifyEmail,
         changeUser,
-        changeProfilePicture,
+        changeUserAndProfilePicture,
         getUserProfile,
         requested,
         requestChatroom,
@@ -372,6 +389,7 @@ function ContextProvider(props) {
         getTestResult,
         saveTestResult,
         showTestResultOfUser,
+        url,
       }}
     >
       {props.children}

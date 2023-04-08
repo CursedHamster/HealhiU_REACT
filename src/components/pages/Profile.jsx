@@ -18,7 +18,8 @@ function Profile() {
     userLogin = "",
     changeUser,
     showTestResultOfUser,
-    changeProfilePicture,
+    changeUserAndProfilePicture,
+    setLoaded,
   } = context;
   const contextUser = context.user;
   const { min, max, confirm, email } = context.text.validation;
@@ -27,7 +28,7 @@ function Profile() {
     email: "",
     name: "",
     dateOfBirth: "",
-    imgUrl: "/profile_image.png",
+    imgUrl: null,
   });
   const [profileImage, setProfileImage] = useState(null);
   const [result, setResult] = useState(null);
@@ -48,6 +49,7 @@ function Profile() {
     title,
     inputs,
     cta,
+    uploadImage,
     showTestResult,
     noResultText,
     closeTestResult,
@@ -94,25 +96,24 @@ function Profile() {
     enableReinitialize: true,
   });
 
-  useEffect(() => {
-    if (profileImage) {
-      const formData = new FormData();
-      formData.append("file", profileImage);
-      console.log(formData)
-      changeProfilePicture(formData);
-    }
-  }, [profileImage]);
-
   function handleUploadImage(e) {
     setProfileImage(e.target.files[0]);
   }
 
   function handleChangeUser(allow) {
     if (allow) {
-      let error = changeUser({ ...formValues, login: userLogin });
-      error.then((res) => {
-        setInfoMessage(res);
-      });
+      setLoaded(false);
+      const userData = { ...formValues, login: userLogin, imgUrl: user.imgUrl };
+      const formData = new FormData();
+      formData.append("file", profileImage);
+      let error = profileImage
+        ? changeUserAndProfilePicture(userData, formData)
+        : changeUser(userData);
+      error
+        .then((res) => {
+          setInfoMessage(res);
+        })
+        .finally(() => setLoaded(true));
       formik.setTouched({});
       formik.setErrors({});
     }
@@ -285,12 +286,17 @@ function Profile() {
           <div className="profile-picture">
             <img
               src={
-                profileImage ? URL.createObjectURL(profileImage) : user.imgUrl
+                profileImage
+                  ? URL.createObjectURL(profileImage)
+                  : user.imgUrl
+                  ? user.imgUrl
+                  : "/profile_image.png"
               }
             />
             <Form.Group className="mb-3" controlId="imgFile">
               <Form.Label className="button outline file-label" column>
-                Завантажити зображення...
+                {uploadImage}
+                <i className="bi bi-camera-fill"></i>
               </Form.Label>
               <Form.Control
                 type="file"

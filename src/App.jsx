@@ -22,62 +22,46 @@ import { Context } from "./Context";
 function App() {
   const context = useContext(Context);
   const { loaded, userType } = context;
-  function getNonUserLinks() {
-    return (
-      <>
-        <Route path="/sign-in" exact element={<SignIn />} />
-        <Route path="/sign-up" exact element={<SignUp />} />
-        <Route path="/profile" exact element={<ErrorPage errorCode={401} />} />
-        <Route
-          path="/profile/:login"
-          exact
-          element={<ErrorPage errorCode={401} />}
-        />
-      </>
-    );
-  }
-  function getUserLinks() {
-    return (
-      <>
-        <Route path="/sign-in" exact element={<ErrorPage errorCode={400} />} />
-        <Route path="/sign-up" exact element={<ErrorPage errorCode={400} />} />
-        <Route path="/profile" exact element={<Profile />} />
-        <Route path="/profile/:login" exact element={<UserProfile />} />
-      </>
-    );
-  }
-  function getNonAdminLinks() {
-    return (
-      <>
-        <Route
-          path="/admin-registration"
-          exact
-          element={<ErrorPage errorCode={403} />}
-        />
-        <Route
-            path="/admin-messages"
-            exact
-            element={<ErrorPage errorCode={403} />}
-          />
-      </>
-    );
-  }
-  function getAdminLinks() {
-    return (
-      <>
-        <Route
-          path="/admin-registration"
-          exact
-          element={<AdminRegistration />}
-        />
-        <Route
-            path="/admin-messages"
-            exact
-            element={<AdminMessages />}
-          />
-      </>
-    );
-  }
+  const nonUserLinks = (
+    <>
+      <Route path="/sign-in" exact element={<SignIn />} />
+      <Route path="/sign-up" exact element={<SignUp />} />
+      <Route path="/profile" exact element={<ErrorPage errorCode={401} />} />
+      <Route
+        path="/profile/:login"
+        exact
+        element={<ErrorPage errorCode={401} />}
+      />
+    </>
+  );
+  const userLinks = (
+    <>
+      <Route path="/sign-in" exact element={<ErrorPage errorCode={400} />} />
+      <Route path="/sign-up" exact element={<ErrorPage errorCode={400} />} />
+      <Route path="/profile" exact element={<Profile />} />
+      <Route path="/profile/:login" exact element={<UserProfile />} />
+    </>
+  );
+  const nonAdminLinks = (
+    <>
+      <Route
+        path="/admin-registration"
+        exact
+        element={<ErrorPage errorCode={403} />}
+      />
+      <Route
+        path="/admin-messages"
+        exact
+        element={<ErrorPage errorCode={403} />}
+      />
+    </>
+  );
+  const adminLinks = (
+    <>
+      <Route path="/admin-registration" exact element={<AdminRegistration />} />
+      <Route path="/admin-messages" exact element={<AdminMessages />} />
+    </>
+  );
   return (
     <div className="App">
       <Router>
@@ -85,8 +69,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" exact element={<Home />} />
-          {userType === null ? getNonUserLinks() : getUserLinks()}
-          {userType === "ADMIN" ? getAdminLinks() : getNonAdminLinks()}
+          {userType === null ? nonUserLinks : userLinks}
+          {userType === "ADMIN" ? adminLinks : nonAdminLinks}
           <Route
             path="/messages"
             exact
@@ -101,7 +85,12 @@ function App() {
           <Route
             path="/sign-up/verification"
             exact
-            element={<VerificationPage />}
+            element={<VerificationPage type="profile" />}
+          />
+          <Route
+            path="/profile/verification"
+            exact
+            element={<VerificationPage type="email" />}
           />
           <Route path="/test" exact element={<TestPage />} />
           <Route path="/test-result" exact element={<TestResult />} />

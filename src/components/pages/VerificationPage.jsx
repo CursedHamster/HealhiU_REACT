@@ -5,15 +5,22 @@ import Button from "../Button";
 import "./VerificationPage.css";
 
 function VerificationPage(props) {
+  const { type = "profile" } = props;
   const context = useContext(Context);
-  const { verifyUser } = context;
-  const { title, infoText, cta, image } = context.text.verificationPage;
+  const { verifyUser, verifyEmail } = context;
+  const { title, image } = context.text.verificationPage;
+  const infoText = context.text.verificationPage.infoText[type];
+  const cta = context.text.verificationPage.cta[type];
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [enabled, setEnabled] = useState(null);
 
   useEffect(() => {
-    verifyUser(token, setEnabled);
+    if (type === "profile") {
+      verifyUser(token, setEnabled);
+    } else {
+      verifyEmail(token, setEnabled);
+    }
   }, []);
 
   return (
@@ -24,14 +31,14 @@ function VerificationPage(props) {
             <h1>{title}</h1>
             <p>{enabled ? infoText.ok : infoText.bad}</p>
             {enabled ? (
-              <Link to="/sign-in">
+              <Link to={type === "profile" ? "/sign-in" : "/profile"}>
                 <Button buttonStyle="cta">
                   {cta.ok}
                   <i className="bi bi-arrow-right"></i>
                 </Button>
               </Link>
             ) : (
-              <Link to="/sign-up">
+              <Link to={type === "profile" ? "/sign-up" : "/profile"}>
                 <Button buttonStyle="cta">
                   {cta.bad}
                   <i className="bi bi-arrow-right"></i>

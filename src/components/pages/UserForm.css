@@ -18,7 +18,7 @@
 }
 
 .sign-container .col-form-label {
-    flex: 0 0 20%;
+    flex: 0 0 30%;
 }
 
 .sign-container div.col {
@@ -47,7 +47,7 @@
 .sign-container .btn-container p {
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem;
+    gap: 0.5rem;
 }
 
 .sign-container .info {
@@ -76,6 +76,14 @@
 
     .sign-container .info {
         display: none;
+    }
+
+    .sign-container .btn-container {
+        flex-direction: column;
+    }
+
+    .sign-container .btn-container .button {
+        width: 100%;
     }
 }
 

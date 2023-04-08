@@ -34,7 +34,10 @@ function AdminMessages() {
         onClick={() => handleAddLogin(user.login, "user")}
       >
         <div className="user">
-          <div className={"circle"}></div>
+          <img
+            className="circle"
+            src={user.imgUrl ? user.imgUrl : "/profile_image.png"}
+          />
           <p>{user.login}</p>
         </div>
         <i className="bi bi-person-plus-fill"></i>
@@ -50,7 +53,10 @@ function AdminMessages() {
         onClick={() => handleAddLogin(doctor.login, "doctor")}
       >
         <div className="user">
-          <div className={"circle"}></div>
+          <img
+            className="circle"
+            src={doctor.imgUrl ? doctor.imgUrl : "/profile_image.png"}
+          />
           <p>{doctor.login}</p>
         </div>
         <i className="bi bi-person-plus-fill"></i>

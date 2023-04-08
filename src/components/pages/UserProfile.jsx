@@ -76,63 +76,68 @@ function UserProfile() {
 
   return (
     <>
-      <div className="sign-container section-padding vertical page-min-height">
+      <div className="profile sign-container section-padding vertical page-min-height">
         <h1>{user ? user.login : noUser}</h1>
         {user ? (
-          <Form action="post" className="sign-form">
-            <Form.Group as={Row} className="mb-3" controlId="name">
-              <Form.Label column>{nameLabel}</Form.Label>
-              <Col>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={user.name}
-                  readOnly={true}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="dateOfBirth">
-              <Form.Label column>{dateOfBirthLabel}</Form.Label>
-              <Col>
-                <Form.Control
-                  type="date"
-                  name="dateOfBirth"
-                  value={user.dateOfBirth}
-                  readOnly={true}
-                />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="name">
-              <Form.Label column>{roleLabel}</Form.Label>
-              <Col>
-                <Form.Control
-                  type="text"
-                  name="role"
-                  value={user.role}
-                  readOnly={true}
-                />
-              </Col>
-            </Form.Group>
-            <div className="btn-container">
-              <Button
-                buttonSize="medium"
-                buttonStyle="primary"
-                onClick={handleGoBack}
-              >
-                <i className="bi bi-arrow-left"></i>
-                {goBack}
-              </Button>
-              {(userType === "DOCTOR" || userType === "ADMIN") && (
+          <div className="sides">
+            <Form action="post" className="sign-form">
+              <Form.Group as={Row} className="mb-3" controlId="name">
+                <Form.Label column>{nameLabel}</Form.Label>
+                <Col>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={user.name}
+                    readOnly={true}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="dateOfBirth">
+                <Form.Label column>{dateOfBirthLabel}</Form.Label>
+                <Col>
+                  <Form.Control
+                    type="date"
+                    name="dateOfBirth"
+                    value={user.dateOfBirth}
+                    readOnly={true}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3" controlId="name">
+                <Form.Label column>{roleLabel}</Form.Label>
+                <Col>
+                  <Form.Control
+                    type="text"
+                    name="role"
+                    value={user.role}
+                    readOnly={true}
+                  />
+                </Col>
+              </Form.Group>
+              <div className="btn-container">
                 <Button
                   buttonSize="medium"
-                  buttonStyle="outline"
-                  onClick={handleShow}
+                  buttonStyle="primary"
+                  onClick={handleGoBack}
                 >
-                  {showTestResult}
+                  <i className="bi bi-arrow-left"></i>
+                  {goBack}
                 </Button>
-              )}
+                {(userType === "DOCTOR" || userType === "ADMIN") && (
+                  <Button
+                    buttonSize="medium"
+                    buttonStyle="outline"
+                    onClick={handleShow}
+                  >
+                    {showTestResult}
+                  </Button>
+                )}
+              </div>
+            </Form>
+            <div className="profile-picture">
+              <img src={user.imgUrl ? user.imgUrl : "/profile_image.png"} />
             </div>
-          </Form>
+          </div>
         ) : (
           <div className="btn-container">
             <Button
@@ -182,8 +187,8 @@ function UserProfile() {
                 </Button>
               </>
             )}
-            </div>
-          ) : (
+          </div>
+        ) : (
           <div className="no-result">{noResultText}</div>
         )}
       </Modal>

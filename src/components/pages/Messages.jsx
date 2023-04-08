@@ -8,11 +8,6 @@ import useToggle from "../utils/useToggle";
 import Stomp from "stompjs";
 
 function Messages() {
-  //constants
-  const BROKER_URL = "ws://localhost:8080/chat-messaging";
-  const TOPIC_NAME = "/chat/messages/";
-  const messageId = "messageId";
-
   //context data
   const context = useContext(Context);
   const {
@@ -29,6 +24,7 @@ function Messages() {
     requestChatroom,
     unrequestChatroom,
     chatrooms,
+    url,
   } = context;
   const {
     enableApplication,
@@ -38,6 +34,11 @@ function Messages() {
     defaultMessage,
     messagePlaceholder,
   } = context.text.messages;
+
+  //constants
+  const BROKER_URL = "ws://" + url + "/chat-messaging";
+  const TOPIC_NAME = "/chat/messages/";
+  const messageId = "messageId";
 
   //states
   const [showNav, toggleShowNav] = useToggle(false);
@@ -49,6 +50,8 @@ function Messages() {
   //functions to get chatroom information
   const getCompanionLogin = (chat) =>
     userType === "USER" ? chat.doctor.login : chat.user.login;
+  const getCompanionProfileImage = (chat) =>
+    userType === "USER" ? chat.doctor.imgUrl : chat.user.imgUrl;
 
   //get jsx chatroom list
   const chatItems = chatrooms.map((chat) => {
@@ -59,7 +62,14 @@ function Messages() {
         className={"chat" + (chat.id === chatroom?.id ? " active" : "")}
         onClick={() => setChatroom(chat)}
       >
-        <div className={"circle"}></div>
+        <img
+          className="circle"
+          src={
+            getCompanionProfileImage(chat)
+              ? getCompanionProfileImage(chat)
+              : "/profile_image.png"
+          }
+        />
         <p>{getCompanionLogin(chat)}</p>
         {unreadCount > 0 && (
           <div className="unread-tag">
@@ -105,7 +115,6 @@ function Messages() {
   }, []);
 
   useEffect(() => {
-    console.log(chatrooms);
     if (chatrooms.length > 0) {
       if (!chatrooms.some((chat) => chat.id === chatroom?.id)) {
         setChatroom(chatrooms[0]);
@@ -188,7 +197,6 @@ function Messages() {
 
   function onSubscribe(data) {
     const message = JSON.parse(data.body);
-    console.log(message)
     const companionLogin = chatroom ? getCompanionLogin(chatroom) : null;
     if (companionLogin) {
       if (message?.id === null && message?.content === null) {

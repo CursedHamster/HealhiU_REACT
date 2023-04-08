@@ -93,31 +93,15 @@ h4 {
 }
 
 .circle {
-  background: var(--hu-accent-green);
-  width: 1rem;
-  height: 1rem;
+  width: 2rem;
+  height: 2rem;
   aspect-ratio: 1/1;
+  object-fit: cover;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-}
-
-.circle.green {
-  background: var(--hu-accent-green);
-}
-
-.circle.pink {
-  background: rgb(226, 107, 107);
-}
-
-.circle.orange {
-  background: rgb(223, 129, 71);
-}
-
-.circle.blue {
-  background: rgb(77, 144, 215);
 }
 
 .error-text {
@@ -133,7 +117,7 @@ h4 {
   -o-border-radius: 0.5rem;
 }
 
-.error-text.s-200,
+.error-text.s-200, .error-text.s-202,
 .valid .error-text {
   background: var(--hu-lighter-sheer);
   color: var(--hu-darker);
