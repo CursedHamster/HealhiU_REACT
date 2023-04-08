@@ -75,8 +75,8 @@ function ContextProvider(props) {
         }
         localStorage.setItem("auth", JSON.stringify(data));
         setUserData(data.username, data.token).finally(() => {
-          navigate("/profile");
           setLoaded(true);
+          navigate("/profile");
         });
       })
       .catch((error) => {
@@ -188,8 +188,8 @@ function ContextProvider(props) {
     setUser(null);
   }
 
-  function setUserData(login, token) {
-    api
+  async function setUserData(login, token) {
+    await api
       .get("/api/user?login=" + login + "&token=" + token)
       .then((res) => res.data)
       .then((data) => setUser(data));
