@@ -217,7 +217,7 @@ function ContextProvider(props) {
 
   function requestChatroom(login) {
     api
-      .post("/api/chatroom/request-chatroom", {
+      .post("/api/chatroom/request-chatroom", {}, {
         params: {
           login: login,
         },
