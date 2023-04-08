@@ -728,7 +728,7 @@ export default {
             photoUrl: "confessions/person-1.jpg",
             name: "Anne White",
             quote:
-              "I liked this test very much. It helped me to appreciate my body",
+              "I liked this test very much. It helped me appreciate my body",
           },
           card: {
             bmi: 23.4,
