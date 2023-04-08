@@ -126,7 +126,11 @@ function ContextProvider(props) {
   function verifyUser(token, setEnabled) {
     setLoaded(false);
     api
-      .get("/api/auth/verify?token=" + token)
+      .get("/api/auth/verify", {
+        params: {
+          token: token,
+        },
+      })
       .then((res) => setEnabled(true))
       .catch((error) => setEnabled(false))
       .finally(() => {
@@ -213,12 +217,11 @@ function ContextProvider(props) {
 
   function requestChatroom(login) {
     api
-      .post(
-        "/api/chatroom/request-chatroom?login=" +
-          login +
-          "&color=" +
-          getRandomColor()
-      )
+      .post("/api/chatroom/request-chatroom", {
+        params: {
+          login: login,
+        },
+      })
       .then((res) => setRequested(res.data ? res.data : false))
       .catch((error) => {
         console.error(error);

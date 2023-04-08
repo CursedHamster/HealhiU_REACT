@@ -248,6 +248,8 @@ export default {
       titleWithLogin: "З Вами розмовляє ",
       titleWithoutLogin: "У Вас немає співрозмовника",
       defaultMessage: "Зробіть запит на пошук співрозмовника в меню зліва",
+      requestedMessage:
+        "Ваш запит на пошук співрозмовника було відправлено. Адміністратор знайде для Вас лікаря (це може відбутись протягом двох днів)",
       messagePlaceholder: "Ваше повідомлення...",
     },
     adminRegistration: {
@@ -892,6 +894,8 @@ export default {
       titleWithoutLogin: "You have no one to speak to right now",
       defaultMessage:
         "Make a request to find a new chat on the left side of the screen",
+      requestedMessage:
+        "Your chat request has been sent. An administrator will find a doctor for you (it can happen within two days).",
       messagePlaceholder: "Your message ...",
     },
     adminRegistration: {

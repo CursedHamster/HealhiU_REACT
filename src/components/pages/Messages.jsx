@@ -32,6 +32,7 @@ function Messages() {
     titleWithLogin,
     titleWithoutLogin,
     defaultMessage,
+    requestedMessage,
     messagePlaceholder,
   } = context.text.messages;
 
@@ -292,7 +293,14 @@ function Messages() {
               <Message
                 messageType="receiver"
                 text={defaultMessage}
-                time="00:00:00"
+                time={convertDateToTime(new Date())}
+              />
+            )}
+            {requested && chatrooms.length === 0 && (
+              <Message
+                messageType="receiver"
+                text={requestedMessage}
+                time={convertDateToTime(new Date())}
               />
             )}
           </div>

@@ -144,7 +144,7 @@
   flex-direction: column;
   overflow-y: auto;
   gap: 1rem;
-  background: url("logo_translucent.svg");
+  background: url("/logo_translucent.svg");
   background-repeat: space;
   scroll-behavior: smooth;
 }
