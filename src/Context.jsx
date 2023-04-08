@@ -74,11 +74,15 @@ function ContextProvider(props) {
           throw new Error("Invalid login or password");
         }
         localStorage.setItem("auth", JSON.stringify(data));
-        const meow = setUserData(data.username, data.token).finally(() => navigate("/profile"));
-        console.log(meow)
+        setUserData(data.username, data.token).finally(() => {
+          navigate("/profile");
+          setLoaded(true);
+        });
       })
-      .catch((error) => setErrorMessage(true))
-      .finally(() => setLoaded(true));
+      .catch((error) => {
+        setErrorMessage(true);
+        setLoaded(true);
+      });
   }
 
   async function renew(renewData) {
