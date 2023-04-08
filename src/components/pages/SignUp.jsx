@@ -65,7 +65,7 @@ function SignUp() {
   });
 
   return (
-    <div className="sign-container section-padding vertical">
+    <div className="sign-container section-padding vertical page-min-height">
       <h1>{title}</h1>
       <div className="sides">
         <Form
@@ -85,9 +85,9 @@ function SignUp() {
                 onBlur={formik.handleBlur}
                 value={formik.values.login}
                 required
-                isInvalid={formik.errors.login}
+                isInvalid={formik.touched.login && formik.errors.login}
               />
-              {formik.errors.login && (
+              {formik.touched.login && formik.errors.login && (
                 <Form.Control.Feedback type="invalid" tooltip>
                   {formik.errors.login}
                 </Form.Control.Feedback>
@@ -106,9 +106,9 @@ function SignUp() {
                 value={formik.values.email}
                 required
                 isValid={formik.touched.email && !formik.errors.email}
-                isInvalid={formik.errors.email}
+                isInvalid={formik.touched.email && formik.errors.email}
               />
-              {formik.errors.email && (
+              {formik.touched.email && formik.errors.email && (
                 <Form.Control.Feedback type="invalid" tooltip>
                   {formik.errors.email}
                 </Form.Control.Feedback>
@@ -127,9 +127,9 @@ function SignUp() {
                 value={formik.values.name}
                 required
                 isValid={formik.touched.name && !formik.errors.name}
-                isInvalid={formik.errors.name}
+                isInvalid={formik.touched.name && formik.errors.name}
               />
-              {formik.errors.name && (
+              {formik.touched.name && formik.errors.name && (
                 <Form.Control.Feedback type="invalid" tooltip>
                   {formik.errors.name}
                 </Form.Control.Feedback>
@@ -148,7 +148,7 @@ function SignUp() {
             value={formik.values.password}
             required
             isValid={formik.touched.password && !formik.errors.password}
-            isInvalid={formik.errors.password}
+            isInvalid={formik.touched.password && formik.errors.password}
           />
           <PasswordInput
             label={confirmPasswordLabel}
@@ -161,7 +161,7 @@ function SignUp() {
             isValid={
               formik.touched.confirmPassword && !formik.errors.confirmPassword
             }
-            isInvalid={formik.errors.confirmPassword}
+            isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
           />
           <Form.Group as={Row} className="mb-3" controlId="dateOfBirth">
             <Form.Label column>{dateOfBirthLabel}</Form.Label>
@@ -177,9 +177,9 @@ function SignUp() {
                 isValid={
                   formik.touched.dateOfBirth && !formik.errors.dateOfBirth
                 }
-                isInvalid={formik.errors.dateOfBirth}
+                isInvalid={formik.touched.dateOfBirth && formik.errors.dateOfBirth}
               />
-              {formik.errors.dateOfBirth && (
+              {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
                 <Form.Control.Feedback type="invalid" tooltip>
                   {formik.errors.dateOfBirth}
                 </Form.Control.Feedback>

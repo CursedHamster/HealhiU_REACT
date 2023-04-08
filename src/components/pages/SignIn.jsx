@@ -73,9 +73,9 @@ function SignIn() {
                 onBlur={formik.handleBlur}
                 value={formik.values.login}
                 required
-                isInvalid={formik.errors.login}
+                isInvalid={formik.touched.login && formik.errors.login}
               />
-              {formik.errors.login && (
+              {formik.touched.login && formik.errors.login && (
                 <Form.Control.Feedback type="invalid" tooltip>
                   {formik.errors.login}
                 </Form.Control.Feedback>
@@ -91,7 +91,7 @@ function SignIn() {
             value={formik.values.password}
             required
             isValid={formik.touched.password && !formik.errors.password}
-            isInvalid={formik.errors.password}
+            isInvalid={formik.touched.password && formik.errors.password}
           />
           <div className="btn-container">
             <Button buttonSize="medium" buttonStyle="cta" type="submit">

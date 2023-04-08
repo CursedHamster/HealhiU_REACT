@@ -2,7 +2,6 @@ import { useState, useEffect, createContext } from "react";
 import textData from "./assets/text";
 import getRandomColor from "./components/utils/getRandomColor";
 import api, { url } from "./components/config/axiosConfig";
-import { HttpStatusCode } from "axios";
 
 const Context = createContext();
 
@@ -66,7 +65,7 @@ function ContextProvider(props) {
   }
 
   function login(loginData, navigate, setErrorMessage) {
-    setLoaded(false)
+    setLoaded(false);
     api
       .post("/api/auth/login", loginData)
       .then((res) => {
@@ -75,8 +74,7 @@ function ContextProvider(props) {
           throw new Error("Invalid login or password");
         }
         localStorage.setItem("auth", JSON.stringify(data));
-        setUserData(data.username, data.token);
-        navigate("/profile");
+        setUserData(data.username, data.token).then(() => navigate("/profile"));
       })
       .catch((error) => setErrorMessage(true))
       .finally(() => setLoaded(true));
@@ -185,8 +183,8 @@ function ContextProvider(props) {
     setUser(null);
   }
 
-  function setUserData(login, token) {
-    api
+  async function setUserData(login, token) {
+    await api
       .get("/api/user?login=" + login + "&token=" + token)
       .then((res) => res.data)
       .then((data) => setUser(data));
