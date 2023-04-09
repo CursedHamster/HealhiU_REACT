@@ -48,6 +48,16 @@ function Messages() {
   const [webSocket, setWebSocket] = useState(null);
   const [stompClient, setStompClient] = useState(null);
   const [messageInput, setMessageInput] = useState("");
+  const [specialMessages, setSpecialMessages] = useState({
+    defaultMessage: {
+      text: defaultMessage,
+      time: convertDateToTime(new Date()),
+    },
+    requestedMessage: {
+      text: requestedMessage,
+      time: convertDateToTime(new Date()),
+    },
+  });
 
   //functions to get chatroom information
   const getCompanionLogin = (chat) =>
@@ -158,6 +168,18 @@ function Messages() {
   useEffect(() => {
     scrollToBottomMessage();
   }, [messages]);
+
+  useEffect(() => {
+    if (requested && chatrooms.length === 0) {
+      setSpecialMessages((prev) => ({
+        ...prev,
+        requestedMessage: {
+          ...prev.requestedMessage,
+          time: convertDateToTime(new Date()),
+        },
+      }));
+    }
+  }, [requested]);
 
   useEffect(() => {
     scrollToBottomMessage();
@@ -292,15 +314,15 @@ function Messages() {
             ) : (
               <Message
                 messageType="receiver"
-                text={defaultMessage}
-                time={convertDateToTime(new Date())}
+                text={specialMessages.defaultMessage.text}
+                time={specialMessages.defaultMessage.time}
               />
             )}
             {requested && chatrooms.length === 0 && (
               <Message
                 messageType="receiver"
-                text={requestedMessage}
-                time={convertDateToTime(new Date())}
+                text={specialMessages.requestedMessage.text}
+                time={specialMessages.requestedMessage.time}
               />
             )}
           </div>

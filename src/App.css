@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.App {
+  overflow-x: hidden;
+}
+
 a {
   text-decoration: none;
 }

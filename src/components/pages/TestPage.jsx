@@ -8,7 +8,7 @@ import Button from "../Button";
 function TestPage() {
   const context = useContext(Context);
   const { getTestResult } = context;
-  const { back, next, complete, questions } = context.text?.test;
+  const { back, next, complete, questions, errorText } = context.text?.test;
 
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ function TestPage() {
     bloodType: false,
   });
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
   const changeAnswered = (name, val) =>
     setAnswered((prev) => ({ ...prev, [name]: val }));
 
@@ -53,6 +54,12 @@ function TestPage() {
       </div>
     </Fragment>
   ));
+
+  useEffect(() => {
+    if (error) {
+      setError(false);
+    }
+  }, [currentQuestion]);
 
   useEffect(() => {
     if (result) {
@@ -91,11 +98,18 @@ function TestPage() {
 
     if (valid) {
       getTestResult(answers, setResult);
+    } else {
+      setError(true);
     }
   }
 
   return (
-    <div className="test-page section-padding vertical page-min-height">
+    <div
+      className={
+        "test-page section-padding vertical page-min-height" +
+        (error ? " invalid" : "")
+      }
+    >
       <div className="page-numbers">{testPages}</div>
       <Test
         question={questions[currentQuestion - 1]}
@@ -127,6 +141,7 @@ function TestPage() {
           </Button>
         )}
       </div>
+      <div className="error-text">{errorText}</div>
     </div>
   );
 }

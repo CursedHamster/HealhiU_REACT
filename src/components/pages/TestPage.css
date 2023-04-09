@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .test-page .page-numbers {
@@ -57,6 +57,10 @@
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+}
+
+.test-page .error-text {
+    margin-top: 0;
 }
 
 @media screen and (max-width: 600px) {

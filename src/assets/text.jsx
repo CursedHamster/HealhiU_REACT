@@ -468,6 +468,7 @@ export default {
       back: "Назад",
       next: "Далі",
       complete: "Завершити",
+      errorText: "Дайте відповіді на всі питання, будь ласка",
       questions: [
         {
           name: "gender",
@@ -1100,6 +1101,7 @@ export default {
       back: "Back",
       next: "Next",
       complete: "Complete",
+      errorText: "Answer all questions, please",
       questions: [
         {
           name: "gender",

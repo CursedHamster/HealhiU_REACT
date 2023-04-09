@@ -69,7 +69,6 @@ body {
   margin: 0;
   display: flex;
   width: 100%;
-  overflow-x: hidden;
   padding: 0 !important;
 }
 

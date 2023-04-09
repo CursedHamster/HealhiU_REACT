@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext } from "react";
 import textData from "./assets/text";
-import getRandomColor from "./components/utils/getRandomColor";
 import api, { url } from "./components/config/axiosConfig";
 
 const Context = createContext();
@@ -141,7 +140,11 @@ function ContextProvider(props) {
   function verifyEmail(token, setEnabled) {
     setLoaded(false);
     api
-      .get("/api/user/verify?token=" + token)
+      .get("/api/user/verify", {
+        params: {
+          token: token,
+        },
+      })
       .then((res) => setEnabled(true))
       .catch((error) => setEnabled(false))
       .finally(() => {
@@ -194,7 +197,12 @@ function ContextProvider(props) {
 
   async function setUserData(login, token) {
     await api
-      .get("/api/user?login=" + login + "&token=" + token)
+      .get("/api/user", {
+        params: {
+          login: login,
+          token: token,
+        },
+      })
       .then((res) => res.data)
       .then((data) => setUser(data));
   }
@@ -211,17 +219,25 @@ function ContextProvider(props) {
 
   function getRequested(login) {
     api
-      .get("/api/chatroom/requested?login=" + login)
+      .get("/api/chatroom/requested", {
+        params: {
+          login: login,
+        },
+      })
       .then((res) => setRequested(res.data));
   }
 
   function requestChatroom(login) {
     api
-      .post("/api/chatroom/request-chatroom", {}, {
-        params: {
-          login: login,
-        },
-      })
+      .post(
+        "/api/chatroom/request-chatroom",
+        {},
+        {
+          params: {
+            login: login,
+          },
+        }
+      )
       .then((res) => setRequested(res.data ? res.data : false))
       .catch((error) => {
         console.error(error);
@@ -230,7 +246,11 @@ function ContextProvider(props) {
 
   function unrequestChatroom(login) {
     api
-      .delete("/api/chatroom/unrequest-chatroom?login=" + login)
+      .delete("/api/chatroom/unrequest-chatroom", {
+        params: {
+          login: login,
+        },
+      })
       .then((res) => setRequested(res.data ? !res.data : true))
       .catch((error) => {
         console.error(error);
@@ -256,7 +276,11 @@ function ContextProvider(props) {
 
   function getChatrooms(login) {
     api
-      .get("/api/chatroom/chatrooms?login=" + login)
+      .get("/api/chatroom/chatrooms", {
+        params: {
+          login: login,
+        },
+      })
       .then((res) => res.data)
       .then((res) => setChatrooms(res))
       .finally(() => setLoaded(true));
@@ -279,12 +303,12 @@ function ContextProvider(props) {
 
   function getMessages(userLogin, companionLogin) {
     api
-      .get(
-        "/api/chatroom/messages?login=" +
-          userLogin +
-          "&companion=" +
-          companionLogin
-      )
+      .get("/api/chatroom/messages", {
+        params: {
+          login: userLogin,
+          companion: companionLogin,
+        },
+      })
       .then((res) => res.data)
       .then((messagesList) => setMessages(messagesList));
   }
@@ -323,7 +347,15 @@ function ContextProvider(props) {
   async function updateMessageStatus(message) {
     let updated = false;
     await api
-      .put("/api/chatroom/message/update-status?id=" + message.id)
+      .put(
+        "/api/chatroom/message/update-status",
+        {},
+        {
+          params: {
+            id: message.id,
+          },
+        }
+      )
       .then((res) => (updated = true))
       .catch((error) => {
         console.error(error);
@@ -346,7 +378,11 @@ function ContextProvider(props) {
 
   function saveTestResult(testData, login, setInfoMessage) {
     api
-      .post("/api/test/result/save?login=" + login, testData)
+      .post("/api/test/result/save", testData, {
+        params: {
+          login: login,
+        },
+      })
       .then((res) => {
         if (!res?.data?.bmi) {
           throw new Error("Invalid request");
@@ -358,7 +394,11 @@ function ContextProvider(props) {
 
   function showTestResultOfUser(login, setTestResult) {
     api
-      .get("/api/test/result/show?login=" + login)
+      .get("/api/test/result/show", {
+        params: {
+          login: login,
+        },
+      })
       .then((res) => res.data)
       .then((result) => setTestResult(result?.bmi ? result : null));
   }
