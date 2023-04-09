@@ -93,17 +93,17 @@ function Header() {
     setNavs(getUserHeader(userType));
   }, [userType]);
 
-  useEffect(() => {
-    const checkIfClickedOutside = e => {
-      if (show && ref.current && !ref.current.contains(e.target)) {
-        setShow(false)
-      }
-    }
-    document.addEventListener("mousedown", checkIfClickedOutside)
-    return () => {
-      document.removeEventListener("mousedown", checkIfClickedOutside)
-    }
-  }, [show])
+  // useEffect(() => {
+  //   const checkIfClickedOutside = e => {
+  //     if (show && ref.current && !ref.current.contains(e.target)) {
+  //       setShow(false)
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", checkIfClickedOutside)
+  //   return () => {
+  //     document.removeEventListener("mousedown", checkIfClickedOutside)
+  //   }
+  // }, [show])
 
   return (
     <>
@@ -128,10 +128,10 @@ function Header() {
               </p>
             </div>
           </div>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav">
+          <Navbar.Toggle aria-controls="basic-navbar-nav">
             <i className="bi bi-list"></i>
           </Navbar.Toggle>
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav>{navs}</Nav>
           </Navbar.Collapse>
         </Container>
