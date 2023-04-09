@@ -13,7 +13,6 @@ function Messages() {
   const {
     userType,
     userLogin,
-    setLoaded,
     getChatrooms,
     addNewMessage,
     getNewMessage,
@@ -122,8 +121,7 @@ function Messages() {
   useEffect(() => {
     if (userType) {
       getRequested(userLogin);
-      setLoaded(false);
-      getChatrooms(userLogin).finally(() => setLoaded(true));
+      getChatrooms(userLogin, true);
     }
     scrollToBottomMessage();
     window.addEventListener("resize", scrollToBottomMessage);
