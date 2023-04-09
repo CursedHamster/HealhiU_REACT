@@ -266,21 +266,20 @@ function ContextProvider(props) {
 
   function getChatroomRequests() {
     setLoaded(false);
-    api
-      .get("/api/admin-messages/requests")
-      .then((res) =>
-        setChatroomRequests(
-          res.data
-            ? res.data
-            : {
-                user: [],
-                doctor: [],
-              }
-        )
-      );
+    api.get("/api/admin-messages/requests").then((res) =>
+      setChatroomRequests(
+        res.data
+          ? res.data
+          : {
+              user: [],
+              doctor: [],
+            }
+      )
+    );
   }
 
   function getChatrooms(login) {
+    setLoaded(false);
     api
       .get("/api/chatroom/chatrooms", {
         params: {
@@ -288,7 +287,8 @@ function ContextProvider(props) {
         },
       })
       .then((res) => res.data)
-      .then((res) => setChatrooms(res));
+      .then((res) => setChatrooms(res))
+      .finally(() => setLoaded(true));
   }
 
   function addNewChatroom(requests, setInfoMessage) {
