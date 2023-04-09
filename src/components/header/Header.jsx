@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import "./Header.css";
 import { Context } from "../../Context";
 import { Navbar, Nav, Container } from "react-bootstrap";
@@ -25,6 +25,7 @@ function Header() {
   );
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const ref = useRef(null);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -92,9 +93,21 @@ function Header() {
     setNavs(getUserHeader(userType));
   }, [userType]);
 
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (show && ref.current && !ref.current.contains(e.target)) {
+        setShow(false)
+      }
+    }
+    document.addEventListener("mousedown", checkIfClickedOutside)
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [show])
+
   return (
     <>
-      <Navbar collapseOnSelect expand="lg">
+      <Navbar collapseOnSelect expand="lg" ref={ref}>
         <Container>
           <div className="logo-and-language">
             <Link className="navbar-brand" to="/">

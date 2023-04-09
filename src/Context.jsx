@@ -97,7 +97,6 @@ function ContextProvider(props) {
       .catch((error) => {
         logout();
         setLoaded(true);
-        console.log("meow");
       });
   }
 
