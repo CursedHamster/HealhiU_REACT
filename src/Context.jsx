@@ -94,7 +94,7 @@ function ContextProvider(props) {
           setUserData(renewData.username, data.token);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => logout());
   }
 
   function register(registerData, setInfoMessage) {
