@@ -25,9 +25,7 @@ function AdminMessages() {
   });
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (userType) {
-      getChatroomRequests();
-    }
+    getChatroomRequests();
   }, []);
 
   const userListItems = chatroomRequests?.user.map((request, i) => {
