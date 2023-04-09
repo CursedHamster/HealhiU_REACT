@@ -51,12 +51,6 @@ function ContextProvider(props) {
     if (user) {
       setLoaded(true);
     }
-    // if (user?.role == "ADMIN") {
-    //   getChatroomRequests();
-    // } else if (user) {
-    //   getRequested(user.login);
-    //   getChatrooms(user.login);
-    // }
   }, [user]);
 
   function changeLanguage(lang) {
@@ -266,16 +260,19 @@ function ContextProvider(props) {
 
   function getChatroomRequests() {
     setLoaded(false);
-    api.get("/api/admin-messages/requests").then((res) =>
-      setChatroomRequests(
-        res.data
-          ? res.data
-          : {
-              user: [],
-              doctor: [],
-            }
+    api
+      .get("/api/admin-messages/requests")
+      .then((res) =>
+        setChatroomRequests(
+          res.data
+            ? res.data
+            : {
+                user: [],
+                doctor: [],
+              }
+        )
       )
-    );
+      .finally(() => setLoaded(true));
   }
 
   function getChatrooms(login) {
