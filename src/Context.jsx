@@ -48,6 +48,9 @@ function ContextProvider(props) {
 
   useEffect(() => {
     setUserType(user ? user.role : null);
+    if (user) {
+      setLoaded(true);
+    }
     // if (user?.role == "ADMIN") {
     //   getChatroomRequests();
     // } else if (user) {
@@ -97,8 +100,7 @@ function ContextProvider(props) {
           setUserData(renewData.username, data.token);
         }
       })
-      .catch((error) => console.error(error))
-      .finally(() => setLoaded(true));
+      .catch((error) => console.error(error));
   }
 
   function register(registerData, setInfoMessage) {
@@ -275,8 +277,7 @@ function ContextProvider(props) {
                 doctor: [],
               }
         )
-      )
-      .finally(() => setLoaded(true));
+      );
   }
 
   function getChatrooms(login) {
@@ -287,8 +288,7 @@ function ContextProvider(props) {
         },
       })
       .then((res) => res.data)
-      .then((res) => setChatrooms(res))
-      .finally(() => setLoaded(true));
+      .then((res) => setChatrooms(res));
   }
 
   function addNewChatroom(requests, setInfoMessage) {
