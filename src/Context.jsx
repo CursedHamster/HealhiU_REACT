@@ -48,12 +48,12 @@ function ContextProvider(props) {
 
   useEffect(() => {
     setUserType(user ? user.role : null);
-    if (user?.role == "ADMIN") {
-      getChatroomRequests();
-    } else if (user) {
-      getRequested(user.login);
-      getChatrooms(user.login);
-    }
+    // if (user?.role == "ADMIN") {
+    //   getChatroomRequests();
+    // } else if (user) {
+    //   getRequested(user.login);
+    //   getChatrooms(user.login);
+    // }
   }, [user]);
 
   function changeLanguage(lang) {
@@ -227,7 +227,8 @@ function ContextProvider(props) {
       .then((res) => setRequested(res.data));
   }
 
-  function requestChatroom(login) {
+  function requestChatroom(login, setDisabled) {
+    setDisabled(true);
     api
       .post(
         "/api/chatroom/request-chatroom",
@@ -241,10 +242,12 @@ function ContextProvider(props) {
       .then((res) => setRequested(res.data ? res.data : false))
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => setDisabled(false));
   }
 
-  function unrequestChatroom(login) {
+  function unrequestChatroom(login, setDisabled) {
+    setDisabled(true);
     api
       .delete("/api/chatroom/unrequest-chatroom", {
         params: {
@@ -254,7 +257,8 @@ function ContextProvider(props) {
       .then((res) => setRequested(res.data ? !res.data : true))
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => setDisabled(false));
   }
 
   function getChatroomRequests() {
@@ -429,9 +433,11 @@ function ContextProvider(props) {
         changeUser,
         changeUserAndProfilePicture,
         getUserProfile,
+        getRequested,
         requested,
         requestChatroom,
         unrequestChatroom,
+        getChatroomRequests,
         chatroomRequests,
         chatrooms,
         getTestResult,

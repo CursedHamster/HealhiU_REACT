@@ -7,7 +7,7 @@ import ModalAlert from "../ModalAlert";
 
 function AdminMessages() {
   const context = useContext(Context);
-  const { chatroomRequests, addNewChatroom } = context;
+  const { getChatroomRequests, chatroomRequests, addNewChatroom } = context;
   const {
     title,
     users,
@@ -24,6 +24,11 @@ function AdminMessages() {
     success: false,
   });
   const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (userType) {
+      getChatroomRequests();
+    }
+  }, []);
 
   const userListItems = chatroomRequests?.user.map((request, i) => {
     const { user } = request;

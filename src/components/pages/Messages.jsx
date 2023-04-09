@@ -20,6 +20,7 @@ function Messages() {
     updateMessageStatus,
     askToUpdateMessages,
     messages,
+    getRequested,
     requested,
     requestChatroom,
     unrequestChatroom,
@@ -58,6 +59,7 @@ function Messages() {
       time: convertDateToTime(new Date()),
     },
   });
+  const [disabled, setDisabled] = useState(false);
 
   //functions to get chatroom information
   const getCompanionLogin = (chat) =>
@@ -117,6 +119,10 @@ function Messages() {
 
   //useEffect's
   useEffect(() => {
+    if (userType) {
+      getRequested(userLogin);
+      getChatrooms(userLogin);
+    }
     scrollToBottomMessage();
     window.addEventListener("resize", scrollToBottomMessage);
     setWebSocket(new WebSocket(BROKER_URL));
@@ -186,8 +192,8 @@ function Messages() {
   }, [showNav]);
 
   //handlers
-  const handleRequest = (e) => requestChatroom(userLogin);
-  const handleUnrequest = (e) => unrequestChatroom(userLogin);
+  const handleRequest = (e) => requestChatroom(userLogin, setDisabled);
+  const handleUnrequest = (e) => unrequestChatroom(userLogin, setDisabled);
   function handleEnter(e) {
     if ((e.ctrlKey && e.key === "Enter") || (e.shiftKey && e.key === "Enter")) {
       e.preventDefault();
@@ -282,11 +288,11 @@ function Messages() {
           </div>
           {!(userType === "USER" && chatrooms.length > 0) &&
             (requested ? (
-              <Button buttonStyle="outline" onClick={handleUnrequest}>
+              <Button buttonStyle="outline" onClick={handleUnrequest} disabled={disabled}>
                 {disableApplication}
               </Button>
             ) : (
-              <Button buttonStyle="primary" onClick={handleRequest}>
+              <Button buttonStyle="primary" onClick={handleRequest} disabled={disabled}>
                 {enableApplication}
               </Button>
             ))}

@@ -12,8 +12,13 @@
     -webkit-animation: messageAppear .2s ease-out;
 }
 
+.message.sender {
+    border-bottom-right-radius: 0rem;
+}
+
 .message.receiver {
     background: white;
+    border-bottom-left-radius: 0rem;
 }
 
 .message.sender {
