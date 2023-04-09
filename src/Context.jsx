@@ -275,17 +275,15 @@ function ContextProvider(props) {
       .finally(() => setLoaded(true));
   }
 
-  function getChatrooms(login) {
-    setLoaded(false);
-    api
+  async function getChatrooms(login) {
+    await api
       .get("/api/chatroom/chatrooms", {
         params: {
           login: login,
         },
       })
       .then((res) => res.data)
-      .then((res) => setChatrooms(res))
-      .finally(() => setLoaded(true));
+      .then((res) => setChatrooms(res));
   }
 
   function addNewChatroom(requests, setInfoMessage) {
