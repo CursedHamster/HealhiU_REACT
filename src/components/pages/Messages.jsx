@@ -315,7 +315,7 @@ function Messages() {
             )}
           </h4>
           <div className="text-boxes" ref={bottomRef}>
-            {chatroom ? (
+            {chatrooms.length > 0 ? (
               messageItems
             ) : (
               <Message
