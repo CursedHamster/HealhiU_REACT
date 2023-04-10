@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import "./Header.css";
 import { Context } from "../../Context";
-import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAlert from "../ModalAlert";
 import logo from "/logo.svg";
+import { Divide as Hamburger } from "hamburger-react";
 
 function Header() {
   const context = useContext(Context);
@@ -13,26 +14,21 @@ function Header() {
   const { signIn, signUp } = text.header.unauthorized;
   const { test, messages, profile, signOut } = text.header.user;
   const { adminRegistration, adminMessages } = text.header.admin;
-  const [navs, setNavs] = useState(
-    <>
-      <Dropdown.Item>
-        <Link className="nav-link" to="/sign-in">
-          {signIn}
-        </Link>
-      </Dropdown.Item>
-      <Dropdown.Item>
-      <Link className="nav-link" to="/sign-up">
-        {signUp}
-      </Link>
-      </Dropdown.Item>
-    </>
-  );
+  const [navs, setNavs] = useState(<></>);
   const [show, setShow] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
   const navigate = useNavigate();
   const ref = useRef(null);
 
+  const handleClickToggler = (e) => {
+    setOpenNav((prev) => !prev);
+  };
+
   const handleLogout = (e) => {
     e.preventDefault();
+    if (openNav) {
+      setOpenNav(false);
+    }
     setShow(true);
   };
 
@@ -43,28 +39,41 @@ function Header() {
     }
   };
 
+  function handleClickLink() {
+    console.log("meow");
+    setOpenNav(false);
+  }
+
   const getUserHeader = (uType) => {
     return !uType ? (
       <>
-        <Link className="nav-link" to="/sign-in">
+        <Link className="nav-link" to="/sign-in" onClick={handleClickLink}>
           {signIn}
         </Link>
-        <Link className="nav-link" to="/sign-up">
+        <Link className="nav-link" to="/sign-up" onClick={handleClickLink}>
           {signUp}
         </Link>
       </>
     ) : uType === "ADMIN" ? (
       <>
-        <Link className="nav-link" to="/test">
+        <Link className="nav-link" to="/test" onClick={handleClickLink}>
           {test}
         </Link>
-        <Link className="nav-link" to="/admin-registration">
+        <Link
+          className="nav-link"
+          to="/admin-registration"
+          onClick={handleClickLink}
+        >
           {adminRegistration}
         </Link>
-        <Link className="nav-link" to="/admin-messages">
+        <Link
+          className="nav-link"
+          to="/admin-messages"
+          onClick={handleClickLink}
+        >
           {adminMessages}
         </Link>
-        <Link className="nav-link" to="/profile">
+        <Link className="nav-link" to="/profile" onClick={handleClickLink}>
           {profile}
         </Link>
         <Link className="nav-link" to="/" onClick={handleLogout}>
@@ -73,13 +82,13 @@ function Header() {
       </>
     ) : (
       <>
-        <Link className="nav-link" to="/test">
+        <Link className="nav-link" to="/test" onClick={handleClickLink}>
           {test}
         </Link>
-        <Link className="nav-link" to="/messages">
+        <Link className="nav-link" to="/messages" onClick={handleClickLink}>
           {messages}
         </Link>
-        <Link className="nav-link" to="/profile">
+        <Link className="nav-link" to="/profile" onClick={handleClickLink}>
           {profile}
         </Link>
         <Link className="nav-link" to="/" onClick={handleLogout}>
@@ -97,21 +106,23 @@ function Header() {
     setNavs(getUserHeader(userType));
   }, [userType]);
 
-  // useEffect(() => {
-  //   const checkIfClickedOutside = e => {
-  //     if (show && ref.current && !ref.current.contains(e.target)) {
-  //       setShow(false)
-  //     }
-  //   }
-  //   document.addEventListener("mousedown", checkIfClickedOutside)
-  //   return () => {
-  //     document.removeEventListener("mousedown", checkIfClickedOutside)
-  //   }
-  // }, [show])
+  useEffect(() => {
+    if (openNav) {
+      const checkIfClickedOutside = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+          setOpenNav(false);
+        }
+      };
+      document.addEventListener("mousedown", checkIfClickedOutside);
+      return () => {
+        document.removeEventListener("mousedown", checkIfClickedOutside);
+      };
+    }
+  }, [openNav]);
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg">
+      <Navbar expand="lg" ref={ref}>
         <Container>
           <div className="logo-and-language">
             <Link className="navbar-brand" to="/">
@@ -132,21 +143,18 @@ function Header() {
               </p>
             </div>
           </div>
-          <Dropdown>
-            <Dropdown.Toggle id="dropdown-basic">
-              <i className="bi bi-list"></i>
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              {navs}
-            </Dropdown.Menu>
-          </Dropdown>
-          {/* <Navbar.Toggle ref={ref} aria-controls="basic-navbar-nav">
-            <i className="bi bi-list"></i>
-          </Navbar.Toggle>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav>{navs}</Nav>
-          </Navbar.Collapse> */}
+          <Hamburger
+            toggled={openNav}
+            toggle={handleClickToggler}
+            size={28}
+            label="Menu"
+            rounded
+          />
+          <Navbar.Collapse in={openNav}>
+            <div>
+              <Nav>{navs}</Nav>
+            </div>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
       <ModalAlert

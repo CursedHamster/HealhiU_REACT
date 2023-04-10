@@ -22,15 +22,9 @@
     height: 1.5em;
 }
 
-.navbar .navbar-toggler {
-    font-size: 2em;
+.navbar .hamburger-react {
     color: var(--hu-accent-green);
-    border: none;
-    padding: 0;
-}
-
-.navbar .navbar-toggler:focus {
-    box-shadow: none;
+    display: none;
 }
 
 .navbar .navbar-collapse {
@@ -69,6 +63,9 @@
 }
 
 @media screen and (max-width: 992px) {
+    .navbar .hamburger-react {
+        display: unset;
+    }
     .navbar .navbar-nav {
         gap: 0;
     }
