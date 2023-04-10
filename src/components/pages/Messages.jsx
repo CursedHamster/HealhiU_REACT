@@ -135,7 +135,7 @@ function Messages() {
   useEffect(() => {
     if (chatrooms.length > 0) {
       if (!chatrooms.some((chat) => chat.id === chatroom?.id)) {
-        setChatroom(chatrooms[0]);
+        setChatroom(null);
       }
     }
   }, [chatrooms]);
