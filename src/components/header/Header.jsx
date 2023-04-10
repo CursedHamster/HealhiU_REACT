@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import "./Header.css";
 import { Context } from "../../Context";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAlert from "../ModalAlert";
 import logo from "/logo.svg";
@@ -15,12 +15,16 @@ function Header() {
   const { adminRegistration, adminMessages } = text.header.admin;
   const [navs, setNavs] = useState(
     <>
-      <Link className="nav-link" to="/sign-in">
-        {signIn}
-      </Link>
+      <Dropdown.Item>
+        <Link className="nav-link" to="/sign-in">
+          {signIn}
+        </Link>
+      </Dropdown.Item>
+      <Dropdown.Item>
       <Link className="nav-link" to="/sign-up">
         {signUp}
       </Link>
+      </Dropdown.Item>
     </>
   );
   const [show, setShow] = useState(false);
@@ -107,7 +111,7 @@ function Header() {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" ref={ref}>
+      <Navbar collapseOnSelect expand="lg">
         <Container>
           <div className="logo-and-language">
             <Link className="navbar-brand" to="/">
@@ -128,12 +132,21 @@ function Header() {
               </p>
             </div>
           </div>
-          <Navbar.Toggle aria-controls="basic-navbar-nav">
+          <Dropdown>
+            <Dropdown.Toggle id="dropdown-basic">
+              <i className="bi bi-list"></i>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {navs}
+            </Dropdown.Menu>
+          </Dropdown>
+          {/* <Navbar.Toggle ref={ref} aria-controls="basic-navbar-nav">
             <i className="bi bi-list"></i>
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>{navs}</Nav>
-          </Navbar.Collapse>
+          </Navbar.Collapse> */}
         </Container>
       </Navbar>
       <ModalAlert
