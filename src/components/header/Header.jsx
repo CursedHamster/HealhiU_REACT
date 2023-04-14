@@ -13,7 +13,7 @@ function Header() {
   const { modalText } = text.header;
   const { signIn, signUp } = text.header.unauthorized;
   const { test, messages, profile, signOut } = text.header.user;
-  const { adminRegistration, adminMessages } = text.header.admin;
+  const { adminRegistration, adminMessages, adminDashboard } = text.header.admin;
   const [navs, setNavs] = useState(<></>);
   const [show, setShow] = useState(false);
   const [openNav, setOpenNav] = useState(false);
@@ -40,7 +40,6 @@ function Header() {
   };
 
   function handleClickLink() {
-    console.log("meow");
     setOpenNav(false);
   }
 
@@ -56,9 +55,6 @@ function Header() {
       </>
     ) : uType === "ADMIN" ? (
       <>
-        <Link className="nav-link" to="/test" onClick={handleClickLink}>
-          {test}
-        </Link>
         <Link
           className="nav-link"
           to="/admin-registration"
@@ -72,6 +68,13 @@ function Header() {
           onClick={handleClickLink}
         >
           {adminMessages}
+        </Link>
+        <Link
+          className="nav-link"
+          to="/admin-dashboard"
+          onClick={handleClickLink}
+        >
+          {adminDashboard}
         </Link>
         <Link className="nav-link" to="/profile" onClick={handleClickLink}>
           {profile}

@@ -414,6 +414,34 @@ function ContextProvider(props) {
       .then((result) => setTestResult(result?.bmi ? result : null));
   }
 
+  function getAllUsers(setUsers) {
+    setLoaded(false);
+    api
+      .get("/api/admin-dashboard")
+      .then((res) => res.data)
+      .then((userList) =>
+        setUsers(
+          userList?.filter((userItem) => userItem?.login !== user?.login)
+        )
+      )
+      .catch((error) => setUsers(null));
+  }
+
+  function deleteUser(login, setUsers) {
+    setLoaded(false);
+    api
+      .delete("/api/admin-dashboard/delete", {
+        params: {
+          login: login,
+        },
+      })
+      .then((res) => {
+        setUsers((prev) => prev.filter((user) => user.login !== login));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoaded(true));
+  }
+
   return (
     <Context.Provider
       value={{
@@ -450,6 +478,8 @@ function ContextProvider(props) {
         getTestResult,
         saveTestResult,
         showTestResultOfUser,
+        getAllUsers,
+        deleteUser,
         url,
       }}
     >

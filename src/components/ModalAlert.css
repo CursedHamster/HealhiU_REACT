@@ -1,5 +1,6 @@
 .modal-alert .modal-content {
     --bs-modal-color: var(--hu-green-black);
+    padding: .5rem 1rem;
 
     border: none;
     box-shadow: var(--hu-gray-shadow);

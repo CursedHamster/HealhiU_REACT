@@ -11,6 +11,7 @@ import UserProfile from "./components/pages/UserProfile";
 import AdminRegistration from "./components/pages/AdminRegistration";
 import Messages from "./components/pages/Messages";
 import AdminMessages from "./components/pages/AdminMessages";
+import AdminDashboard from "./components/pages/AdminDashboard";
 import TestPage from "./components/pages/TestPage";
 import TestResult from "./components/pages/TestResult";
 import VerificationPage from "./components/pages/VerificationPage";
@@ -54,12 +55,18 @@ function App() {
         exact
         element={<ErrorPage errorCode={403} />}
       />
+      <Route
+        path="/admin-dashboard"
+        exact
+        element={<ErrorPage errorCode={403} />}
+      />
     </>
   );
   const adminLinks = (
     <>
       <Route path="/admin-registration" exact element={<AdminRegistration />} />
       <Route path="/admin-messages" exact element={<AdminMessages />} />
+      <Route path="/admin-dashboard" exact element={<AdminDashboard />} />
     </>
   );
   return (

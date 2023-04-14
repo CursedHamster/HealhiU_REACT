@@ -15,6 +15,7 @@ export default {
         test: "Тест",
         adminRegistration: "Реєстрація",
         adminMessages: "Чати",
+        adminDashboard: "Панель",
         profile: "Мій профіль",
         signOut: "Вийти",
       },
@@ -450,6 +451,20 @@ export default {
           "Для набирання 1 кг за тиждень Вам потрібно стільки калорій в день: ",
       },
     },
+    adminDashboard: {
+      title: "Панель адміністратора",
+      search: {
+        searchPlaceholder: "Логін користувача",
+        searchButton: "Знайти",
+      },
+      nothingFound: "Нічого не знайдено",
+      modalText: {
+        title: "Ви впевнені, що хочете видалити цього користувача?",
+        text: "Інформація про користувача буде повністю видалена",
+        noButton: "Закрити",
+        yesButton: "Так, видалити",
+      },
+    },
     testCard: {
       genderLabel: "Стать",
       ageLabel: "Вік",
@@ -658,6 +673,7 @@ export default {
         test: "Test",
         adminRegistration: "Registration",
         adminMessages: "Chats",
+        adminDashboard: "Dashboard",
         profile: "My Profile",
         signOut: "Sign Out",
       },
@@ -1081,6 +1097,20 @@ export default {
           "To gain 0.5 kg by week you need to consume this much calories per day:",
         gain1:
           "To gain 1 kg by week you need to consume this much calories per day:",
+      },
+    },
+    adminDashboard: {
+      title: "Admin Dashboard",
+      search: {
+        searchPlaceholder: "User login",
+        searchButton: "Search",
+      },
+      nothingFound: "Nothing found",
+      modalText: {
+        title: "Are you sure you want to delete this user?",
+        text: "All user info will be removed from database",
+        noButton: "Close",
+        yesButton: "Yes, delete",
       },
     },
     testCard: {

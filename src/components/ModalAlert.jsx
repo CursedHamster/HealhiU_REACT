@@ -5,10 +5,10 @@ import { Context } from "../Context";
 import Button from "./Button";
 
 function ModalAlert(props) {
-  const { show, setShow, allowFunction } = props;
+  const { show, setShow, allowFunction, value } = props;
   const { title, text, noButton, yesButton } = props.modalText;
   const handleClose = (allow) => {
-    allowFunction(allow);
+    allowFunction(allow, value);
     setShow(false);
   };
   return (
