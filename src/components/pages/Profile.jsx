@@ -22,7 +22,7 @@ function Profile() {
     setLoaded,
   } = context;
   const contextUser = context.user;
-  const { min, max, confirm, email } = context.text.validation;
+  const { min, max, dateError, confirm, email } = context.text.validation;
   const [infoMessage, setInfoMessage] = useState(null);
   const [user, setUser] = useState({
     email: "",
@@ -33,6 +33,9 @@ function Profile() {
   const [profileImage, setProfileImage] = useState(null);
   const [result, setResult] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const minDateOfBirth = "1900-01-01";
+  const maxDateOfBirth = new Date().toLocaleDateString("fr-ca");
 
   useEffect(() => {
     if (contextUser) {
@@ -77,7 +80,9 @@ function Profile() {
       .min(6, min + 6)
       .max(15, max + 15),
     confirmPassword: Yup.string().matches(new RegExp(password, "g"), confirm),
-    dateOfBirth: Yup.date(),
+    dateOfBirth: Yup.date()
+      .min(minDateOfBirth, dateError)
+      .max(maxDateOfBirth, dateError),
   });
 
   const formik = useFormik({
@@ -246,7 +251,8 @@ function Profile() {
               <Col>
                 <Form.Control
                   type="date"
-                  min="1900-01-01"
+                  min={minDateOfBirth}
+                  max={maxDateOfBirth}
                   name="dateOfBirth"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

@@ -29,38 +29,36 @@ function AdminMessages() {
   }, []);
 
   const userListItems = chatroomRequests?.user.map((request, i) => {
-    const { user } = request;
     return (
       <li
         key={"userListItem" + i}
         className="chat-list-item"
-        onClick={() => handleAddLogin(user.login, "user")}
+        onClick={() => handleAddLogin(request?.login, "user")}
       >
         <div className="user">
           <img
             className="circle"
-            src={user.imgUrl ? user.imgUrl : "/profile_image.png"}
+            src={request?.imgUrl ? request?.imgUrl : "/profile_image.png"}
           />
-          <p>{user.login}</p>
+          <p>{request?.login}</p>
         </div>
         <i className="bi bi-person-plus-fill"></i>
       </li>
     );
   });
   const doctorListItems = chatroomRequests?.doctor.map((request, i) => {
-    const { doctor } = request;
     return (
       <li
         key={"userListItem" + i}
         className="chat-list-item"
-        onClick={() => handleAddLogin(doctor.login, "doctor")}
+        onClick={() => handleAddLogin(request?.login, "doctor")}
       >
         <div className="user">
           <img
             className="circle"
-            src={doctor.imgUrl ? doctor.imgUrl : "/profile_image.png"}
+            src={request?.imgUrl ? request?.imgUrl : "/profile_image.png"}
           />
-          <p>{doctor.login}</p>
+          <p>{request?.login}</p>
         </div>
         <i className="bi bi-person-plus-fill"></i>
       </li>

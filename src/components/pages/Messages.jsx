@@ -96,14 +96,14 @@ function Messages() {
 
   //get jsx messages list
   const messageItems = messages.map((message) => {
-    if (message.status === "UNREAD" && message.recipient.login === userLogin) {
+    if (message.status === "UNREAD" && message.recipientLogin === userLogin) {
       updateStatus(message);
     }
     return (
       <Message
         key={"message-" + message.id}
         messageType={
-          message.recipient.login === userLogin ? "receiver" : "sender"
+          message.recipientLogin === userLogin ? "receiver" : "sender"
         }
         text={message.content}
         time={convertDateToTime(new Date(message.timestamp))}
@@ -231,9 +231,9 @@ function Messages() {
     if (companionLogin) {
       if (message?.id === null && message?.content === null) {
         getMessages(userLogin, companionLogin);
-      } else if (message?.sender.login === companionLogin) {
+      } else if (message?.senderLogin === companionLogin) {
         updateStatus(message);
-      } else if (message?.recipient.login === companionLogin) {
+      } else if (message?.recipientLogin === companionLogin) {
         getNewMessage(message);
       }
 
@@ -266,7 +266,7 @@ function Messages() {
     const updated = updateMessageStatus(message);
     updated.then((res) => {
       if (res) {
-        askToUpdateMessages(userLogin, message.sender.login, stompClient);
+        askToUpdateMessages(userLogin, message.senderLogin, stompClient);
       }
     });
   }

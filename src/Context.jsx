@@ -63,7 +63,7 @@ function ContextProvider(props) {
   function login(loginData, navigate, setErrorMessage) {
     setLoaded(false);
     api
-      .post("/api/auth/login", loginData)
+      .post("/auth/login", loginData)
       .then((res) => {
         let data = res.data;
         if (!data.token) {
@@ -83,7 +83,7 @@ function ContextProvider(props) {
 
   async function renew(renewData) {
     await api
-      .post("/api/auth/renew", renewData)
+      .post("/auth/renew", renewData)
       .then((res) => {
         let data = res.data;
         if (data.token) {
@@ -104,7 +104,7 @@ function ContextProvider(props) {
     setLoaded(false);
     if (!registerData.role) {
       api
-        .post("/api/auth/register", registerData)
+        .post("/auth/register", registerData)
         .then((res) => {
           setInfoMessage(res.status);
         })
@@ -113,7 +113,7 @@ function ContextProvider(props) {
     } else {
       api
         .post(
-          "/api/auth/admin-register?role=" + registerData.role,
+          "/auth/admin-register?role=" + registerData.role,
           registerData
         )
         .then((res) => setInfoMessage({ error: false, success: true }))
@@ -125,7 +125,7 @@ function ContextProvider(props) {
   function verifyUser(token, setEnabled) {
     setLoaded(false);
     api
-      .get("/api/auth/verify", {
+      .get("/auth/verify", {
         params: {
           token: token,
         },
@@ -140,7 +140,7 @@ function ContextProvider(props) {
   function verifyEmail(token, setEnabled) {
     setLoaded(false);
     api
-      .get("/api/user/verify", {
+      .get("/user/verify", {
         params: {
           token: token,
         },
@@ -155,7 +155,7 @@ function ContextProvider(props) {
   async function changeUser(userData) {
     let errorCode = null;
     await api
-      .post("/api/user/change", userData)
+      .put("/user/change", userData)
       .then((res) => {
         let data = res.data;
         if (!data.login) {
@@ -165,7 +165,7 @@ function ContextProvider(props) {
         errorCode = res.status;
       })
       .catch((error) => {
-        errorCode = error.response ? error.response.status : null;
+        errorCode = error.response ? error.response.status : 400;
       });
     return errorCode;
   }
@@ -173,7 +173,7 @@ function ContextProvider(props) {
   async function changeUserAndProfilePicture(userData, pictureData) {
     let newImgUrl = null;
     await api
-      .post("/api/user/change-picture", pictureData, {
+      .put("/user/change-picture", pictureData, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -197,7 +197,7 @@ function ContextProvider(props) {
 
   async function setUserData(login, token) {
     await api
-      .get("/api/user", {
+      .get("/user", {
         params: {
           login: login,
           token: token,
@@ -210,8 +210,8 @@ function ContextProvider(props) {
   function getUserProfile(login, setUser) {
     setLoaded(false);
     api
-      .get("/api/user/" + login)
-      .then((res) => res.data)
+      .get("/user/" + login)
+      .then((res) => res?.data)
       .then((data) => setUser(data))
       .catch((error) => setUser(null))
       .finally(() => setLoaded(true));
@@ -219,7 +219,7 @@ function ContextProvider(props) {
 
   function getRequested(login) {
     api
-      .get("/api/chatroom/requested", {
+      .get("/chatroom/requested", {
         params: {
           login: login,
         },
@@ -231,7 +231,7 @@ function ContextProvider(props) {
     setDisabled(true);
     api
       .post(
-        "/api/chatroom/request-chatroom",
+        "/chatroom/request-chatroom",
         {},
         {
           params: {
@@ -239,7 +239,7 @@ function ContextProvider(props) {
           },
         }
       )
-      .then((res) => setRequested(res.data ? res.data : false))
+      .then((res) => setRequested(res.data ? true : false))
       .catch((error) => {
         console.error(error);
       })
@@ -249,12 +249,12 @@ function ContextProvider(props) {
   function unrequestChatroom(login, setDisabled) {
     setDisabled(true);
     api
-      .delete("/api/chatroom/unrequest-chatroom", {
+      .delete("/chatroom/unrequest-chatroom", {
         params: {
           login: login,
         },
       })
-      .then((res) => setRequested(res.data ? !res.data : true))
+      .then((res) => setRequested(res.data ? false: true))
       .catch((error) => {
         console.error(error);
       })
@@ -264,7 +264,7 @@ function ContextProvider(props) {
   function getChatroomRequests() {
     setLoaded(false);
     api
-      .get("/api/admin-messages/requests")
+      .get("/admin-messages/requests")
       .then((res) =>
         setChatroomRequests(
           res.data
@@ -283,7 +283,7 @@ function ContextProvider(props) {
       setLoaded(false);
     }
     api
-      .get("/api/chatroom/chatrooms", {
+      .get("/chatroom/chatrooms", {
         params: {
           login: login,
         },
@@ -299,7 +299,7 @@ function ContextProvider(props) {
 
   function addNewChatroom(requests, setInfoMessage) {
     api
-      .post("/api/admin-messages/add-chatroom", requests)
+      .post("/admin-messages/add-chatroom", requests)
       .then((res) => {
         setChatroomRequests((prev) => ({
           ...prev,
@@ -314,7 +314,7 @@ function ContextProvider(props) {
 
   function getMessages(userLogin, companionLogin) {
     api
-      .get("/api/chatroom/messages", {
+      .get("/chatroom/messages", {
         params: {
           login: userLogin,
           companion: companionLogin,
@@ -359,7 +359,7 @@ function ContextProvider(props) {
     let updated = false;
     await api
       .put(
-        "/api/chatroom/message/update-status",
+        "/chatroom/message/update-status",
         {},
         {
           params: {
@@ -376,7 +376,7 @@ function ContextProvider(props) {
 
   function getTestResult(testData, setResult) {
     api
-      .post("/api/test/result", testData)
+      .post("/test/result", testData)
       .then((res) => {
         let data = res.data;
         if (!data?.bmi) {
@@ -389,7 +389,7 @@ function ContextProvider(props) {
 
   function saveTestResult(testData, login, setInfoMessage) {
     api
-      .post("/api/test/result/save", testData, {
+      .post("/test/result/save", testData, {
         params: {
           login: login,
         },
@@ -405,7 +405,7 @@ function ContextProvider(props) {
 
   function showTestResultOfUser(login, setTestResult) {
     api
-      .get("/api/test/result/show", {
+      .get("/test/result/show", {
         params: {
           login: login,
         },
@@ -417,7 +417,7 @@ function ContextProvider(props) {
   function getAllUsers(setUsers) {
     setLoaded(false);
     api
-      .get("/api/admin-dashboard")
+      .get("/admin-dashboard")
       .then((res) => res.data)
       .then((userList) =>
         setUsers(
@@ -430,7 +430,7 @@ function ContextProvider(props) {
   function deleteUser(login, setUsers) {
     setLoaded(false);
     api
-      .delete("/api/admin-dashboard/delete", {
+      .delete("/admin-dashboard/delete", {
         params: {
           login: login,
         },

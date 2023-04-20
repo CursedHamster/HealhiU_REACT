@@ -320,6 +320,7 @@ export default {
       required: "Це поле необхідно заповнити",
       min: "Мінімальна довжина цього поля - ",
       max: "Максимальна довжина цього поля - ",
+      dateError: "Некоректна дата народження",
       confirm: "Пароль повинен співпадати із введеним вище",
       email:
         "Електронна пошта повинна мати такий вигляд: 'youremail@gmail.com'",
@@ -982,6 +983,7 @@ export default {
       required: "This field is necessary to fill",
       min: "Minimal length of the field is ",
       max: "Maximal length of the field is ",
+      dateError: "Incorrect date of birth",
       confirm: "Password should match the one entered above",
       email: "Email should look like this: 'youremail@gmail.com'",
       login:

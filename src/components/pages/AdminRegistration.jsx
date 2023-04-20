@@ -11,7 +11,7 @@ import * as Yup from "yup";
 function AdminRegistration() {
   const context = useContext(Context);
   const { register } = context;
-  const { required, min, max, confirm, email, login } = context.text.validation;
+  const { required, min, max, dateError, confirm, email, login } = context.text.validation;
 
   const [password, setPassword] = useState("");
   const [infoMessage, setInfoMessage] = useState({
@@ -19,6 +19,9 @@ function AdminRegistration() {
     success: false,
   });
   const [formValues, setFormValues] = useState(null);
+
+  const minDateOfBirth = "1900-01-01";
+  const maxDateOfBirth = new Date().toLocaleDateString("fr-ca");
 
   const { title, inputs, info, cta, modalText, messageText } =
     context.text.adminRegistration;
@@ -53,7 +56,8 @@ function AdminRegistration() {
     confirmPassword: Yup.string()
       .matches(new RegExp(password, "g"), confirm)
       .required(required),
-    dateOfBirth: Yup.date().required(required),
+    dateOfBirth: Yup.date().required(required).min(minDateOfBirth, dateError)
+    .max(maxDateOfBirth, dateError),
   });
 
   const formik = useFormik({
@@ -190,7 +194,8 @@ function AdminRegistration() {
               <Col>
                 <Form.Control
                   type="date"
-                  min="1900-01-01"
+                  min={minDateOfBirth}
+                  max={maxDateOfBirth}
                   name="dateOfBirth"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}

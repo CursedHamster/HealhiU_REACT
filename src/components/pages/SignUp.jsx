@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./UserForm.css";
 import { Context } from "../../Context";
 import { Form, Row, Col } from "react-bootstrap";
@@ -11,12 +11,16 @@ import * as Yup from "yup";
 function SignUp() {
   const context = useContext(Context);
   const { register } = context;
-  const { required, min, max, confirm, email, login } = context.text.validation;
+  const { required, min, max, dateError, confirm, email, login } =
+    context.text.validation;
   const [password, setPassword] = useState("");
   const [infoMessage, setInfoMessage] = useState(null);
-  const navigate = useNavigate();
 
-  const { title, inputs, info, cta, linkText, link, messageText } = context.text.signUp;
+  const minDateOfBirth = "1900-01-01";
+  const maxDateOfBirth = new Date().toLocaleDateString("fr-ca");
+
+  const { title, inputs, info, cta, linkText, link, messageText } =
+    context.text.signUp;
   const {
     loginLabel,
     emailLabel,
@@ -46,7 +50,10 @@ function SignUp() {
     confirmPassword: Yup.string()
       .matches(new RegExp(password, "g"), confirm)
       .required(required),
-    dateOfBirth: Yup.date().required(required),
+    dateOfBirth: Yup.date()
+      .required(required)
+      .min(minDateOfBirth, dateError)
+      .max(maxDateOfBirth, dateError),
   });
 
   const formik = useFormik({
@@ -161,14 +168,17 @@ function SignUp() {
             isValid={
               formik.touched.confirmPassword && !formik.errors.confirmPassword
             }
-            isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
+            isInvalid={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
           />
           <Form.Group as={Row} className="mb-3" controlId="dateOfBirth">
             <Form.Label column>{dateOfBirthLabel}</Form.Label>
             <Col>
               <Form.Control
                 type="date"
-                min="1900-01-01"
+                min={minDateOfBirth}
+                max={maxDateOfBirth}
                 name="dateOfBirth"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -177,7 +187,9 @@ function SignUp() {
                 isValid={
                   formik.touched.dateOfBirth && !formik.errors.dateOfBirth
                 }
-                isInvalid={formik.touched.dateOfBirth && formik.errors.dateOfBirth}
+                isInvalid={
+                  formik.touched.dateOfBirth && formik.errors.dateOfBirth
+                }
               />
               {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
                 <Form.Control.Feedback type="invalid" tooltip>
@@ -199,12 +211,10 @@ function SignUp() {
             </p>
           </div>
           <div
-              className={
-                "error-text " + (infoMessage ? "s-" + infoMessage : "")
-              }
-            >
-              {messageText[infoMessage] ? messageText[infoMessage] : ""}
-            </div>
+            className={"error-text " + (infoMessage ? "s-" + infoMessage : "")}
+          >
+            {messageText[infoMessage] ? messageText[infoMessage] : ""}
+          </div>
         </Form>
         <p className="info">{info}</p>
       </div>
