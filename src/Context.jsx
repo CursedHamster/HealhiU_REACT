@@ -305,7 +305,7 @@ function ContextProvider(props) {
       .then((res) => {
         setChatroomRequests((prev) => ({
           ...prev,
-          user: prev.user.filter((val) => val.user.login !== requests.user),
+          user: prev.user.filter((val) => val.login !== requests.user),
         }));
         setInfoMessage({ error: false, success: true });
       })
