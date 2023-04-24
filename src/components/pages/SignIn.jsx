@@ -90,7 +90,6 @@ function SignIn() {
             onBlur={formik.handleBlur}
             value={formik.values.password}
             required
-            isValid={formik.touched.password && !formik.errors.password}
             isInvalid={formik.touched.password && formik.errors.password}
           />
           <div className="btn-container">

@@ -92,6 +92,8 @@ function ContextProvider(props) {
             JSON.stringify({ ...renewData, token: data.token })
           );
           setUserData(renewData.username, data.token);
+        } else {
+          setLoaded(true)
         }
       })
       .catch((error) => {

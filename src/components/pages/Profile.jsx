@@ -186,7 +186,6 @@ function Profile() {
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
                   required
-                  isValid={formik.touched.email && !formik.errors.email}
                   isInvalid={formik.errors.email}
                 />
                 {formik.errors.email && (
@@ -207,7 +206,6 @@ function Profile() {
                   onBlur={formik.handleBlur}
                   value={formik.values.name}
                   required
-                  isValid={formik.touched.name && !formik.errors.name}
                   isInvalid={formik.touched.name && formik.errors.name}
                 />
                 {formik.touched.name && formik.errors.name && (
@@ -228,7 +226,6 @@ function Profile() {
               onBlur={formik.handleBlur}
               value={formik.values.password}
               required
-              isValid={formik.touched.password && !formik.errors.password}
               isInvalid={formik.touched.password && formik.errors.password}
             />
             <PasswordInput
@@ -239,9 +236,6 @@ function Profile() {
               onBlur={formik.handleBlur}
               value={formik.values.confirmPassword}
               required
-              isValid={
-                formik.touched.confirmPassword && !formik.errors.confirmPassword
-              }
               isInvalid={
                 formik.touched.confirmPassword && formik.errors.confirmPassword
               }
@@ -258,9 +252,6 @@ function Profile() {
                   onBlur={formik.handleBlur}
                   value={formik.values.dateOfBirth}
                   required
-                  isValid={
-                    formik.touched.dateOfBirth && !formik.errors.dateOfBirth
-                  }
                   isInvalid={
                     formik.touched.dateOfBirth && formik.errors.dateOfBirth
                   }
