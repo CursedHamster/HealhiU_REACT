@@ -21,6 +21,7 @@ function ContextProvider(props) {
   const [chatrooms, setChatrooms] = useState([]);
 
   useEffect(() => {
+    window.fetch = null;
     if (!localStorage.getItem(languageItemName)) {
       localStorage.setItem(languageItemName, language);
     } else {
