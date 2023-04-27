@@ -1,20 +1,29 @@
 .modal-alert .modal-content {
-    --bs-modal-color: var(--hu-green-black);
-    padding: .5rem 1rem;
+  --bs-modal-color: var(--hu-green-black);
+  padding: 0.5rem 1rem;
 
-    border: none;
-    box-shadow: var(--hu-gray-shadow);
+  border: none;
+  box-shadow: var(--hu-gray-shadow);
 }
 
 .modal-alert .modal-header {
-    gap: 2rem;
-    border: none;
+  gap: 2rem;
+  border: none;
 }
 
 .modal-alert .btn-close {
-    margin: 0;
+  margin: 0;
 }
 
 .modal-alert .modal-footer {
-    border: none;
+  border: none;
+}
+
+@media (min-width: 576px) {
+  .modal-alert {
+    padding: 0 1rem;
+  }
+  .modal-alert .modal-dialog {
+    max-width: fit-content;
+  }
 }
