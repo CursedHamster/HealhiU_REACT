@@ -4,7 +4,7 @@ import { Context } from "../../Context";
 import "./TestResult.css";
 import ResultCard from "../ResultCard";
 import Button from "../Button";
-import ModalAlert from "../ModalAlert";
+import Toast from "react-bootstrap/Toast";
 
 function TestResult(props) {
   const context = useContext(Context);
@@ -15,6 +15,9 @@ function TestResult(props) {
   const testResult = location.state;
   const [result, setResult] = useState(null);
   const [infoMessage, setInfoMessage] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const toggleShowToast = () => setShowToast((prev) => !prev);
+  
   useEffect(() => {
     if (testResult) {
       setResult(testResult);
@@ -22,7 +25,7 @@ function TestResult(props) {
   }, [testResult]);
 
   function saveResult() {
-    saveTestResult(result, userLogin, setInfoMessage);
+    saveTestResult(result, userLogin, setInfoMessage, setShowToast);
   }
   return (
     <>
@@ -52,12 +55,19 @@ function TestResult(props) {
             </Button>
           )}
         </div>
-        <div
-          className={"error-text " + (infoMessage ? "s-" + infoMessage : "")}
-        >
-          {messageText[infoMessage] ? messageText[infoMessage] : ""}
-        </div>
       </div>
+      <Toast
+        className={infoMessage ? "s-" + infoMessage : ""}
+        show={showToast}
+        onClose={toggleShowToast}
+        delay={5000}
+        autohide
+      >
+        <Toast.Header className="justify-content-between">
+          <i className="icon bi bi-exclamation-square-fill"></i>
+          {messageText[infoMessage] ? messageText[infoMessage] : ""}
+        </Toast.Header>
+      </Toast>
     </>
   );
 }

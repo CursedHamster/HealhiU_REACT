@@ -394,7 +394,7 @@ function ContextProvider(props) {
       .catch((error) => console.log(error));
   }
 
-  function saveTestResult(testData, login, setInfoMessage) {
+  function saveTestResult(testData, login, setInfoMessage, setShowToast) {
     api
       .post("/test/result/save", testData, {
         params: {
@@ -407,7 +407,8 @@ function ContextProvider(props) {
         }
         setInfoMessage(res.status);
       })
-      .catch((error) => setInfoMessage(error.response.status));
+      .catch((error) => setInfoMessage(error.response.status))
+      .finally(() => setShowToast(true));
   }
 
   function showTestResultOfUser(login, setTestResults) {
