@@ -7,6 +7,7 @@ import Button from "../Button";
 import PasswordInput from "../PasswordInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Toast from "react-bootstrap/Toast";
 
 function SignIn() {
   const context = useContext(Context);
@@ -21,6 +22,9 @@ function SignIn() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
+
+  const [showToast, setShowToast] = useState(false);
+  const toggleShowToast = () => setShowToast((prev) => !prev);
 
   const schema = Yup.object().shape({
     login: Yup.string()
@@ -47,7 +51,8 @@ function SignIn() {
           password: values.password,
         },
         navigate,
-        setErrorMessage
+        setErrorMessage,
+        toggleShowToast
       );
     },
   });
@@ -104,10 +109,20 @@ function SignIn() {
               </Link>
             </p>
           </div>
-          <div className="error-text">{errorText}</div>
         </Form>
         <p className="info">{info}</p>
       </div>
+      <Toast
+        show={showToast}
+        onClose={toggleShowToast}
+        delay={5000}
+        autohide
+      >
+        <Toast.Header className="justify-content-between">
+          <i className="icon bi bi-exclamation-square-fill"></i>
+          {errorText}
+        </Toast.Header>
+      </Toast>
     </div>
   );
 }

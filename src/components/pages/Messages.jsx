@@ -19,7 +19,7 @@ function Messages() {
     getMessages,
     updateMessageStatus,
     askToUpdateMessages,
-    messages,
+    // messages,
     getRequested,
     requested,
     requestChatroom,
@@ -46,6 +46,7 @@ function Messages() {
   //states
   const [showNav, toggleShowNav] = useToggle(false);
   const [chatroom, setChatroom] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [webSocket, setWebSocket] = useState(null);
   const [stompClient, setStompClient] = useState(null);
   const [messageInput, setMessageInput] = useState("");
@@ -95,20 +96,32 @@ function Messages() {
   });
 
   //get jsx messages list
-  const messageItems = messages.map((message) => {
+  const messageItems = messages.map((message, i, array) => {
     if (message.status === "UNREAD" && message.recipientLogin === userLogin) {
       updateStatus(message);
     }
+    const prevElement = i - 1 >= 0 ? array[i - 1] : null;
+    const dateElement =
+      (prevElement &&
+        !checkMessageDate(message.timestamp, prevElement.timestamp)) ||
+      i === 0 ? (
+        <div className="messages-date" key={"date-" + i}>
+          {new Date(message.timestamp).toDateString()}
+        </div>
+      ) : null;
     return (
-      <Message
-        key={"message-" + message.id}
-        messageType={
-          message.recipientLogin === userLogin ? "receiver" : "sender"
-        }
-        text={message.content}
-        time={convertDateToTime(new Date(message.timestamp))}
-        read={message.status === "READ"}
-      />
+      <>
+        {dateElement ? dateElement : <></>}
+        <Message
+          key={"message-" + message.id}
+          messageType={
+            message.recipientLogin === userLogin ? "receiver" : "sender"
+          }
+          text={message.content}
+          time={convertDateToTime(new Date(message.timestamp))}
+          read={message.status === "READ"}
+        />
+      </>
     );
   });
 
@@ -142,10 +155,11 @@ function Messages() {
 
   useEffect(() => {
     if (chatroom) {
-      getMessages(userLogin, getCompanionLogin(chatroom));
+      getMessages(userLogin, getCompanionLogin(chatroom), setMessages);
       if (stompClient) {
         subscribe();
       }
+    } else {
     }
   }, [chatroom]);
 
@@ -215,6 +229,17 @@ function Messages() {
     );
   }
 
+  //checking message date
+  function checkMessageDate(thisMessageDate, prevMessageDate) {
+    const thisDate = new Date(thisMessageDate);
+    const prevDate = new Date(prevMessageDate);
+    return (
+      thisDate.getFullYear() === prevDate.getFullYear() &&
+      thisDate.getMonth() === prevDate.getMonth() &&
+      thisDate.getDate() === prevDate.getDate()
+    );
+  }
+
   //messaging functions
   function subscribe() {
     if (stompClient.subscriptions.messageId) {
@@ -230,11 +255,11 @@ function Messages() {
     const companionLogin = chatroom ? getCompanionLogin(chatroom) : null;
     if (companionLogin) {
       if (message?.id === null && message?.content === null) {
-        getMessages(userLogin, companionLogin);
+        getMessages(userLogin, companionLogin, setMessages);
       } else if (message?.senderLogin === companionLogin) {
         updateStatus(message);
       } else if (message?.recipientLogin === companionLogin) {
-        getNewMessage(message);
+        getNewMessage(message, setMessages);
       }
 
       getChatrooms(userLogin);
@@ -288,11 +313,19 @@ function Messages() {
           </div>
           {!(userType === "USER" && chatrooms.length > 0) &&
             (requested ? (
-              <Button buttonStyle="outline" onClick={handleUnrequest} disabled={disabled}>
+              <Button
+                buttonStyle="outline"
+                onClick={handleUnrequest}
+                disabled={disabled}
+              >
                 {disableApplication}
               </Button>
             ) : (
-              <Button buttonStyle="primary" onClick={handleRequest} disabled={disabled}>
+              <Button
+                buttonStyle="primary"
+                onClick={handleRequest}
+                disabled={disabled}
+              >
                 {enableApplication}
               </Button>
             ))}

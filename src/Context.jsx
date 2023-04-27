@@ -8,7 +8,6 @@ function ContextProvider(props) {
   const [loaded, setLoaded] = useState(false);
   const [language, setLanguage] = useState("ukr");
   const [text, setText] = useState(textData.ukr);
-  const [messages, setMessages] = useState([]);
   const languages = ["ukr", "eng"];
   const languageItemName = "language";
   const [user, setUser] = useState(null);
@@ -61,7 +60,7 @@ function ContextProvider(props) {
     }
   }
 
-  function login(loginData, navigate, setErrorMessage) {
+  function login(loginData, navigate, setErrorMessage, toggleShowToast) {
     setLoaded(false);
     api
       .post("/auth/login", loginData)
@@ -79,6 +78,7 @@ function ContextProvider(props) {
       .catch((error) => {
         setErrorMessage(true);
         setLoaded(true);
+        toggleShowToast();
       });
   }
 
@@ -94,7 +94,7 @@ function ContextProvider(props) {
           );
           setUserData(renewData.username, data.token);
         } else {
-          setLoaded(true)
+          setLoaded(true);
         }
       })
       .catch((error) => {
@@ -103,7 +103,7 @@ function ContextProvider(props) {
       });
   }
 
-  function register(registerData, setInfoMessage) {
+  function register(registerData, setInfoMessage, toggleShowToast) {
     setLoaded(false);
     if (!registerData.role) {
       api
@@ -112,16 +112,19 @@ function ContextProvider(props) {
           setInfoMessage(res.status);
         })
         .catch((error) => setInfoMessage(error.response.status))
-        .finally(() => setLoaded(true));
+        .finally(() => {
+          setLoaded(true);
+          toggleShowToast();
+        });
     } else {
       api
-        .post(
-          "/auth/admin-register?role=" + registerData.role,
-          registerData
-        )
+        .post("/auth/admin-register?role=" + registerData.role, registerData)
         .then((res) => setInfoMessage({ error: false, success: true }))
         .catch((error) => setInfoMessage({ error: true, success: false }))
-        .finally(() => setLoaded(true));
+        .finally(() => {
+          setLoaded(true);
+          toggleShowToast();
+        });
     }
   }
 
@@ -257,7 +260,7 @@ function ContextProvider(props) {
           login: login,
         },
       })
-      .then((res) => setRequested(res.data ? false: true))
+      .then((res) => setRequested(res.data ? false : true))
       .catch((error) => {
         console.error(error);
       })
@@ -300,7 +303,7 @@ function ContextProvider(props) {
       });
   }
 
-  function addNewChatroom(requests, setInfoMessage) {
+  function addNewChatroom(requests, setInfoMessage, toggleShowToast) {
     api
       .post("/admin-messages/add-chatroom", requests)
       .then((res) => {
@@ -312,10 +315,11 @@ function ContextProvider(props) {
       })
       .catch((error) => {
         setInfoMessage({ error: true, success: false });
-      });
+      })
+      .finally(() => toggleShowToast());
   }
 
-  function getMessages(userLogin, companionLogin) {
+  function getMessages(userLogin, companionLogin, setMessages) {
     api
       .get("/chatroom/messages", {
         params: {
@@ -342,7 +346,7 @@ function ContextProvider(props) {
     );
   }
 
-  function getNewMessage(message) {
+  function getNewMessage(message, setMessages) {
     setMessages((prev) => [...prev, message]);
   }
 
@@ -406,7 +410,7 @@ function ContextProvider(props) {
       .catch((error) => setInfoMessage(error.response.status));
   }
 
-  function showTestResultOfUser(login, setTestResult) {
+  function showTestResultOfUser(login, setTestResults) {
     api
       .get("/test/result/show", {
         params: {
@@ -414,7 +418,35 @@ function ContextProvider(props) {
         },
       })
       .then((res) => res.data)
-      .then((result) => setTestResult(result?.bmi ? result : null));
+      .then((results) =>
+        setTestResults(results?.length > 0 ? results.reverse() : [])
+      );
+  }
+
+  function deleteTestResult(
+    id,
+    setTestResults,
+    setInfoMessage,
+    toggleShowToast
+  ) {
+    setLoaded(false);
+    api
+      .delete("/test/result/delete", {
+        params: {
+          testId: id,
+        },
+      })
+      .then((res) => {
+        setTestResults((prev) => prev.filter((result) => result?.id !== id));
+        setInfoMessage("test200");
+      })
+      .catch((error) => {
+        setInfoMessage("test500");
+      })
+      .finally(() => {
+        setLoaded(true);
+        toggleShowToast();
+      });
   }
 
   function getAllUsers(setUsers) {
@@ -456,7 +488,6 @@ function ContextProvider(props) {
         userLogin: user?.login,
         getChatrooms,
         getMessages,
-        messages,
         addNewChatroom,
         addNewMessage,
         getNewMessage,
@@ -480,6 +511,7 @@ function ContextProvider(props) {
         chatrooms,
         getTestResult,
         saveTestResult,
+        deleteTestResult,
         showTestResultOfUser,
         getAllUsers,
         deleteUser,

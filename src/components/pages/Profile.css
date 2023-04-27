@@ -88,6 +88,17 @@
     -o-border-radius: 0.5rem;
 }
 
+.result-list {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.icon-group .bi.show {
+    color: rgb(139, 139, 139);
+}
+
 @media screen and (max-width: 1200px) {
     .profile .sides {
         gap: 1.5rem;

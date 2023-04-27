@@ -28,8 +28,25 @@ function UserProfile() {
   } = context.text.profile;
   const { nameLabel, dateOfBirthLabel, roleLabel } = inputs.inputLabels;
   const [user, setUser] = useState(null);
+  const [results, setResults] = useState([]);
   const [result, setResult] = useState(null);
+  const resultItems = results?.map((resultItem, i) => (
+    <div className="brick-list-item" key={"result-" + i}>
+      <p className="brick-login">
+        {resultItem?.timestamp
+          ? convertDate(new Date(resultItem.timestamp))
+          : "NULL"}
+      </p>
+      <div className="icon-group">
+        <i
+          className="bi bi-eye-fill show"
+          onClick={(e) => handleShow(e, resultItem)}
+        ></i>
+      </div>
+    </div>
+  ));
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showResults, setShowResults] = useState(false);
   const [showResultCard, setShowResultCard] = useState(false);
   const navigate = useNavigate();
 
@@ -39,7 +56,7 @@ function UserProfile() {
         navigate("/profile");
       } else {
         getUserProfile(login, setUser);
-        showTestResultOfUser(login, setResult);
+        showTestResultOfUser(login, setResults);
       }
     }
   }, [login]);
@@ -47,8 +64,9 @@ function UserProfile() {
   const handleClose = () => {
     setShowResultCard(false);
   };
-  const handleShow = (e) => {
+  const handleShow = (e, resultItem) => {
     e.preventDefault();
+    setResult(resultItem);
     setShowResultCard(true);
     setCurrentIndex(0);
   };
@@ -73,6 +91,16 @@ function UserProfile() {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   }
+
+  const handleShowResults = (e) => {
+    e.preventDefault();
+    setShowResults((prev) => !prev);
+  };
+
+  function convertDate(dateObj) {
+    return dateObj.toLocaleDateString();
+  }
+
 
   return (
     <>
@@ -125,12 +153,17 @@ function UserProfile() {
                 </Button>
                 {(userType === "DOCTOR" || userType === "ADMIN") && (
                   <Button
-                    buttonSize="medium"
-                    buttonStyle="outline"
-                    onClick={handleShow}
-                  >
-                    {showTestResult}
-                  </Button>
+                  buttonSize="medium"
+                  buttonStyle="outline"
+                  onClick={handleShowResults}
+                >
+                  {showTestResult}
+                  <i
+                    className={
+                      showResults ? "bi bi-chevron-up" : "bi bi-chevron-down"
+                    }
+                  ></i>
+                </Button>
                 )}
               </div>
             </Form>
@@ -150,6 +183,7 @@ function UserProfile() {
             </Button>
           </div>
         )}
+        {(userType === "DOCTOR" || userType === "ADMIN") && showResults && <div className="result-list">{resultItems}</div>}
       </div>
       <Modal
         className="profile-modal"

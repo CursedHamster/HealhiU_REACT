@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import { Context } from "../../Context";
 import Button from "../Button";
 import ModalAlert from "../ModalAlert";
+import Toast from "react-bootstrap/Toast";
 
 function AdminMessages() {
   const context = useContext(Context);
@@ -27,6 +28,10 @@ function AdminMessages() {
   useEffect(() => {
     getChatroomRequests();
   }, []);
+
+  const [showToast, setShowToast] = useState(false);
+  const toggleShowToast = () => setShowToast((prev) => !prev);
+
 
   const userListItems = chatroomRequests?.user.map((request, i) => {
     return (
@@ -86,7 +91,8 @@ function AdminMessages() {
           user: inputData.user,
           doctor: inputData.doctor,
         },
-        setInfoMessage
+        setInfoMessage, 
+        toggleShowToast
       );
       setInputData({ user: "", doctor: "" });
     }
@@ -132,9 +138,6 @@ function AdminMessages() {
             {cta}
             <i className="bi bi-envelope-plus-fill"></i>
           </Button>
-          <div className="error-text">
-            {infoMessage.error ? messageText.error : messageText.success}
-          </div>
         </Form>
       </div>
       <ModalAlert
@@ -143,6 +146,18 @@ function AdminMessages() {
         allowFunction={handleNewChatroom}
         modalText={modalText}
       />
+      <Toast
+        show={showToast}
+        onClose={toggleShowToast}
+        className={infoMessage.success ? "s-200" : "s-500"}
+        delay={5000}
+        autohide
+      >
+        <Toast.Header className="justify-content-between">
+          <i className="icon bi bi-exclamation-square-fill"></i>
+          {infoMessage.success ? messageText.success : messageText.error}
+        </Toast.Header>
+      </Toast>
     </>
   );
 }

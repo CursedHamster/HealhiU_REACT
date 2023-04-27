@@ -22,8 +22,8 @@ function AdminDashboard() {
   const [show, setShow] = useState(false);
   const [deleteValue, setDeleteValue] = useState(null);
   const userItems = pageUsers?.map((user) => (
-    <div className="user-list-item" key={user.login}>
-      <p className="user-login">{user.login}</p>
+    <div className="brick-list-item" key={user.login}>
+      <p className="brick-login">{user.login}</p>
       <div className="icon-group">
         <Link to={"/profile/" + user.login}>
           <i className="bi bi-person-circle"></i>
@@ -132,7 +132,7 @@ function AdminDashboard() {
       </Form>
       {filteredUsers?.length > 0 ? (
         <div className="pages">
-          <div className="user-list">{userItems}</div>
+          <div className="brick-list">{userItems}</div>
           <PaginationControl
             page={page}
             between={3}

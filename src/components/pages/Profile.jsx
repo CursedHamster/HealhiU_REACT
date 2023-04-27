@@ -11,12 +11,14 @@ import PasswordInput from "../PasswordInput";
 import ModalAlert from "../ModalAlert";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Toast from "react-bootstrap/Toast";
 
 function Profile() {
   const context = useContext(Context);
   const {
     userLogin = "",
     changeUser,
+    deleteTestResult,
     showTestResultOfUser,
     changeUserAndProfilePicture,
     setLoaded,
@@ -31,7 +33,27 @@ function Profile() {
     imgUrl: null,
   });
   const [profileImage, setProfileImage] = useState(null);
+  const [results, setResults] = useState([]);
   const [result, setResult] = useState(null);
+  const resultItems = results?.map((resultItem, i) => (
+    <div className="brick-list-item" key={"result-" + i}>
+      <p className="brick-login">
+        {resultItem?.timestamp
+          ? convertDate(new Date(resultItem.timestamp))
+          : "NULL"}
+      </p>
+      <div className="icon-group">
+        <i
+          className="bi bi-eye-fill show"
+          onClick={(e) => handleShow(e, resultItem)}
+        ></i>
+        <i
+          className="bi bi-trash3-fill"
+          onClick={(e) => handleShowDeleteTestResultModal(e, resultItem?.id)}
+        ></i>
+      </div>
+    </div>
+  ));
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const minDateOfBirth = "1900-01-01";
@@ -40,11 +62,12 @@ function Profile() {
   useEffect(() => {
     if (contextUser) {
       setUser((prev) => ({ ...prev, ...contextUser }));
-      showTestResultOfUser(contextUser.login, setResult);
+      showTestResultOfUser(contextUser.login, setResults);
     }
   }, [contextUser]);
 
   const [password, setPassword] = useState("");
+  const [showResults, setShowResults] = useState(false);
   const [showResultCard, setShowResultCard] = useState(false);
 
   const [formValues, setFormValues] = useState(null);
@@ -54,7 +77,7 @@ function Profile() {
     cta,
     uploadImage,
     showTestResult,
-    noResultText,
+    modalTextDeleteTestResult,
     closeTestResult,
     modalText,
     messageText,
@@ -70,6 +93,11 @@ function Profile() {
   const { loginPlaceholder, emailPlaceholder, namePlaceholder } =
     inputs.inputPlaceholders;
   const [show, setShow] = useState(false);
+  const [showDeleteTestResultModal, setShowDeleteTestResultModal] =
+    useState(false);
+  const [deleteValue, setDeleteValue] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const toggleShowToast = () => setShowToast((prev) => !prev);
 
   const schema = Yup.object().shape({
     email: Yup.string().email(email),
@@ -118,17 +146,38 @@ function Profile() {
         .then((res) => {
           setInfoMessage(res);
         })
-        .finally(() => setLoaded(true));
+        .finally(() => {
+          setLoaded(true);
+          toggleShowToast();
+        });
       formik.setTouched({});
       formik.setErrors({});
     }
   }
 
+  function handleShowDeleteTestResultModal(e, id) {
+    e.preventDefault();
+    setDeleteValue(id);
+    setShowDeleteTestResultModal(true);
+  }
+
+  function handleDeleteTestResult(allow, id) {
+    if (allow) {
+      deleteTestResult(id, setResults, setInfoMessage, toggleShowToast);
+    }
+  }
+
+  const handleShowResults = (e) => {
+    e.preventDefault();
+    setShowResults((prev) => !prev);
+  };
+
   const handleClose = () => {
     setShowResultCard(false);
   };
-  const handleShow = (e) => {
+  const handleShow = (e, resultItem) => {
     e.preventDefault();
+    setResult(resultItem);
     setShowResultCard(true);
     setCurrentIndex(0);
   };
@@ -150,6 +199,10 @@ function Profile() {
     } else {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
+  }
+
+  function convertDate(dateObj) {
+    return dateObj.toLocaleDateString();
   }
 
   return (
@@ -271,17 +324,15 @@ function Profile() {
               <Button
                 buttonSize="medium"
                 buttonStyle="outline"
-                onClick={handleShow}
+                onClick={handleShowResults}
               >
                 {showTestResult}
+                <i
+                  className={
+                    showResults ? "bi bi-chevron-up" : "bi bi-chevron-down"
+                  }
+                ></i>
               </Button>
-            </div>
-            <div
-              className={
-                "error-text " + (infoMessage ? "s-" + infoMessage : "")
-              }
-            >
-              {messageText[infoMessage] ? messageText[infoMessage] : ""}
             </div>
           </Form>
           <div className="profile-picture">
@@ -314,6 +365,7 @@ function Profile() {
             </Form.Group>
           </div>
         </div>
+        {showResults && <div className="result-list">{resultItems}</div>}
       </div>
       <Modal
         className="profile-modal"
@@ -324,37 +376,33 @@ function Profile() {
           {closeTestResult}
           <i className="bi bi-x"></i>
         </div>
-        {result ? (
-          <div className="card-container">
-            {currentIndex === 0 ? (
-              <>
-                <ResultCard cardType="type-d" resultInfo={result} />
-                <Button
-                  className="button-right"
-                  buttonStyle="icon"
-                  buttonSize="medium"
-                  onClick={() => nextCard(currentIndex)}
-                >
-                  <i className="bi bi-chevron-right"></i>
-                </Button>
-              </>
-            ) : (
-              <>
-                <TestCard testInfo={result} />
-                <Button
-                  className="button-left"
-                  buttonStyle="icon"
-                  buttonSize="medium"
-                  onClick={() => prevCard(currentIndex)}
-                >
-                  <i className="bi bi-chevron-left"></i>
-                </Button>
-              </>
-            )}
-          </div>
-        ) : (
-          <div className="no-result">{noResultText}</div>
-        )}
+        <div className="card-container">
+          {currentIndex === 0 ? (
+            <>
+              <ResultCard cardType="type-d" resultInfo={result} />
+              <Button
+                className="button-right"
+                buttonStyle="icon"
+                buttonSize="medium"
+                onClick={() => nextCard(currentIndex)}
+              >
+                <i className="bi bi-chevron-right"></i>
+              </Button>
+            </>
+          ) : (
+            <>
+              <TestCard testInfo={result} />
+              <Button
+                className="button-left"
+                buttonStyle="icon"
+                buttonSize="medium"
+                onClick={() => prevCard(currentIndex)}
+              >
+                <i className="bi bi-chevron-left"></i>
+              </Button>
+            </>
+          )}
+        </div>
       </Modal>
       <ModalAlert
         show={show}
@@ -362,6 +410,25 @@ function Profile() {
         allowFunction={handleChangeUser}
         modalText={modalText}
       />
+      <ModalAlert
+        show={showDeleteTestResultModal}
+        setShow={setShowDeleteTestResultModal}
+        allowFunction={handleDeleteTestResult}
+        modalText={modalTextDeleteTestResult}
+        value={deleteValue}
+      />
+      <Toast
+        show={showToast}
+        onClose={toggleShowToast}
+        className={infoMessage ? "s-" + infoMessage : ""}
+        delay={5000}
+        autohide
+      >
+        <Toast.Header className="justify-content-between">
+          <i className="icon bi bi-exclamation-square-fill"></i>
+          {messageText[infoMessage] ? messageText[infoMessage] : ""}
+        </Toast.Header>
+      </Toast>
     </>
   );
 }

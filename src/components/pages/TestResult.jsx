@@ -10,18 +10,17 @@ function TestResult(props) {
   const context = useContext(Context);
   const { userLogin, saveTestResult } = context;
   const { resultVariants } = context.text.resultCard;
-  const { title, goToHome, saveButton, modalText, messageText } = context.text.testResult;
+  const { title, goToHome, saveButton, messageText } = context.text.testResult;
   const location = useLocation();
   const testResult = location.state;
   const [result, setResult] = useState(null);
   const [infoMessage, setInfoMessage] = useState(null);
-  const [show, setShow] = useState(false);
-  const handleSave = () => setShow(true);
   useEffect(() => {
     if (testResult) {
       setResult(testResult);
     }
   }, [testResult]);
+
   function saveResult() {
     saveTestResult(result, userLogin, setInfoMessage);
   }
@@ -48,7 +47,7 @@ function TestResult(props) {
             </Button>
           </Link>
           {userLogin && result && (
-            <Button buttonStyle="cta" buttonSize="medium" onClick={handleSave}>
+            <Button buttonStyle="cta" buttonSize="medium" onClick={saveResult}>
               {saveButton} <i className="bi bi-sd-card"></i>
             </Button>
           )}
@@ -59,12 +58,6 @@ function TestResult(props) {
           {messageText[infoMessage] ? messageText[infoMessage] : ""}
         </div>
       </div>
-      <ModalAlert
-        show={show}
-        setShow={setShow}
-        allowFunction={saveResult}
-        modalText={modalText}
-      />
     </>
   );
 }

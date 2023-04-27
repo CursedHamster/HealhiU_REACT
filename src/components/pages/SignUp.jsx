@@ -7,6 +7,7 @@ import Button from "../Button";
 import PasswordInput from "../PasswordInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Toast from "react-bootstrap/Toast";
 
 function SignUp() {
   const context = useContext(Context);
@@ -31,6 +32,9 @@ function SignUp() {
   } = inputs.inputLabels;
   const { loginPlaceholder, emailPlaceholder, namePlaceholder } =
     inputs.inputPlaceholders;
+
+  const [showToast, setShowToast] = useState(false);
+  const toggleShowToast = () => setShowToast((prev) => !prev);
 
   const schema = Yup.object().shape({
     login: Yup.string()
@@ -67,7 +71,7 @@ function SignUp() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      register(values, setInfoMessage);
+      register(values, setInfoMessage, toggleShowToast);
     },
   });
 
@@ -210,14 +214,21 @@ function SignUp() {
               </Link>
             </p>
           </div>
-          <div
-            className={"error-text " + (infoMessage ? "s-" + infoMessage : "")}
-          >
-            {messageText[infoMessage] ? messageText[infoMessage] : ""}
-          </div>
         </Form>
         <p className="info">{info}</p>
       </div>
+      <Toast
+        show={showToast}
+        onClose={toggleShowToast}
+        className={infoMessage ? "s-" + infoMessage : ""}
+        delay={5000}
+        autohide
+      >
+        <Toast.Header className="justify-content-between">
+          <i className="icon bi bi-exclamation-square-fill"></i>
+          {messageText[infoMessage] ? messageText[infoMessage] : ""}
+        </Toast.Header>
+      </Toast>
     </div>
   );
 }

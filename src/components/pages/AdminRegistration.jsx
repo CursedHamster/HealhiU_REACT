@@ -7,6 +7,8 @@ import PasswordInput from "../PasswordInput";
 import ModalAlert from "../ModalAlert";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Toast from "react-bootstrap/Toast";
+
 
 function AdminRegistration() {
   const context = useContext(Context);
@@ -37,6 +39,9 @@ function AdminRegistration() {
   const { loginPlaceholder, emailPlaceholder, namePlaceholder } =
     inputs.inputPlaceholders;
   const [show, setShow] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
+  const toggleShowToast = () => setShowToast((prev) => !prev);
 
   const schema = Yup.object().shape({
     login: Yup.string()
@@ -79,7 +84,7 @@ function AdminRegistration() {
 
   function addNewUser(allow) {
     if (allow) {
-      register(formValues, setInfoMessage);
+      register(formValues, setInfoMessage, toggleShowToast);
     }
   }
 
@@ -237,9 +242,6 @@ function AdminRegistration() {
                 <i className="bi bi-arrow-right"></i>
               </Button>
             </div>
-            <div className="error-text">
-              {infoMessage.error ? messageText.error : messageText.success}
-            </div>
           </Form>
           <div className="info">{info}</div>
         </div>
@@ -250,6 +252,18 @@ function AdminRegistration() {
         allowFunction={addNewUser}
         modalText={modalText}
       />
+      <Toast
+        show={showToast}
+        onClose={toggleShowToast}
+        className={infoMessage.success ? "s-200" : "s-500"}
+        delay={5000}
+        autohide
+      >
+        <Toast.Header className="justify-content-between">
+          <i className="icon bi bi-exclamation-square-fill"></i>
+          {infoMessage.error ? messageText.error : messageText.success}
+        </Toast.Header>
+      </Toast>
     </>
   );
 }

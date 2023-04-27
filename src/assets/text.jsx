@@ -217,7 +217,7 @@ export default {
       cta: "Зберегти зміни",
       goBack: "Повернутись назад",
       uploadImage: "Завантажити зображення",
-      showTestResult: "Результат тесту",
+      showTestResult: "Результати тесту",
       noResultText: "Збереженого результату тесту немає",
       closeTestResult: "Закрити",
       info: (
@@ -235,12 +235,21 @@ export default {
         noButton: "Закрити",
         yesButton: "Так, зберегти зміни",
       },
+      modalTextDeleteTestResult: {
+        title: "Ви впевнені, що хочете видалити збережений результат тесту?",
+        text: "Після видалення його неможливо буде відновити.",
+        noButton: "Закрити",
+        yesButton: "Так, видалити результат тесту",
+      },
       messageText: {
         200: "Ваш профіль успішно змінено",
         202: "Зміни було внесено. На вказану електронну пошту має прийти лист із підтвердженням",
         400: "Ніяких змін не було внесено",
         401: "Новий пароль не співпадає з підтвердженням",
         403: "Пошта вже використовується",
+        500: "Щось пішло не так",
+        test200: "Результат тесту було успішно видалено",
+        test500: "Результат тесту не було видалено",
       },
     },
     messages: {
@@ -879,7 +888,7 @@ export default {
       cta: "Save changes",
       goBack: "Go back",
       uploadImage: "Upload new image",
-      showTestResult: "Show test result",
+      showTestResult: "Show test results",
       noResultText: "There is no saved test result",
       closeTestResult: "Close",
       info: (
@@ -897,12 +906,21 @@ export default {
         noButton: "Close",
         yesButton: "Yes, save changes",
       },
+      modalTextDeleteTestResult: {
+        title: "Are you sure you want to delete the saved test result?",
+        text: "It will not be possible to restore it later.",
+        noButton: "Close",
+        yesButton: "Yes, delete the test result",
+      },
       messageText: {
         200: "The profile has been changed",
         202: "Changes have been applied. An email confirmation should be sent to the provided email address",
         400: "No changes have been made",
         401: "New password was not confirmed correctly",
-        403: "This email is already in use by someone else",
+        403: "This email is already used by someone else",
+        500: "Something went wrong",
+        test200: "Test result was successfully deleted",
+        test500: "Couldn't delete the test result",
       },
     },
     messages: {
@@ -1163,7 +1181,7 @@ export default {
             "To use this test it is necessary to be 14 y.o. or older. Calculator can not be used by children.",
           type: "input",
           restrictions: {
-            minutes: 14,
+            min: 14,
             max: 130,
           },
         },
