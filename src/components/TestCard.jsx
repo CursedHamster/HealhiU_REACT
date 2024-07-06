@@ -27,9 +27,8 @@ function TestCard(props) {
   } = props.testInfo;
 
   return (
-    <div className="result-card d-flex">
-      <div className="sides w-100 d-flex">
-        <div className="col column-1">
+    <div className="result-card test-card d-flex rounded-5">
+        <div className="col">
           <div className="test-cell">
             <h3>{genderLabel}</h3>
             <p className="cell">{genderText[gender]}</p>
@@ -47,7 +46,7 @@ function TestCard(props) {
             <p className="cell">{weight}</p>
           </div>
         </div>
-        <div className="col column-2">
+        <div className="col">
           <div className="test-cell">
             <h3>{chestSizeLabel}</h3>
             <p className="cell">{chestSize}</p>
@@ -65,7 +64,6 @@ function TestCard(props) {
             <p className="cell">{bloodType}</p>
           </div>
         </div>
-      </div>
     </div>
   );
 }

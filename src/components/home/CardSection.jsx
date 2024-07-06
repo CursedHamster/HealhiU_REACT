@@ -13,23 +13,21 @@ function CardSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const cardRef = useRef(null);
 
-  gsap.registerPlugin(ScrollTrigger);
-
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     setCurrentCard(cardsData[currentIndex]);
     gsap.fromTo(
       ".confession-container",
-      {
-        opacity: 0,
-        y: 50,
-        duration: 0.5,
-      },
       {
         scrollTrigger: {
           trigger: ".confession-container",
           toggleActions: "restart pause none none",
         },
-        opacity: 1,
+        autoAlpha: 0,
+        y: 50,
+      },
+      {
+        autoAlpha: 1,
         y: 0,
         duration: 1,
       }
@@ -37,12 +35,14 @@ function CardSection() {
     gsap.fromTo(
       ".result-card",
       {
+        autoAlpha: 0.5,
         y: 50,
-        duration: 0.2,
+        // scale: 0.95,
       },
       {
+        autoAlpha: 1,
         y: 0,
-        duration: 1,
+        duration: 0.5,
       }
     );
     const timeout = setTimeout(() => {

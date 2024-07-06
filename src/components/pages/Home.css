@@ -1,12 +1,12 @@
 .perk-section {
-    padding-top: 8vh;
-    padding-bottom: 8vh;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
     background: var(--hu-green-black);
     color: var(--hu-white);
 
     justify-content: center;
     align-items: flex-start;
-    gap: 3rem;
+    gap: 4rem;
 
     flex-wrap: wrap;
 }

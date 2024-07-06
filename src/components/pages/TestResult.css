@@ -4,6 +4,12 @@
   background: var(--hu-light-gradient);
 }
 
+.test-result .result-card {
+  /* max-width: 1200px; */
+  /* margin: 2rem 0; */
+  min-height: 60vh;
+}
+
 .test-result .green {
   height: 100vh;
   position: absolute;
@@ -23,11 +29,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 @media screen and (max-width: 600px) {
   .test-result h1 {
+    text-align: center;
+  }
+  .test-result p {
     text-align: center;
   }
   .test-result .button-group {

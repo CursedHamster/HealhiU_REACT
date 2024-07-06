@@ -4,7 +4,7 @@ import { Context } from "../../Context";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ModalAlert from "../ModalAlert";
-import logo from "/logo.svg";
+import logo from "/healthiu_logo.svg";
 import { Divide as Hamburger } from "hamburger-react";
 
 function Header() {

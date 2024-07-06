@@ -63,6 +63,11 @@
     cursor: pointer;
 }
 
+.logo-and-language .language-option:hover {
+    cursor: pointer;
+    color: var(--hu-black);
+}
+
 @media screen and (max-width: 992px) {
     .navbar .navbar-collapse {
         text-align: start;

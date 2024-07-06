@@ -2,10 +2,14 @@
     position: relative;
     isolation: isolate;
     gap: 5rem;
-    height: fit-content;
+    min-height: 100vh;
+    min-height: 100svh;
+    align-items: center;
 }
 
 .card-container {
+    width: 100%;
+    height: fit-content;
     position: relative;
     isolation: isolate;
 }
@@ -27,17 +31,19 @@
 }
 
 .ball-1 {
-    width: 10vw;
-    bottom: -4vw;
-    left: -7vw;
-    z-index: 2;
+    width: 8vw;
+    bottom: 1vw;
+    left: -3vw;
+    opacity: 0.5;
+    /* z-index: 2; */
 }
 
 .ball-2 {
-    width: 7vw;
+    width: 10vw;
     bottom: -4.5vw;
     left: 4vw;
-    z-index: 2;
+    opacity: 0.5;
+    /* z-index: 2; */
 }
 
 .ball-3 {
@@ -53,7 +59,7 @@
     top: 10%;
     right: -8%;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
 .card-shadow {
@@ -76,7 +82,7 @@
 }
 
 .card-section .green {
-    height: 70%;
+    height: 70vh;
     position: absolute;
     z-index: -1;
 }
@@ -176,7 +182,7 @@
 
     .card-section {
         flex-direction: column-reverse;
-        gap: 2rem;
+        gap: 4rem;
     }
 
     .card-section .ball {
@@ -184,7 +190,7 @@
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 900px) {
     .card-section {
         flex-direction: column-reverse;
         gap: 4rem;
@@ -200,5 +206,13 @@
         justify-content: center;
         align-items: flex-end;
         gap: 30%;
+    }
+
+    .card-container .button-right {
+        right: -1.5rem;
+    }
+    
+    .card-container .button-left {
+        left: -1.5rem;
     }
 }

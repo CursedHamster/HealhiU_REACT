@@ -69,7 +69,9 @@
     }
 
     .test-page .page-numbers {
+        width: 100%;
         gap: 0.5rem;
+        flex-wrap: nowrap;
     }
 
     .test-page .page-number {
@@ -78,5 +80,7 @@
 
     .test-page .page-breaker {
         width: 0.5em;
+        display: none;
+        /* height: 0.5em; */
     }
 }

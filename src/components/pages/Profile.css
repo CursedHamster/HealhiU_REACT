@@ -46,9 +46,9 @@
 }
 
 .profile-modal .modal-dialog {
-    max-width: 100%;
+    max-width: 1200px;
     width: 100%;
-    margin: 0 calc(var(--section-padding-horisontal) / 2);
+    margin: 0 auto;
     display: flex;
     justify-content: center;
 }

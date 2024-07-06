@@ -136,6 +136,7 @@
 }
 
 .messages .text-boxes {
+  position: relative;
   flex: 1;
   padding: var(--messages-padding-vertical) var(--messages-padding-horisontal);
   width: 100%;
@@ -144,10 +145,26 @@
   flex-direction: column;
   overflow-y: auto;
   gap: 1rem;
-  background: url("/logo_translucent.svg");
-  background-repeat: space;
+  /* background: url("/healthiu_logo.svg");
+  background-size: 1rem 1rem;
+  background-repeat: space; */
   scroll-behavior: smooth;
+  z-index: 0;
 }
+/* 
+.messages .text-boxes::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url("/healthiu_logo.svg"); 
+  background-size: 2rem;
+  background-repeat: space;
+  opacity: 0.05;
+  z-index: -1;
+} */
 
 .messages .text-input-container {
   position: relative;

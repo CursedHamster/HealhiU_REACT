@@ -36,14 +36,16 @@ export default {
         info: (
           <>
             <p>
-              <b>Увага</b>. Пройшовши цей тест, Ви дізнаєтесь про стан свого
-              здоров’я, а точніше - чи Ваша вага в нормі, отримаєте рекомендацію
-              стосовно того, що і скільки Вам потрібно їсти, щоб підтримувати
-              своє тіло в хорошій формі.
+              Безкоштовно пройдіть короткий тест і отримайте персональні
+              рекомендації щодо харчування: дізнайтеся, чи відповідає ваша вага
+              нормі, отримайте поради, що і скільки вам їсти, щоб підтримувати
+              себе у формі, зробіть перший крок до кращого самопочуття та
+              життєвої енергії.
             </p>
+            <br />
             <p>
               Якщо хочете зберегти результат, Ви повинні спочатку ввійти в свій
-              акаунт!
+              профіль!
             </p>
           </>
         ),
@@ -57,7 +59,7 @@ export default {
               Тест <span className="accent-text light">не замінить</span> лікаря
             </>
           ),
-          text: "Хоча тест має велику точність результату, але якщо у тебе існують сумніви з приводу свого здоров’я, треба звернутись  до лікаря",
+          text: "Хоча тест має велику точність результату, але якщо у Вас існують сумніви з приводу свого здоров’я, треба звернутись  до лікаря",
         },
         {
           icon: "bi bi-apple",
@@ -67,7 +69,7 @@ export default {
               <span className="accent-text light">важливе</span>
             </>
           ),
-          text: "Незалежно від результату, тобі буде запропонований раціон, який допоможе підтримувати хороший стан здоров’я",
+          text: "Незалежно від результату, Вам буде запропонований раціон, який допоможе підтримувати хороший стан здоров’я",
         },
         {
           icon: "bi bi-capsule",
@@ -450,15 +452,15 @@ export default {
       caloriesLabel: "Розрахунок споживання калорій на день",
       caloriesVariants: {
         maintain:
-          "Для підтримання ваги без змін Вам потрібно стільки калорій в день: ",
+          "Для підтримання ваги без змін Вам потрібно стільки калорій на день: ",
         lose05:
-          "Для скидання 0.5 кг за тиждень Вам потрібно стільки калорій в день: ",
+          "Для скидання 0.5 кг за тиждень Вам потрібно стільки калорій на день: ",
         lose1:
-          "Для скидання 1 кг за тиждень Вам потрібно стільки калорій в день: ",
+          "Для скидання 1 кг за тиждень Вам потрібно стільки калорій на день: ",
         gain05:
-          "Для набирання 0.5 кг за тиждень Вам потрібно стільки калорій в день: ",
+          "Для набирання 0.5 кг за тиждень Вам потрібно стільки калорій на день: ",
         gain1:
-          "Для набирання 1 кг за тиждень Вам потрібно стільки калорій в день: ",
+          "Для набирання 1 кг за тиждень Вам потрібно стільки калорій на день: ",
       },
     },
     adminDashboard: {
@@ -598,7 +600,7 @@ export default {
           imgUrl: "test/test_8.jpg",
           title: "Вкажіть групу крові (О = 1, А = 2, В = 3, АВ = 4)",
           description:
-            "Для визначення своєї групи крові потрібно провести клінічний аналіз крові: медичні лабораторії роблять спеціальні аналізи крові, щоб визначити групу крові. Цей метод є найточнішим і надійнішим.",
+            "Для визначення своєї групи крові потрібно провести клінічний аналіз крові: медичні лабораторії роблять спеціальні аналізи крові, щоб визначити групу крові. Цей метод є найточнішим.",
           type: "select",
           answers: [
             {
@@ -704,11 +706,12 @@ export default {
         info: (
           <>
             <p>
-              <b>Attention</b>. Having passed this test, you will find out about
-              your own health condition, or rather - whether your weight is
-              normal. You will receive diet recommendations to maintain your
-              body in good shape
+              Take our free short quiz and get personalized nutrition
+              recommendations: find out if your weight is in the normal range,
+              get tips on what and how much to eat to stay in shape, take the
+              first step to better well-being and vitality.
             </p>
+            <br />
             <p>
               If you want to save result, you should first enter sign in into
               your account!
@@ -1256,7 +1259,7 @@ export default {
           imgUrl: "test/test_8.jpg",
           title: "Choose your blood type (O = 1, A = 2, B = 3, AB = 4)",
           description:
-            "To determine your blood type, a clinical blood analysis is required. Medical laboratories perform specialized blood tests to determine the blood type. This method is the most accurate and reliable.",
+            "To determine your blood type, a clinical blood analysis is required. Medical laboratories perform specialized blood tests to determine the blood type. This method is the most accurate.",
           type: "select",
           answers: [
             {

@@ -42,7 +42,7 @@ h4 {
   content: "";
   position: absolute;
   width: 105%;
-  height: 30%;
+  height: 0.3em;
   left: -2.5%;
   bottom: 10%;
   background: var(--hu-lighter);
@@ -63,7 +63,8 @@ h4 {
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
-  backdrop-filter: blur(1px);
+  /* backdrop-filter: blur(1px); */
+  filter: blur(10px);
   z-index: -1;
 }
 
@@ -179,7 +180,7 @@ h4 {
   -moz-border-radius: 0.5rem;
   -ms-border-radius: 0.5rem;
   -o-border-radius: 0.5rem;
-  box-shadow: var(--hu-gray-shadow);
+  /* box-shadow: var(--hu-gray-shadow); */
 }
 
 .brick-list-item .brick-login {

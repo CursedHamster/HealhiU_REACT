@@ -8,13 +8,13 @@
 
 .sign-container .sides {
     display: flex;
-    align-items: center;
+    align-items: start;
+    margin-top: 2rem;
     gap: 4rem;
 }
 
 .sign-container .sign-form {
     flex: 1 0 60%;
-    margin-top: 2rem;
 }
 
 .sign-container .col-form-label {
