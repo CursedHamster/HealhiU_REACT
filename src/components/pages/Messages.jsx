@@ -39,7 +39,7 @@ function Messages() {
 
   //constants
   // const BROKER_URL = "ws://" + url + "/chat-messaging";
-  const BROKER_URL = "wss://" + url + "/chat-messaging";
+  const BROKER_URL = "ws://" + url + "/chat-messaging";
   const TOPIC_NAME = "/chat/messages/";
   const messageId = "messageId";
 
