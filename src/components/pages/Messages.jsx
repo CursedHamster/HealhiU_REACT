@@ -165,7 +165,7 @@ function Messages() {
 
   useEffect(() => {
     if (webSocket) {
-      setStompClient(Stomp.over(webSocket));
+      setStompClient(Stomp.over(webSocket, { transports: ["websocket"] }));
     }
     return () => {
       if (webSocket) {
@@ -176,7 +176,7 @@ function Messages() {
 
   useEffect(() => {
     if (stompClient) {
-      stompClient.connect({transports: ['websocket']}, subscribe);
+      stompClient.connect({}, subscribe);
     }
     return () => {
       if (stompClient) {
