@@ -39,7 +39,8 @@ function Messages() {
 
   //constants
   // const BROKER_URL = "ws://" + url + "/chat-messaging";
-  const BROKER_URL = "wss://" + url + "/chat-messaging";
+  // const BROKER_URL = "wss://" + url + "/chat-messaging";
+  const BROKER_URL = "wss://axdqb03231.execute-api.eu-north-1.amazonaws.com/chat-messaging/";
   const TOPIC_NAME = "/chat/messages/";
   const messageId = "messageId";
 
@@ -165,7 +166,7 @@ function Messages() {
 
   useEffect(() => {
     if (webSocket) {
-      setStompClient(Stomp.over(webSocket, { transports: ["websocket"] }));
+      setStompClient(Stomp.over(webSocket));
     }
     return () => {
       if (webSocket) {
@@ -176,7 +177,7 @@ function Messages() {
 
   useEffect(() => {
     if (stompClient) {
-      stompClient.connect({}, subscribe);
+      stompClient.connect({transports: ['websocket']}, subscribe);
     }
     return () => {
       if (stompClient) {
