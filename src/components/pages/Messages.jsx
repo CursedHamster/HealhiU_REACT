@@ -168,8 +168,7 @@ function Messages() {
   useEffect(() => {
     if (webSocket) {
       webSocket?.addEventListener("error", (e) => {
-        console.log(e);
-        setIsWSConnected(false);
+        // setIsWSConnected(false);
       });
       setStompClient(Stomp.over(webSocket));
     }
