@@ -7,8 +7,8 @@ const url = "shiwmdj4k2.execute-api.eu-north-1.amazonaws.com";
 
 export default axios.create({
     // baseURL: "http://localhost:8080/api",
-    baseURL: `http://${url}/api`,
-    // baseURL: `https://${url}/api`,
+    // baseURL: `http://${url}/api`,
+    baseURL: `https://${url}/api`,
     // baseURL: "https://healthiuspring-production.up.railway.app/api",
 })
 
