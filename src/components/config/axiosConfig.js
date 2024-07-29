@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const url = "localhost:8080";
+// const url = "localhost:8080";
 // const url = "ec2-16-170-253-71.eu-north-1.compute.amazonaws.com:8080";
-// const url = "shiwmdj4k2.execute-api.eu-north-1.amazonaws.com";
+const url = "shiwmdj4k2.execute-api.eu-north-1.amazonaws.com";
 // const url = "healthiuspring-production.up.railway.app";
 
 export default axios.create({
