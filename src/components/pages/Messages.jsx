@@ -35,16 +35,17 @@ function Messages() {
     defaultMessage,
     requestedMessage,
     messagePlaceholder,
+    messagesError
   } = context.text.messages;
 
   //constants
   // const BROKER_URL = "ws://" + url + "/chat-messaging";
-  // const BROKER_URL = "wss://" + url + "/chat-messaging";
-  const BROKER_URL = "wss://axdqb03231.execute-api.eu-north-1.amazonaws.com/chat-messaging";
+  const BROKER_URL = "wss://" + url + "/chat-messaging";
   const TOPIC_NAME = "/chat/messages/";
   const messageId = "messageId";
 
   //states
+  const [isWSConnected, setIsWSConnected] = useState(true);
   const [showNav, toggleShowNav] = useToggle(false);
   const [chatroom, setChatroom] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -166,6 +167,10 @@ function Messages() {
 
   useEffect(() => {
     if (webSocket) {
+      webSocket?.addEventListener("error", (e) => {
+        console.log(e);
+        setIsWSConnected(false);
+      });
       setStompClient(Stomp.over(webSocket));
     }
     return () => {
@@ -177,7 +182,7 @@ function Messages() {
 
   useEffect(() => {
     if (stompClient) {
-      stompClient.connect({transports: ['websocket']}, subscribe);
+      stompClient.connect({}, subscribe);
     }
     return () => {
       if (stompClient) {
@@ -298,92 +303,114 @@ function Messages() {
   }
 
   return (
-    <div
-      className={
-        "messages-page section-padding page-min-height " +
-        (showNav && "open-nav")
-      }
-    >
-      <div className="messages d-flex">
-        <div className="messages-nav-container">
-          <div className="messages-nav-header">
-            <i
-              className={"bi bi-" + (showNav ? "chevron-left" : "list")}
-              onClick={toggleShowNav}
-            ></i>
-          </div>
-          {!(userType === "USER" && chatrooms.length > 0) &&
-            (requested ? (
-              <Button
-                buttonStyle="outline"
-                onClick={handleUnrequest}
-                disabled={disabled}
-              >
-                {disableApplication}
-              </Button>
-            ) : (
-              <Button
-                buttonStyle="primary"
-                onClick={handleRequest}
-                disabled={disabled}
-              >
-                {enableApplication}
-              </Button>
-            ))}
-          <div className="messages-nav-chats">{chatItems}</div>
-        </div>
-        <div className="messages-container flex-column">
-          <h4 className="companion">
-            {chatroom ? (
-              <>
-                {titleWithLogin}{" "}
-                <Link
-                  className="companion-profile"
-                  to={"/profile/" + getCompanionLogin(chatroom)}
-                >
-                  {getCompanionLogin(chatroom)}
-                </Link>
-              </>
-            ) : (
-              <>{titleWithoutLogin}</>
-            )}
-          </h4>
-          <div className="text-boxes" ref={bottomRef}>
-            {chatrooms.length > 0 ? (
-              messageItems
-            ) : (
-              <Message
-                messageType="receiver"
-                text={specialMessages.defaultMessage.text}
-                time={specialMessages.defaultMessage.time}
-              />
-            )}
-            {requested && chatrooms.length === 0 && (
-              <Message
-                messageType="receiver"
-                text={specialMessages.requestedMessage.text}
-                time={specialMessages.requestedMessage.time}
-              />
-            )}
-          </div>
-          <div className="text-input-container">
-            <textarea
-              className="text-input"
-              name="text_input"
-              id="text_input"
-              rows="3"
-              onKeyDown={handleEnter}
-              placeholder={messagePlaceholder}
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-            ></textarea>
-            <div className="text-blob" onClick={sendMessage}>
-              <i className="bi bi-send-fill"></i>
+    <>
+      {isWSConnected ? (
+        <div
+          className={
+            "messages-page section-padding page-min-height " +
+            (showNav && "open-nav")
+          }
+        >
+          <div className="messages d-flex">
+            <div className="messages-nav-container">
+              <div className="messages-nav-header">
+                <i
+                  className={"bi bi-" + (showNav ? "chevron-left" : "list")}
+                  onClick={toggleShowNav}
+                ></i>
+              </div>
+              {!(userType === "USER" && chatrooms.length > 0) &&
+                (requested ? (
+                  <Button
+                    buttonStyle="outline"
+                    onClick={handleUnrequest}
+                    disabled={disabled}
+                  >
+                    {disableApplication}
+                  </Button>
+                ) : (
+                  <Button
+                    buttonStyle="primary"
+                    onClick={handleRequest}
+                    disabled={disabled}
+                  >
+                    {enableApplication}
+                  </Button>
+                ))}
+              <div className="messages-nav-chats">{chatItems}</div>
+            </div>
+            <div className="messages-container flex-column">
+              <h4 className="companion">
+                {chatroom ? (
+                  <>
+                    {titleWithLogin}{" "}
+                    <Link
+                      className="companion-profile"
+                      to={"/profile/" + getCompanionLogin(chatroom)}
+                    >
+                      {getCompanionLogin(chatroom)}
+                    </Link>
+                  </>
+                ) : (
+                  <>{titleWithoutLogin}</>
+                )}
+              </h4>
+              <div className="text-boxes" ref={bottomRef}>
+                {chatrooms.length > 0 ? (
+                  messageItems
+                ) : (
+                  <Message
+                    messageType="receiver"
+                    text={specialMessages.defaultMessage.text}
+                    time={specialMessages.defaultMessage.time}
+                  />
+                )}
+                {requested && chatrooms.length === 0 && (
+                  <Message
+                    messageType="receiver"
+                    text={specialMessages.requestedMessage.text}
+                    time={specialMessages.requestedMessage.time}
+                  />
+                )}
+              </div>
+              <div className="text-input-container">
+                <textarea
+                  className="text-input"
+                  name="text_input"
+                  id="text_input"
+                  rows="3"
+                  onKeyDown={handleEnter}
+                  placeholder={messagePlaceholder}
+                  value={messageInput}
+                  onChange={(e) => setMessageInput(e.target.value)}
+                ></textarea>
+                <div className="text-blob" onClick={sendMessage}>
+                  <i className="bi bi-send-fill"></i>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="messages-error-page d-flex section-padding vertical page-min-height">
+          <div className="messages-error d-flex"><div className="messages-error-info d-flex flex-column">
+          <h1>{messagesError?.title}</h1>
+            <p>{messagesError?.text}</p>
+            <Link to="/">
+              <Button buttonStyle="cta" buttonSize="medium">
+                {messagesError?.cta}
+                <i className="bi bi-arrow-right"></i>
+              </Button>
+            </Link>
+          </div>
+          <img
+            className="messages-error-image"
+            src="/messages_error.png"
+            alt="Sad message bubble"
+          /></div>
+        </div>
+      )}
+    </>
   );
 }
 

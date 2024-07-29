@@ -263,6 +263,11 @@ export default {
       requestedMessage:
         "Ваш запит на пошук співрозмовника було відправлено. Адміністратор знайде для Вас лікаря (це може відбутись протягом двох днів)",
       messagePlaceholder: "Ваше повідомлення...",
+      messagesError: {
+        title: "Неможливо з'єднатись з сервером",
+        text: "Вибачте, нам не вдалося з'єднатись з сервером. Повідомлення тимчасово недоступні. Дякуємо за розуміння.",
+        cta: "Повернутись на головну сторінку",
+      },
     },
     adminRegistration: {
       title: "Реєстрація нового користувача",
@@ -936,6 +941,11 @@ export default {
       requestedMessage:
         "Your chat request has been sent. An administrator will find a doctor for you (it can happen within two days).",
       messagePlaceholder: "Your message ...",
+      messagesError: {
+        title: "Server Error",
+        text: "We're having trouble connecting to the server right now. Messages are temporarily unavailable. Please try again later.",
+        cta: "Go back to the home page",
+      },
     },
     adminRegistration: {
       title: "Registration",

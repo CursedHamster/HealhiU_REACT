@@ -9,7 +9,9 @@
 }
 
 .messages {
-  box-shadow: 0 2px 10px 1px rgb(0 0 0 / 5%), 0 0 2px 0px rgb(0 0 0 / 10%);
+  box-shadow:
+    0 2px 10px 1px rgb(0 0 0 / 5%),
+    0 0 2px 0px rgb(0 0 0 / 10%);
 }
 
 .messages-nav-container {
@@ -124,11 +126,11 @@
 .messages .companion .companion-profile {
   color: var(--hu-darker);
   font-weight: bold;
-  transition: color .2s ease-in-out;
-  -webkit-transition: color .2s ease-in-out;
-  -moz-transition: color .2s ease-in-out;
-  -ms-transition: color .2s ease-in-out;
-  -o-transition: color .2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  -webkit-transition: color 0.2s ease-in-out;
+  -moz-transition: color 0.2s ease-in-out;
+  -ms-transition: color 0.2s ease-in-out;
+  -o-transition: color 0.2s ease-in-out;
 }
 
 .messages .companion .companion-profile:hover {
@@ -178,9 +180,7 @@
   width: 100%;
   resize: none;
   padding: var(--messages-padding-vertical) var(--messages-padding-horisontal);
-  padding-right: calc(
-    var(--messages-padding-horisontal) + var(--text-blob-size) + 0.7rem
-  );
+  padding-right: calc(var(--messages-padding-horisontal) + var(--text-blob-size) + 0.7rem);
   color: var(--hu-green-black);
 }
 
@@ -223,17 +223,44 @@
   margin: 1rem auto;
   background: var(--hu-light-green-gray-sheer);
   color: var(--hu-teal-dark);
-  padding: .5rem 1rem;
-  border-radius: .5rem;
-  -webkit-border-radius: .5rem;
-  -moz-border-radius: .5rem;
-  -ms-border-radius: .5rem;
-  -o-border-radius: .5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+}
+
+.messages-error-page {
+  justify-content: center;
+  align-items: center;
+}
+
+.messages-error {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 20%;
+  flex-wrap: wrap;
+}
+
+.messages-error-info {
+  flex: 1;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.messages-error img {
+  max-width: 100%;
+  max-height: 20vh;
 }
 
 @media screen and (max-width: 1050px) {
   .open-nav .messages-nav-container {
     width: 30vw;
+  }
+  .messages-error {
+    gap: 4rem;
   }
 }
 
@@ -251,5 +278,20 @@
 
   .open-nav .messages-container {
     display: none;
+  }
+
+  .messages-error-page {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .messages-error {
+    flex-direction: column;
+  }
+
+  .messages-error img {
+    width: 80%;
+    height: auto;
+    max-height: unset;
   }
 }

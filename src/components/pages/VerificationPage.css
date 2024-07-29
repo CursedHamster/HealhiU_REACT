@@ -18,6 +18,16 @@
   .verification-container {
     flex-direction: column;
     justify-content: flex-start;
-    gap: 2rem;
+    gap: 4rem;
+  }
+
+  .verification-info {
+    width: 100%;
+  }
+  
+  .verification-image {
+    width: 80%;
+    height: auto;
+    max-height: unset;
   }
 }
