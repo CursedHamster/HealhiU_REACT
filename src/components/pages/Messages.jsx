@@ -35,7 +35,7 @@ function Messages() {
     defaultMessage,
     requestedMessage,
     messagePlaceholder,
-    messagesError
+    messagesError,
   } = context.text.messages;
 
   //constants
@@ -168,7 +168,7 @@ function Messages() {
   useEffect(() => {
     if (webSocket) {
       webSocket?.addEventListener("error", (e) => {
-        // setIsWSConnected(false);
+        setIsWSConnected(false);
       });
       setStompClient(Stomp.over(webSocket));
     }
@@ -392,21 +392,23 @@ function Messages() {
         </div>
       ) : (
         <div className="messages-error-page d-flex section-padding vertical page-min-height">
-          <div className="messages-error d-flex"><div className="messages-error-info d-flex flex-column">
-          <h1>{messagesError?.title}</h1>
-            <p>{messagesError?.text}</p>
-            <Link to="/">
-              <Button buttonStyle="cta" buttonSize="medium">
-                {messagesError?.cta}
-                <i className="bi bi-arrow-right"></i>
-              </Button>
-            </Link>
+          <div className="messages-error d-flex">
+            <div className="messages-error-info d-flex flex-column">
+              <h1>{messagesError?.title}</h1>
+              <p>{messagesError?.text}</p>
+              <Link to="/">
+                <Button buttonStyle="cta" buttonSize="medium">
+                  {messagesError?.cta}
+                  <i className="bi bi-arrow-right"></i>
+                </Button>
+              </Link>
+            </div>
+            <img
+              className="messages-error-image"
+              src="/messages_error.png"
+              alt="Sad message bubble"
+            />
           </div>
-          <img
-            className="messages-error-image"
-            src="/messages_error.png"
-            alt="Sad message bubble"
-          /></div>
         </div>
       )}
     </>
